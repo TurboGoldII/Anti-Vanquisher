@@ -4,6 +4,10 @@
 <head>
   <script src="../engine/lib/phaser.js"></script>
   <script src="../engine/lib/phaser-arcade-physics.js"></script>
+  <script src="../engine/api/utils/debug.js"></script>
+  <script src="settings/design.js"></script>
+
+  <link rel="stylesheet" href="gui/global.css">
 </head>
 
 <body>
@@ -12,46 +16,53 @@
       type: Phaser.AUTO,
       width: 800,
       height: 600,
+      backgroundColor: 0xbababa,
       physics: {
         default: 'arcade',
         arcade: {
-          gravity: { y: 200 }
+          debug: true
         }
       },
       scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
       }
     };
 
     var game = new Phaser.Game(config);
+    var player = null;
 
     function preload() {
-      this.load.setBaseURL('http://labs.phaser.io');
-
-      this.load.image('sky', 'assets/skies/space3.png');
-      this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-      this.load.image('red', 'assets/particles/red.png');
+      this.load.spritesheet('bob_omb', 'assets/bob_omb.png', { frameWidth: 21, frameHeight: 24 });
     }
 
     function create() {
-      this.add.image(400, 300, 'sky');
+      player = this.physics.add.sprite(400, 300, 'bob_omb')
+        .setScale(SCALE_PLAYER)
+        .refreshBody();
 
-      var particles = this.add.particles('red');
-
-      var emitter = particles.createEmitter({
-        speed: 100,
-        scale: { start: 1, end: 0 },
-        blendMode: 'ADD'
+      this.anims.create({
+        key: 'idle',
+        frames: this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 7 }),
+        frameRate: ANIMATION_FRAMERATE_PLAYER,
+        repeat: -1
       });
 
-      var logo = this.physics.add.image(400, 100, 'logo');
+      player.anims.play('idle', true);
 
-      logo.setVelocity(100, 200);
-      logo.setBounce(1, 1);
-      logo.setCollideWorldBounds(true);
+      this.input.on('pointermove', function (pointer) {
+        //TO-DO: Set stage bounds here
+        /*
+         * For x use 14px, for y use 19px
+         */
+        player.x = Phaser.Math.Clamp(pointer.x, 14, 786);
+        player.y = Phaser.Math.Clamp(pointer.y, 19, 581);
+      }, this);
+    }
 
-      emitter.startFollow(logo);
+    function update() {
+
     }
   </script>
 
