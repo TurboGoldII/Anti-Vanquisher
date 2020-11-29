@@ -1,1 +1,7 @@
-//Flame speed...
+//Fireball constants
+const FIREBALL_START_FIRERATE = 1;
+const FIREBALL_VELOCITY = 0;
+
+//Score constants
+const SCORE_INCREMENT_FIREBALL = 10;
+const SCORE_INCREMENT_FIRESTREAM = 50;
