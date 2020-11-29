@@ -48,7 +48,7 @@ function startGame() {
   }
 
   //The firerate is fireRate per second
-  var fireRate = FIREBALL_START_FIRERATE;
+  var fireRate = FIREBALL_START_FIRE_RATE;
   var score = 0;
 
   function update() {
@@ -61,10 +61,12 @@ function startGame() {
   }
 
   function isAllowedToShootFireball() {
-    return isSecondsPassed(fireRate, game);
+    //Convert fire rate into seconds for next shot
+    var intervalForNextShot = 1 / fireRate;
+    return isSecondsPassed(intervalForNextShot, game);
   }
 
   function shootFireball() {
-    cl('Shooty shoot');
+    cl('Shoot fireball');
   }
 }

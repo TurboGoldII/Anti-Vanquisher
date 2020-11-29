@@ -30,7 +30,7 @@ function isSecondsPassed(seconds, game) {
     framesPassedForEachCheck[currentCheckIterator] = 1;
   }
 
-  var compareFrameRate = Math.round(game.loop.actualFps) / (1 / seconds);
+  var compareFrameRate = Math.round(game.loop.actualFps) * seconds;
 
   if (framesPassedForEachCheck[currentCheckIterator] % Math.round(compareFrameRate) === 0) {
     framesPassedForEachCheck[currentCheckIterator] = 0;

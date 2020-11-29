@@ -1,5 +1,5 @@
 //Fireball constants
-const FIREBALL_START_FIRERATE = 1;
+const FIREBALL_START_FIRE_RATE = 1;
 const FIREBALL_VELOCITY = 0;
 
 //Score constants
