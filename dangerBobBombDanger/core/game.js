@@ -17,46 +17,85 @@ function startGame() {
     }
   };
 
-  var game = new Phaser.Game(config);
-  var player = null;
-
   function preload() {
-    this.load.spritesheet('bob_omb', 'assets/bob_omb.png', { frameWidth: 21, frameHeight: 24 });
+    this.load.image('bobOmb', 'assets/bobOmb.png');
+    this.load.image('lava', 'assets/stage/lava.png');
+    this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
+    this.load.image('scoreBar', 'assets/hud/scoreBar.png');
   }
 
+  var game = new Phaser.Game(config);
+  var player = null;
+  var score = 0;
+  var scoreCounterText = null;
+
   function create() {
-    player = this.physics.add.sprite(400, 300, 'bob_omb')
-      .setScale(SCALE_PLAYER);
+    this.add.image(STAGE_CENTER.x, 30, 'scoreBar');
 
-    this.anims.create({
-      key: 'idle',
-      frames: this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 7 }),
-      frameRate: ANIMATION_FRAMERATE_PLAYER,
-      repeat: -1
-    });
+    this.add.text(
+      595,
+      15,
+      'Score:',
+      {
+        fontFamily: 'Arial, Helvetica, sans-serif',
+        fontSize: '30px larger',
+        fill: '#ffffff'
+      }
+    );
 
-    player.anims.play('idle', true);
+    scoreCounterText = this.add.text(
+      690,
+      15,
+      formatScore(),
+      {
+        fontFamily: 'Arial, Helvetica, sans-serif',
+        fontSize: '30px larger',
+        fill: '#ffffff'
+      }
+    );
+
+    const stages = this.physics.add.staticGroup();
+
+    stages.create(
+      STAGE_CENTER.x,
+      STAGE_CENTER.y,
+      'lava'
+    );
+
+    stages.create(
+      STAGE_CENTER.x,
+      STAGE_CENTER.y,
+      'floatingFloor'
+    );
+
+    player = this.physics.add.image(
+      STAGE_CENTER.x,
+      STAGE_CENTER.y,
+      'bobOmb'
+    )
+      .setScale(1.5);
 
     this.input.on('pointermove', function (pointer) {
-      //TO-DO: Set stage bounds here
       /*
-       * For x use 14px, for y use 17px
+       * Sadly, these stage bounds here always have to be fine-tuned by the
+       * programmer. Test it out, once the right textures are installed.
        */
-      player.x = Phaser.Math.Clamp(pointer.x, 14, 786);
-      player.y = Phaser.Math.Clamp(pointer.y, 17, 583);
-    }, this);
+      player.x = Phaser.Math.Clamp(pointer.x, 112, 688);
+      player.y = Phaser.Math.Clamp(pointer.y, 142, 518);
+    },
+      this
+    );
   }
 
   //The firerate is fireRate per second
   var fireRate = FIREBALL_START_FIRE_RATE;
-  var score = 0;
 
   function update() {
     resetTimer();
 
     if (isAllowedToShootFireball()) {
       shootFireball();
-      score += SCORE_INCREMENT_FIREBALL;
+      increaseScoreForFireball();
     }
   }
 
@@ -67,6 +106,41 @@ function startGame() {
   }
 
   function shootFireball() {
-    cl('Shoot fireball');
+    //TO-DO
+  }
+
+  /**
+   * Increases the score by the fireball increment.
+   * 
+   * TO-DO: Implement a new scorer class for more future scoring mechanics.
+   */
+  function increaseScoreForFireball() {
+    score += SCORE_INCREMENT_FIREBALL;
+    var formattedScore = formatScore();
+    scoreCounterText.setText(formattedScore);
+  }
+
+  /**
+   * According to the current score length, zeros are added to make the score
+   * look cooler.
+   */
+  function formatScore() {
+    if (score >= SCORE_MAXIMUM) {
+      return SCORE_MAXIMUM;
+    }
+
+    var formattedScore = score.toString();
+    var formattedScoreLength = formattedScore.length;
+    var formattedMaxScoreLength = SCORE_MAXIMUM.toString().length;
+
+    if (formattedScoreLength < formattedMaxScoreLength) {
+      var lengthDifference = formattedMaxScoreLength - formattedScoreLength;
+
+      for (var i = 0; i < lengthDifference; i++) {
+        formattedScore = '0' + formattedScore;
+      }
+    }
+
+    return formattedScore;
   }
 }
