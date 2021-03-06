@@ -30,10 +30,13 @@ function startGame() {
   var score = 0;
   var scoreCounterText = null;
   var fireballs = [];
-  var activeFireballs = [];
 
   function create() {
-    this.add.image(GAME_CENTER.x, 30, 'scoreBar');
+    this.add.image(
+      GAME_CENTER.x,
+      30,
+      'scoreBar'
+    );
 
     this.add.text(
       15,
@@ -115,46 +118,22 @@ function startGame() {
       this
     );
 
+    //TO-DO: Delete after random implementation
     FIREBALL_TURRET_POSITIONS.forEach(fireball => {
-      this.add.image(fireball.x, fireball.y, 'bobOmb').setScale(3);
+      this.add.image(fireball.x, fireball.y, 'bobOmb')
+        .setScale(3);
+
       fireballs.push({ x: fireball.x, y: fireball.y });
     });
   }
 
-  //The firerate is fireRate per second
-  var fireRate = FIREBALL_START_FIRE_RATE;
-
   function update() {
     resetTimer();
 
-    if (isAllowedToShootFireball()) {
-      shootFireball(this.physics);
+    if (isAllowedToShootFireball(game)) {
+      shootFireball(this.physics, player, fireballs);
       increaseScoreForFireball();
     }
-  }
-
-  function isAllowedToShootFireball() {
-    //Convert fire rate into seconds for next shot
-    var intervalForNextShot = 1 / fireRate;
-    return isSecondsPassed(intervalForNextShot, game);
-  }
-
-  function shootFireball(physics) {
-    var randomFireball = fireballs[Math.round(Math.random() * 100) % fireballs.length]
-    var fireballTexture = physics.add.image(
-      randomFireball.x,
-      randomFireball.y,
-      'fireball'
-    ).setScale(0.5);
-    var angle = { x: player.x, y: player.y };
-    var gcd = getGCD(angle.x, angle.y);
-    angle.x = (angle.x - randomFireball.x) / gcd;
-    angle.y = (angle.y - randomFireball.y) / gcd;
-    fireballTexture.setVelocityX(angle.x);
-    fireballTexture.setVelocityY(angle.y);
-    setTimeout(() => {
-      // tp dp
-    }, 60000);
   }
 
   /**
