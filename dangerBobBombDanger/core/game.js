@@ -22,7 +22,7 @@ function startGame() {
     this.load.image('lava', 'assets/stage/lava.png');
     this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
-    this.load.image('fireball', 'assets/prototypes/fireball.PNG');
+    this.load.image('fireball', 'assets/mob/fireball.png');
   }
 
   var game = new Phaser.Game(config);
@@ -74,7 +74,7 @@ function startGame() {
       STAGE_CENTER.y,
       'bobOmb'
     ).setScale(2);
-      
+
 
     this.input.on('pointermove', function (pointer) {
       /*
