@@ -29,6 +29,8 @@ function startGame() {
   var player = null;
   var score = 0;
   var scoreCounterText = null;
+  var fireballs = [];
+  var activeFireballs = [];
 
   function create() {
     this.add.image(STAGE_CENTER.x, 30, 'scoreBar');
@@ -74,7 +76,7 @@ function startGame() {
       STAGE_CENTER.y,
       'bobOmb'
     ).setScale(2);
-      
+
 
     this.input.on('pointermove', function (pointer) {
       /*
@@ -87,8 +89,10 @@ function startGame() {
       this
     );
 
-
-    this.add.image(STAGE_CENTER.x, 100, 'fireball').setScale(0.5);
+    FIREBALLS_POSITIONS.forEach(fireball => {
+      this.add.image(fireball.x, fireball.y, 'fireball').setScale(0.5);
+      fireballs.push({ x: fireball.x, y: fireball.y });
+    });
   }
 
   //The firerate is fireRate per second
@@ -98,9 +102,13 @@ function startGame() {
     resetTimer();
 
     if (isAllowedToShootFireball()) {
-      shootFireball();
+      shootFireball(this.physics);
       increaseScoreForFireball();
     }
+
+    activeFireballs.forEach(fireball => {
+      fireball.fireballTexture.x += 2;
+    });
   }
 
   function isAllowedToShootFireball() {
@@ -109,8 +117,16 @@ function startGame() {
     return isSecondsPassed(intervalForNextShot, game);
   }
 
-  function shootFireball() {
-    //TO-DO
+  function shootFireball(physics) {
+    var randomFireball = fireballs[Math.round(Math.random() * 100) % fireballs.length]
+    var fireballTexture = physics.add.image(
+      randomFireball.x,
+      randomFireball.y,
+      'fireball'
+    ).setScale(0.5);
+    activeFireballs.push(
+      { fireballTexture: fireballTexture, playerPosition: { x: player.x, y: player.y } }
+    );
   }
 
   /**
