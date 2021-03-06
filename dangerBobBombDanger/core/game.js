@@ -31,7 +31,18 @@ function startGame() {
   var scoreCounterText = null;
 
   function create() {
-    this.add.image(STAGE_CENTER.x, 30, 'scoreBar');
+    this.add.image(GAME_CENTER.x, 30, 'scoreBar');
+
+    this.add.text(
+      15,
+      15,
+      GAME_NAME,
+      {
+        fontFamily: 'Arial, Helvetica, sans-serif',
+        fontSize: '30px larger',
+        fill: '#ffffff'
+      }
+    );
 
     this.add.text(
       595,
@@ -58,37 +69,56 @@ function startGame() {
     const stages = this.physics.add.staticGroup();
 
     stages.create(
-      STAGE_CENTER.x,
-      STAGE_CENTER.y,
+      GAME_CENTER.x,
+      GAME_CENTER.y,
       'lava'
     );
 
     stages.create(
-      STAGE_CENTER.x,
-      STAGE_CENTER.y,
+      FLOOR_CENTER.x,
+      FLOOR_CENTER.y,
       'floatingFloor'
     );
 
     player = this.physics.add.image(
-      STAGE_CENTER.x,
-      STAGE_CENTER.y,
+      FLOOR_CENTER.x,
+      FLOOR_CENTER.y,
       'bobOmb'
     ).setScale(2);
 
 
-    this.input.on('pointermove', function (pointer) {
-      /*
-       * Sadly, these stage bounds here always have to be fine-tuned by the
-       * programmer. Test it out, once the right textures are installed.
-       */
-      player.x = Phaser.Math.Clamp(pointer.x, 112, 688);
-      player.y = Phaser.Math.Clamp(pointer.y, 142, 518);
-    },
+    this.input.on(
+      'pointermove',
+      function (pointer) {
+        /*
+         * Sadly, these stage bounds here always have to be fine-tuned by the
+         * programmer. Test it out, once the right textures are installed.
+         */
+        const coordXDiff = 239;
+
+        player.x = Phaser.Math.Clamp(
+          pointer.x,
+          FLOOR_CENTER.x - coordXDiff,
+          FLOOR_CENTER.x + coordXDiff
+        );
+
+        const coordYDiff = 154;
+
+        player.y = Phaser.Math.Clamp(
+          pointer.y,
+          FLOOR_CENTER.y - coordYDiff,
+          FLOOR_CENTER.y + coordYDiff
+        );
+      },
       this
     );
 
-
-    this.add.image(STAGE_CENTER.x, 100, 'fireball').setScale(0.5);
+    this.add.image(
+      GAME_CENTER.x,
+      100,
+      'fireball'
+    )
+      .setScale(0.5);
   }
 
   //The firerate is fireRate per second
@@ -135,7 +165,10 @@ function startGame() {
 
     var formattedScore = score.toString();
     var formattedScoreLength = formattedScore.length;
-    var formattedMaxScoreLength = SCORE_MAXIMUM.toString().length;
+
+    var formattedMaxScoreLength = SCORE_MAXIMUM
+      .toString()
+      .length;
 
     if (formattedScoreLength < formattedMaxScoreLength) {
       var lengthDifference = formattedMaxScoreLength - formattedScoreLength;
