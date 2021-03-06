@@ -22,7 +22,7 @@ function startGame() {
     this.load.image('lava', 'assets/stage/lava.png');
     this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
-    this.load.image('fireball', 'assets/prototypes/fireball.PNG');
+    this.load.image('fireball', 'assets/mob/fireball.png');
   }
 
   var game = new Phaser.Game(config);
@@ -33,7 +33,18 @@ function startGame() {
   var activeFireballs = [];
 
   function create() {
-    this.add.image(STAGE_CENTER.x, 30, 'scoreBar');
+    this.add.image(GAME_CENTER.x, 30, 'scoreBar');
+
+    this.add.text(
+      15,
+      15,
+      GAME_NAME,
+      {
+        fontFamily: 'Arial, Helvetica, sans-serif',
+        fontSize: '30px larger',
+        fill: '#ffffff'
+      }
+    );
 
     this.add.text(
       595,
@@ -60,37 +71,52 @@ function startGame() {
     const stages = this.physics.add.staticGroup();
 
     stages.create(
-      STAGE_CENTER.x,
-      STAGE_CENTER.y,
+      GAME_CENTER.x,
+      GAME_CENTER.y,
       'lava'
     );
 
     stages.create(
-      STAGE_CENTER.x,
-      STAGE_CENTER.y,
+      FLOOR_CENTER.x,
+      FLOOR_CENTER.y,
       'floatingFloor'
     );
 
     player = this.physics.add.image(
-      STAGE_CENTER.x,
-      STAGE_CENTER.y,
+      FLOOR_CENTER.x,
+      FLOOR_CENTER.y,
       'bobOmb'
     ).setScale(2);
 
 
-    this.input.on('pointermove', function (pointer) {
-      /*
-       * Sadly, these stage bounds here always have to be fine-tuned by the
-       * programmer. Test it out, once the right textures are installed.
-       */
-      player.x = Phaser.Math.Clamp(pointer.x, 112, 688);
-      player.y = Phaser.Math.Clamp(pointer.y, 142, 518);
-    },
+    this.input.on(
+      'pointermove',
+      function (pointer) {
+        /*
+         * Sadly, these stage bounds here always have to be fine-tuned by the
+         * programmer. Test it out, once the right textures are installed.
+         */
+        const coordXDiff = 239;
+
+        player.x = Phaser.Math.Clamp(
+          pointer.x,
+          FLOOR_CENTER.x - coordXDiff,
+          FLOOR_CENTER.x + coordXDiff
+        );
+
+        const coordYDiff = 154;
+
+        player.y = Phaser.Math.Clamp(
+          pointer.y,
+          FLOOR_CENTER.y - coordYDiff,
+          FLOOR_CENTER.y + coordYDiff
+        );
+      },
       this
     );
 
-    FIREBALLS_POSITIONS.forEach(fireball => {
-      this.add.image(fireball.x, fireball.y, 'fireball').setScale(0.5);
+    FIREBALL_TURRET_POSITIONS.forEach(fireball => {
+      this.add.image(fireball.x, fireball.y, 'bobOmb').setScale(3);
       fireballs.push({ x: fireball.x, y: fireball.y });
     });
   }
@@ -105,10 +131,6 @@ function startGame() {
       shootFireball(this.physics);
       increaseScoreForFireball();
     }
-
-    activeFireballs.forEach(fireball => {
-      fireball.fireballTexture.x += 2;
-    });
   }
 
   function isAllowedToShootFireball() {
@@ -124,9 +146,15 @@ function startGame() {
       randomFireball.y,
       'fireball'
     ).setScale(0.5);
-    activeFireballs.push(
-      { fireballTexture: fireballTexture, playerPosition: { x: player.x, y: player.y } }
-    );
+    var angle = { x: player.x, y: player.y };
+    var gcd = getGCD(angle.x, angle.y);
+    angle.x = (angle.x - randomFireball.x) / gcd;
+    angle.y = (angle.y - randomFireball.y) / gcd;
+    fireballTexture.setVelocityX(angle.x);
+    fireballTexture.setVelocityY(angle.y);
+    setTimeout(() => {
+      // tp dp
+    }, 60000);
   }
 
   /**
@@ -151,7 +179,10 @@ function startGame() {
 
     var formattedScore = score.toString();
     var formattedScoreLength = formattedScore.length;
-    var formattedMaxScoreLength = SCORE_MAXIMUM.toString().length;
+
+    var formattedMaxScoreLength = SCORE_MAXIMUM
+      .toString()
+      .length;
 
     if (formattedScoreLength < formattedMaxScoreLength) {
       var lengthDifference = formattedMaxScoreLength - formattedScoreLength;

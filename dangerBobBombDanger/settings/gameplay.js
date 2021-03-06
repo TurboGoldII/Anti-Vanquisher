@@ -7,7 +7,9 @@ const SCORE_MAXIMUM = 999999;
 const SCORE_INCREMENT_FIREBALL = 10;
 const SCORE_INCREMENT_FIRESTREAM = 50;
 
-const FIREBALLS_POSITIONS = [
-    { x: STAGE_CENTER.x, y: 100 },
-    { x: 65, y: STAGE_CENTER.y }
+const FIREBALL_TURRET_POSITIONS = [
+    { x: FLOOR_CENTER.x, y: 100 },
+    { x: FLOOR_CENTER.x, y: 550 },
+    { x: 65, y: FLOOR_CENTER.y },
+    { x: 765, y: FLOOR_CENTER.y }
 ];
