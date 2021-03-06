@@ -22,6 +22,7 @@ function startGame() {
     this.load.image('lava', 'assets/stage/lava.png');
     this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
+    this.load.image('fireball', 'assets/prototypes/fireball.PNG');
   }
 
   var game = new Phaser.Game(config);
@@ -72,8 +73,8 @@ function startGame() {
       STAGE_CENTER.x,
       STAGE_CENTER.y,
       'bobOmb'
-    )
-      .setScale(2);
+    ).setScale(2);
+      
 
     this.input.on('pointermove', function (pointer) {
       /*
@@ -85,6 +86,9 @@ function startGame() {
     },
       this
     );
+
+
+    this.add.image(STAGE_CENTER.x, 100, 'fireball').setScale(0.5);
   }
 
   //The firerate is fireRate per second
