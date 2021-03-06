@@ -73,7 +73,7 @@ function startGame() {
       STAGE_CENTER.y,
       'bobOmb'
     )
-      .setScale(1.5);
+      .setScale(2);
 
     this.input.on('pointermove', function (pointer) {
       /*
