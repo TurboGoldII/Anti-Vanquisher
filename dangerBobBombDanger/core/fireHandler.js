@@ -34,7 +34,6 @@ function shootFireball(physics, player, fireballs) {
 
   var angleXMultiplier = 1;
   var angleYMultiplier = 1;
-
   var speedX = Math.abs(angle.x);
   var speedY = Math.abs(angle.y);
 
@@ -42,7 +41,7 @@ function shootFireball(physics, player, fireballs) {
     angleYMultiplier = FIREBALL_VELOCITY / speedX;
 
     if (angle.x < 0) {
-      angle.x = FIREBALL_VELOCITY * (-1);
+      angle.x = -FIREBALL_VELOCITY;
     } else {
       angle.x = FIREBALL_VELOCITY;
     }
@@ -51,7 +50,7 @@ function shootFireball(physics, player, fireballs) {
     angleXMultiplier = FIREBALL_VELOCITY / speedY;
 
     if (angle.y < 0) {
-      angle.y = FIREBALL_VELOCITY * (-1);
+      angle.y = -FIREBALL_VELOCITY;
     } else {
       angle.y = FIREBALL_VELOCITY;
     }
@@ -60,7 +59,48 @@ function shootFireball(physics, player, fireballs) {
   fireballTexture.setVelocityX(angle.x * angleXMultiplier);
   fireballTexture.setVelocityY(angle.y * angleYMultiplier);
 
+  //Removes the fireball texture after a time to keep the memory clean
   setTimeout(() => {
     fireballTexture.destroy();
-  }, 60000);
+  }, FIREBALL_TTL);
+}
+
+function isAllowedToShootFirestream(game) {
+  //Convert fire rate into seconds for next stream
+  var intervalForNextShot = 1 / FIRESTREAM_FIRE_RATE;
+  return isSecondsPassed(intervalForNextShot, game);
+}
+
+function showFirestreamWarning(physics) {
+  var streamPos = calculateStreamStartPos();
+
+  var warning = physics.add.sprite(
+    streamPos.x,
+    streamPos.y,
+    'warning'
+  )
+    .setScale(3);
+
+  warning.anims.play('warning_blink');
+
+  setTimeout(() => {
+    warning.destroy();
+    shootFirestream();
+  }, FIRESTREAM_WARNING_TIME);
+}
+
+function calculateStreamStartPos() {
+  var rangeXAxle = (FIRESTREAM_X_AXLE_RANGE.end - FIRESTREAM_STAGE_OFFSET)
+    - (FIRESTREAM_X_AXLE_RANGE.start + FIRESTREAM_STAGE_OFFSET);
+
+  var randomStart = Math.floor(Math.random() * rangeXAxle);
+
+  return {
+    x: (FIRESTREAM_X_AXLE_RANGE.start + FIRESTREAM_STAGE_OFFSET) + randomStart,
+    y: HUD_HEIGHT + 24
+  }
+}
+
+function shootFirestream() {
+
 }

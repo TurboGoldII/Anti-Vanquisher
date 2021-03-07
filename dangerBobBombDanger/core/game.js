@@ -23,6 +23,7 @@ function startGame() {
     this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
     this.load.image('fireball', 'assets/mob/fireball.png');
+    this.load.spritesheet('warning', 'assets/callouts/warning.png', { frameWidth: 16, frameHeight: 16 });
   }
 
   var game = new Phaser.Game(config);
@@ -39,7 +40,7 @@ function startGame() {
     );
 
     this.add.text(
-      15,
+      10,
       15,
       GAME_NAME,
       {
@@ -118,6 +119,13 @@ function startGame() {
       this
     );
 
+    this.anims.create({
+      key: 'warning_blink',
+      frames: this.anims.generateFrameNumbers('warning', { start: 0, end: 1 }),
+      frameRate: 2,
+      repeat: -1
+    });
+
     //TO-DO: Delete after random implementation
     FIREBALL_TURRET_POSITIONS.forEach(fireball => {
       this.add.image(fireball.x, fireball.y, 'bobOmb')
@@ -134,6 +142,11 @@ function startGame() {
       shootFireball(this.physics, player, fireballs);
       increaseScoreForFireball();
     }
+
+    if (isAllowedToShootFirestream(game)) {
+      showFirestreamWarning(this.physics);
+      increaseScoreForFirestream();
+    }
   }
 
   /**
@@ -147,6 +160,12 @@ function startGame() {
     scoreCounterText.setText(formattedScore);
   }
 
+  function increaseScoreForFirestream() {
+    score += SCORE_INCREMENT_FIRESTREAM;
+    var formattedScore = formatScore();
+    scoreCounterText.setText(formattedScore);
+  }
+
   /**
    * According to the current score length, zeros are added to make the score
    * look cooler.
@@ -156,6 +175,7 @@ function startGame() {
       return SCORE_MAXIMUM;
     }
 
+    //TO-DO: Improve this with string padding
     var formattedScore = score.toString();
     var formattedScoreLength = formattedScore.length;
 
