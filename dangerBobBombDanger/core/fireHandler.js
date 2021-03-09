@@ -55,10 +55,10 @@ function isAllowedToShootFirestream(game) {
   return isSecondsPassed(intervalForNextShot, game);
 }
 
-function showFirestreamWarning(this) {
+function showFirestreamWarning(_this) {
   var streamPos = calculateStreamStartPos();
 
-  var warning = this.add.sprite(
+  var warning = _this.add.sprite(
     streamPos.x,
     streamPos.y,
     'warning'
@@ -69,7 +69,7 @@ function showFirestreamWarning(this) {
 
   setTimeout(() => {
     warning.destroy();
-    shootFirestream(this.physics);
+    shootFirestream(_this.physics);
   }, FIRESTREAM_WARNING_TIME);
 }
 
