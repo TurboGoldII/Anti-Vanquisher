@@ -144,7 +144,7 @@ function startGame() {
     }
 
     if (isAllowedToShootFirestream(game)) {
-      showFirestreamWarning(this.physics);
+      showFirestreamWarning(this);
       increaseScoreForFirestream();
     }
   }

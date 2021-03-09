@@ -32,32 +32,16 @@ function shootFireball(physics, player, fireballs) {
     y: dest.y - randomFireball.y
   };
 
-  var angleXMultiplier = 1;
-  var angleYMultiplier = 1;
   var speedX = Math.abs(angle.x);
   var speedY = Math.abs(angle.y);
 
-  if (speedX > speedY) {
-    angleYMultiplier = FIREBALL_VELOCITY / speedX;
+  var speedMultiplier = Math.sqrt(
+    (FIREBALL_VELOCITY ** 2) /
+    ((speedX ** 2) + (speedY ** 2))
+  );
 
-    if (angle.x < 0) {
-      angle.x = -FIREBALL_VELOCITY;
-    } else {
-      angle.x = FIREBALL_VELOCITY;
-    }
-  }
-  else {
-    angleXMultiplier = FIREBALL_VELOCITY / speedY;
-
-    if (angle.y < 0) {
-      angle.y = -FIREBALL_VELOCITY;
-    } else {
-      angle.y = FIREBALL_VELOCITY;
-    }
-  }
-
-  fireballTexture.setVelocityX(angle.x * angleXMultiplier);
-  fireballTexture.setVelocityY(angle.y * angleYMultiplier);
+  fireballTexture.setVelocityX(angle.x * speedMultiplier);
+  fireballTexture.setVelocityY(angle.y * speedMultiplier);
 
   //Removes the fireball texture after a time to keep the memory clean
   setTimeout(() => {
@@ -71,10 +55,10 @@ function isAllowedToShootFirestream(game) {
   return isSecondsPassed(intervalForNextShot, game);
 }
 
-function showFirestreamWarning(physics) {
+function showFirestreamWarning(this) {
   var streamPos = calculateStreamStartPos();
 
-  var warning = physics.add.sprite(
+  var warning = this.add.sprite(
     streamPos.x,
     streamPos.y,
     'warning'
@@ -85,7 +69,7 @@ function showFirestreamWarning(physics) {
 
   setTimeout(() => {
     warning.destroy();
-    shootFirestream();
+    shootFirestream(this.physics);
   }, FIRESTREAM_WARNING_TIME);
 }
 
@@ -101,6 +85,6 @@ function calculateStreamStartPos() {
   }
 }
 
-function shootFirestream() {
-
+function shootFirestream(physics) {
+  //TO-DO
 }
