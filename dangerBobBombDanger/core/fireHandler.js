@@ -1,7 +1,3 @@
-/*
- * TO-DO: Firerate must increase itself over time
- */
-
 //The firerate is fireRate per second
 var fireRate = FIREBALL_START_FIRE_RATE;
 var fireballsShot = 0;
@@ -40,15 +36,17 @@ function getRandomFireballTurretPosition() {
     }
   }
 
-  return { x: x, y: y};
+  return { x: x, y: y };
 }
 
 function shootFireball(physics, player) {
   ++fireballsShot;
+
   if (fireballsShot === 20) {
     fireballsShot = 0;
     fireRate += 0.1;
   }
+
   var randomFireball = getRandomFireballTurretPosition();
 
   var fireballTexture = physics.add.image(
@@ -58,6 +56,7 @@ function shootFireball(physics, player) {
   );
 
   $this.physics.add.collider(player, fireballTexture, fireballHitPlayer);
+
   //The fireball shall fly to the players current position
   var dest = {
     x: player.x,

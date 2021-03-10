@@ -28,7 +28,7 @@ function startGame() {
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
     this.load.image('fireball', 'assets/mob/fireball.png');
     this.load.spritesheet('warning', 'assets/callouts/warning.png', { frameWidth: 16, frameHeight: 16 });
-    this.load.audio('soundtrack_1', 'assets/music/Danger! Bomb! Danger! Demo Soundtrack 1 v1.0.mp3');
+    this.load.audio('soundtrack_1', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
   }
 
   var game = new Phaser.Game(config);
@@ -38,8 +38,8 @@ function startGame() {
   function create() {
     $soundtrack_1 = this.sound.add('soundtrack_1');
     $soundtrack_1.play({ loop: true });
-
     $this = this;
+
     this.add.image(
       GAME_CENTER.x,
       30,
