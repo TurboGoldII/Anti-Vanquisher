@@ -10,7 +10,7 @@ function isAllowedToShootFireball(game) {
 
 function fireballHitPlayer() {
   $score = 0;
-  $soundtrack_1.stop();
+  $soundHandler.stopBackgroundMusic();
   $this.registry.destroy(); // destroy registry
   $this.events.off(); // disable all active events
   $this.scene.restart(); // restart current scene

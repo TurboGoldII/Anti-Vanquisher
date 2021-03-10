@@ -1,6 +1,6 @@
 var $this = null;
 var $score = 0;
-var $soundtrack_1 = null;
+var $soundHandler = null;
 
 function startGame() {
   var config = {
@@ -27,8 +27,10 @@ function startGame() {
     this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
     this.load.image('fireball', 'assets/mob/fireball.png');
+    this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
+    this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
     this.load.spritesheet('warning', 'assets/callouts/warning.png', { frameWidth: 16, frameHeight: 16 });
-    this.load.audio('soundtrack_1', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
+    this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
   }
 
   var game = new Phaser.Game(config);
@@ -36,8 +38,8 @@ function startGame() {
   var scoreCounterText = null;
 
   function create() {
-    $soundtrack_1 = this.sound.add('soundtrack_1');
-    $soundtrack_1.play({ loop: true });
+    $soundHandler = new Soundhandler(this);
+    $soundHandler.playBackgroundMusic();
     $this = this;
 
     this.add.image(
