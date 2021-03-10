@@ -13,10 +13,7 @@ const SCORE_MAXIMUM = 999999;
 const SCORE_INCREMENT_FIREBALL = 10;
 const SCORE_INCREMENT_FIRESTREAM = 50;
 
-//TO-DO: To be deleted. Will be replaced by a randomizer.
-const FIREBALL_TURRET_POSITIONS = [
-  { x: FLOOR_CENTER.x, y: 100 },
-  { x: FLOOR_CENTER.x, y: 550 },
-  { x: 65, y: FLOOR_CENTER.y },
-  { x: 765, y: FLOOR_CENTER.y }
-];
+const FIREBALL_TURRET_POSITIONS = {
+  x: { left: -20, right: GAME_WIDTH + 20 },
+  y: { top: -20, bottom: GAME_HEIGHT + 20 }
+};

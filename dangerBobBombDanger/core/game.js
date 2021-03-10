@@ -1,8 +1,12 @@
+var $this = null;
+var $score = 0;
+var $soundtrack_1 = null;
+
 function startGame() {
   var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: GAME_WIDTH,
+    height: GAME_HEIGHT,
     backgroundColor: 0xbababa,
     physics: {
       default: 'arcade',
@@ -24,15 +28,18 @@ function startGame() {
     this.load.image('scoreBar', 'assets/hud/scoreBar.png');
     this.load.image('fireball', 'assets/mob/fireball.png');
     this.load.spritesheet('warning', 'assets/callouts/warning.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.audio('soundtrack_1', 'assets/music/Danger! Bomb! Danger! Demo Soundtrack 1 v1.0.mp3');
   }
 
   var game = new Phaser.Game(config);
   var player = null;
-  var score = 0;
   var scoreCounterText = null;
-  var fireballs = [];
 
   function create() {
+    $soundtrack_1 = this.sound.add('soundtrack_1');
+    $soundtrack_1.play({ loop: true });
+
+    $this = this;
     this.add.image(
       GAME_CENTER.x,
       30,
@@ -92,7 +99,6 @@ function startGame() {
       'bobOmb'
     ).setScale(2);
 
-
     this.input.on(
       'pointermove',
       function (pointer) {
@@ -125,21 +131,13 @@ function startGame() {
       frameRate: 2,
       repeat: -1
     });
-
-    //TO-DO: Delete after random implementation
-    FIREBALL_TURRET_POSITIONS.forEach(fireball => {
-      this.add.image(fireball.x, fireball.y, 'bobOmb')
-        .setScale(3);
-
-      fireballs.push({ x: fireball.x, y: fireball.y });
-    });
   }
 
   function update() {
     resetTimer();
 
     if (isAllowedToShootFireball(game)) {
-      shootFireball(this.physics, player, fireballs);
+      shootFireball(this.physics, player);
       increaseScoreForFireball();
     }
 
@@ -155,13 +153,13 @@ function startGame() {
    * TO-DO: Implement a new scorer class for more future scoring mechanics.
    */
   function increaseScoreForFireball() {
-    score += SCORE_INCREMENT_FIREBALL;
+    $score += SCORE_INCREMENT_FIREBALL;
     var formattedScore = formatScore();
     scoreCounterText.setText(formattedScore);
   }
 
   function increaseScoreForFirestream() {
-    score += SCORE_INCREMENT_FIRESTREAM;
+    $score += SCORE_INCREMENT_FIRESTREAM;
     var formattedScore = formatScore();
     scoreCounterText.setText(formattedScore);
   }
@@ -171,12 +169,12 @@ function startGame() {
    * look cooler.
    */
   function formatScore() {
-    if (score >= SCORE_MAXIMUM) {
+    if ($score >= SCORE_MAXIMUM) {
       return SCORE_MAXIMUM;
     }
 
     //TO-DO: Improve this with string padding
-    var formattedScore = score.toString();
+    var formattedScore = $score.toString();
     var formattedScoreLength = formattedScore.length;
 
     var formattedMaxScoreLength = SCORE_MAXIMUM

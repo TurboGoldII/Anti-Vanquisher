@@ -1,4 +1,6 @@
 const GAME_NAME = 'Danger! Bomb! Danger!';
+const GAME_WIDTH = 800;
+const GAME_HEIGHT = 600;
 
 /*
  * Determines the height of the HUD
@@ -28,5 +30,5 @@ const FLOOR_CENTER = {
   y: GAME_CENTER.y + 30
 };
 
-const FIREBALL_TTL = 60000;
+const FIREBALL_TTL = 10000;
 const WARNING_BLINK_INTERVAL = 500;

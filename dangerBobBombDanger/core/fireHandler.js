@@ -4,6 +4,7 @@
 
 //The firerate is fireRate per second
 var fireRate = FIREBALL_START_FIRE_RATE;
+var fireballsShot = 0;
 
 function isAllowedToShootFireball(game) {
   //Convert fire rate into seconds for next shot
@@ -11,9 +12,44 @@ function isAllowedToShootFireball(game) {
   return isSecondsPassed(intervalForNextShot, game);
 }
 
-function shootFireball(physics, player, fireballs) {
-  var fireballIndex = Math.round(Math.random() * 100) % fireballs.length;
-  var randomFireball = fireballs[fireballIndex];
+function fireballHitPlayer() {
+  $score = 0;
+  $soundtrack_1.stop();
+  $this.registry.destroy(); // destroy registry
+  $this.events.off(); // disable all active events
+  $this.scene.restart(); // restart current scene
+}
+
+function getRandomFireballTurretPosition() {
+  var x = 0;
+  var y = 0;
+
+  if (Math.random() < 0.5) {
+    y = Math.floor(Math.random() * GAME_HEIGHT * 100) % GAME_HEIGHT;
+    if (Math.random() < 0.5) {
+      x = FIREBALL_TURRET_POSITIONS.x.left;
+    } else {
+      x = FIREBALL_TURRET_POSITIONS.x.right;
+    }
+  } else {
+    x = Math.floor(Math.random() * GAME_WIDTH * 100) % GAME_WIDTH;
+    if (Math.random() < 0.5) {
+      y = FIREBALL_TURRET_POSITIONS.y.top;
+    } else {
+      y = FIREBALL_TURRET_POSITIONS.y.bottom;
+    }
+  }
+
+  return { x: x, y: y};
+}
+
+function shootFireball(physics, player) {
+  ++fireballsShot;
+  if (fireballsShot === 20) {
+    fireballsShot = 0;
+    fireRate += 0.1;
+  }
+  var randomFireball = getRandomFireballTurretPosition();
 
   var fireballTexture = physics.add.image(
     randomFireball.x,
@@ -21,6 +57,7 @@ function shootFireball(physics, player, fireballs) {
     'fireball'
   );
 
+  $this.physics.add.collider(player, fireballTexture, fireballHitPlayer);
   //The fireball shall fly to the players current position
   var dest = {
     x: player.x,
