@@ -47,11 +47,11 @@ function shootFireball(physics, player) {
     fireRate += 0.1;
   }
 
-  var randomFireball = getRandomFireballTurretPosition();
+  var rndTurretPos = getRandomFireballTurretPosition();
 
   var fireballTexture = physics.add.image(
-    randomFireball.x,
-    randomFireball.y,
+    rndTurretPos.x,
+    rndTurretPos.y,
     'fireball'
   );
 
@@ -64,8 +64,8 @@ function shootFireball(physics, player) {
   };
 
   var angle = {
-    x: dest.x - randomFireball.x,
-    y: dest.y - randomFireball.y
+    x: dest.x - rndTurretPos.x,
+    y: dest.y - rndTurretPos.y
   };
 
   var speedX = Math.abs(angle.x);
