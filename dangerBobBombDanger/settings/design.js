@@ -1,6 +1,8 @@
 const GAME_NAME = 'Danger! Bomb! Danger!';
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
+const FONT = 'pixel_font';
+
 /**
  * Determines the sound volume multiplier of all played sounds of the game. Will
  * probably be replaced by a volume slider later on.

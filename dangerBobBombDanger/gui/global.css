@@ -1,3 +1,10 @@
 canvas {
   cursor: none;
 }
+
+#fontLoader {
+  font-family: pixel_font; 
+  position: absolute; 
+  left: -1000px; 
+  visibility: hidden;
+}

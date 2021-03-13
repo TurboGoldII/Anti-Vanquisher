@@ -38,48 +38,9 @@ function startGame() {
   var scoreCounterText = null;
 
   function create() {
-    $soundHandler = new Soundhandler(this);
+    $soundHandler = new SoundHandler(this);
     $soundHandler.playBackgroundMusic();
     $this = this;
-
-    this.add.image(
-      GAME_CENTER.x,
-      30,
-      'scoreBar'
-    );
-
-    this.add.text(
-      10,
-      15,
-      GAME_NAME,
-      {
-        fontFamily: 'Arial, Helvetica, sans-serif',
-        fontSize: '30px larger',
-        fill: '#ffffff'
-      }
-    );
-
-    this.add.text(
-      595,
-      15,
-      'Score:',
-      {
-        fontFamily: 'Arial, Helvetica, sans-serif',
-        fontSize: '30px larger',
-        fill: '#ffffff'
-      }
-    );
-
-    scoreCounterText = this.add.text(
-      690,
-      15,
-      formatScore(),
-      {
-        fontFamily: 'Arial, Helvetica, sans-serif',
-        fontSize: '30px larger',
-        fill: '#ffffff'
-      }
-    );
 
     const stages = this.physics.add.staticGroup();
 
@@ -133,6 +94,18 @@ function startGame() {
       frameRate: 2,
       repeat: -1
     });
+
+    this.add.image(
+      GAME_CENTER.x,
+      30,
+      'scoreBar'
+    );
+
+    const textHandler = new TextHandler(this);
+    const scoreBoardTextPosY = 17;
+    textHandler.createText(10, scoreBoardTextPosY, GAME_NAME);
+    textHandler.createText(575, scoreBoardTextPosY, 'Score:');
+    scoreCounterText = textHandler.createText(685, scoreBoardTextPosY, formatScore());
   }
 
   function update() {

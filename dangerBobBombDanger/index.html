@@ -19,12 +19,28 @@
   <script src="core/game.js"></script>
   <script src="core/fireHandler.js"></script>
   <script src="core/SoundHandler.js"></script>
+  <script src="core/TextHandler.js"></script>
 
   <!-- CSS files -->
   <link rel="stylesheet" href="gui/global.css">
 </head>
 
 <body>
+  <!--
+    The font is enabled by adding an invisible field, so that Phaser can use
+    the font of it.
+  -->
+  <style media='screen' type='text/css'>
+    @font-face {
+      font-family: pixel_font;
+      src: url('assets/font/pixel_font.ttf');
+      font-weight: 400;
+      font-weight: normal;
+    }
+  </style>
+
+  <div id="fontLoader">.</div>
+
   <script>
     /*
      * TO-DO: Implement a game menu here.

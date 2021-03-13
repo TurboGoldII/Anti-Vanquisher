@@ -1,4 +1,4 @@
-class Soundhandler {
+class SoundHandler {
   game = null;
   backgroundMusic = null;
   gameOverMusic = null;
@@ -8,7 +8,7 @@ class Soundhandler {
   }
 
   playBackgroundMusic() {
-    this.backgroundMusic = this.playSound('backgroundMusic');
+    this.backgroundMusic = this.createSound('backgroundMusic');
     this.backgroundMusic.play({ loop: true });
   }
 
@@ -21,7 +21,7 @@ class Soundhandler {
    * note.
    */
   playGameOverMusic() {
-    this.gameOverMusic = this.playSound('gameOverMusic');
+    this.gameOverMusic = this.createSound('gameOverMusic');
     this.gameOverMusic.play();
   }
 
@@ -29,7 +29,7 @@ class Soundhandler {
     this.gameOverMusic.stop();
   }
 
-  playSound(soundName) {
+  createSound(soundName) {
     return this.game.sound.add(soundName, { volume: SOUND_VOLUME });
   }
 }
