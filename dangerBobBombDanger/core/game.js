@@ -23,7 +23,12 @@ function startGame() {
 
   function preload() {
     this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
-    this.load.spritesheet('bobOmb', 'assets/bobOmb.png', { frameWidth: 32, frameHeight: 32 });
+
+    this.load.spritesheet(
+      'bobOmb',
+      'assets/bobOmb.png', { frameWidth: 32, frameHeight: 32 }
+    );
+
     this.load.image('lava', 'assets/stage/game_background.png');
     this.load.image('fireball', 'assets/mob/fireball.png');
     this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
@@ -39,18 +44,9 @@ function startGame() {
     $soundHandler = new SoundHandler(this);
     $soundHandler.playBackgroundMusic();
     $this = this;
+    this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
 
-    this.add.image(
-      GAME_CENTER.x,
-      GAME_CENTER.y,
-      'lava'
-    );
-
-    player = this.physics.add.sprite(
-      FLOOR_CENTER.x,
-      FLOOR_CENTER.y,
-      'bobOmb'
-    );
+    player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
 
     this.anims.create({
       key: 'bobOmbTwitch',
@@ -60,38 +56,36 @@ function startGame() {
     });
 
     player.anims.play('bobOmbTwitch');
-
-    this.input.on(
-      'pointermove',
-      function (pointer) {
-        /*
-         * Sadly, these stage bounds here always have to be fine-tuned by the
-         * programmer. Test it out, once the right textures are installed.
-         */
-        const coordXDiff = 340;
-
-        player.x = Phaser.Math.Clamp(
-          pointer.x,
-          FLOOR_CENTER.x - coordXDiff,
-          FLOOR_CENTER.x + coordXDiff
-        );
-
-        const coordYDiff = 170;
-
-        player.y = Phaser.Math.Clamp(
-          pointer.y,
-          FLOOR_CENTER.y - coordYDiff,
-          FLOOR_CENTER.y + coordYDiff
-        );
-      },
-      this
-    );
-
+    this.input.on('pointermove', limitPlayerMovement, this);
     const textHandler = new TextHandler(this);
     const scoreBoardTextPosY = 17;
     textHandler.createText(10, scoreBoardTextPosY, GAME_NAME);
     textHandler.createText(575, scoreBoardTextPosY, 'Score:');
     scoreCounterText = textHandler.createText(685, scoreBoardTextPosY, formatScore());
+  }
+
+  /**
+   * Sadly, these stage bounds here always have to be fine-tuned by the
+   * programmer. Test it out, once the right textures are installed.
+   * 
+   * @param {object} pointer 
+   */
+  function limitPlayerMovement(pointer) {
+    const coordXDiff = 340;
+
+    player.x = Phaser.Math.Clamp(
+      pointer.x,
+      FLOOR_CENTER.x - coordXDiff,
+      FLOOR_CENTER.x + coordXDiff
+    );
+
+    const coordYDiff = 170;
+
+    player.y = Phaser.Math.Clamp(
+      pointer.y,
+      FLOOR_CENTER.y - coordYDiff,
+      FLOOR_CENTER.y + coordYDiff
+    );
   }
 
   function update() {

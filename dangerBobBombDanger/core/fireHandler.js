@@ -22,6 +22,7 @@ function getRandomFireballTurretPosition() {
 
   if (Math.random() < 0.5) {
     y = Math.floor(Math.random() * GAME_HEIGHT * 100) % GAME_HEIGHT;
+
     if (Math.random() < 0.5) {
       x = FIREBALL_TURRET_POSITIONS.x.left;
     } else {
@@ -29,6 +30,7 @@ function getRandomFireballTurretPosition() {
     }
   } else {
     x = Math.floor(Math.random() * GAME_WIDTH * 100) % GAME_WIDTH;
+
     if (Math.random() < 0.5) {
       y = FIREBALL_TURRET_POSITIONS.y.top;
     } else {
