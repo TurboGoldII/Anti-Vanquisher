@@ -94,17 +94,7 @@ function isAllowedToShootFirestream(game) {
 function showFirestreamWarning(_this) {
   var streamPos = calculateStreamStartPos();
 
-  var warning = _this.add.sprite(
-    streamPos.x,
-    streamPos.y,
-    'warning'
-  )
-    .setScale(3);
-
-  warning.anims.play('warning_blink');
-
   setTimeout(() => {
-    warning.destroy();
     shootFirestream(_this.physics);
   }, FIRESTREAM_WARNING_TIME);
 }
@@ -117,7 +107,7 @@ function calculateStreamStartPos() {
 
   return {
     x: (FIRESTREAM_X_AXLE_RANGE.start + FIRESTREAM_STAGE_OFFSET) + randomStart,
-    y: HUD_HEIGHT + 24
+    y: 24
   }
 }
 

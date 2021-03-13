@@ -22,14 +22,12 @@ function startGame() {
   };
 
   function preload() {
-    this.load.image('bobOmb', 'assets/bobOmb.png');
-    this.load.image('lava', 'assets/stage/lava.png');
-    this.load.image('floatingFloor', 'assets/stage/floatingFloor.png');
-    this.load.image('scoreBar', 'assets/hud/scoreBar.png');
+    this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
+    this.load.spritesheet('bobOmb', 'assets/bobOmb.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image('lava', 'assets/stage/game_background.png');
     this.load.image('fireball', 'assets/mob/fireball.png');
     this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
     this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
-    this.load.spritesheet('warning', 'assets/callouts/warning.png', { frameWidth: 16, frameHeight: 16 });
     this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
   }
 
@@ -42,25 +40,26 @@ function startGame() {
     $soundHandler.playBackgroundMusic();
     $this = this;
 
-    const stages = this.physics.add.staticGroup();
-
-    stages.create(
+    this.add.image(
       GAME_CENTER.x,
       GAME_CENTER.y,
       'lava'
     );
 
-    stages.create(
-      FLOOR_CENTER.x,
-      FLOOR_CENTER.y,
-      'floatingFloor'
-    );
-
-    player = this.physics.add.image(
+    player = this.physics.add.sprite(
       FLOOR_CENTER.x,
       FLOOR_CENTER.y,
       'bobOmb'
-    ).setScale(2);
+    );
+
+    this.anims.create({
+      key: 'bobOmbTwitch',
+      frames: this.anims.generateFrameNumbers('bobOmb', { start: 0, end: 1 }),
+      frameRate: 8,
+      repeat: -1
+    });
+
+    player.anims.play('bobOmbTwitch');
 
     this.input.on(
       'pointermove',
@@ -69,7 +68,7 @@ function startGame() {
          * Sadly, these stage bounds here always have to be fine-tuned by the
          * programmer. Test it out, once the right textures are installed.
          */
-        const coordXDiff = 239;
+        const coordXDiff = 340;
 
         player.x = Phaser.Math.Clamp(
           pointer.x,
@@ -77,7 +76,7 @@ function startGame() {
           FLOOR_CENTER.x + coordXDiff
         );
 
-        const coordYDiff = 154;
+        const coordYDiff = 170;
 
         player.y = Phaser.Math.Clamp(
           pointer.y,
@@ -86,19 +85,6 @@ function startGame() {
         );
       },
       this
-    );
-
-    this.anims.create({
-      key: 'warning_blink',
-      frames: this.anims.generateFrameNumbers('warning', { start: 0, end: 1 }),
-      frameRate: 2,
-      repeat: -1
-    });
-
-    this.add.image(
-      GAME_CENTER.x,
-      30,
-      'scoreBar'
     );
 
     const textHandler = new TextHandler(this);
