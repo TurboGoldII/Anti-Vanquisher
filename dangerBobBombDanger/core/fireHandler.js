@@ -57,6 +57,7 @@ function shootFireball(physics, player) {
     'fireball'
   );
 
+  fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
   $this.physics.add.collider(player, fireballTexture, fireballHitPlayer);
 
   //The fireball shall fly to the players current position

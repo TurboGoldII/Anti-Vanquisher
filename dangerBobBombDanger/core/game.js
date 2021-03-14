@@ -45,8 +45,9 @@ function startGame() {
     $soundHandler.playBackgroundMusic();
     $this = this;
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
-
     player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
+    player.setSize(PLAYER_HITBOX.x, PLAYER_HITBOX.y);
+    player.setOffset(PLAYER_HITBOX.x - 1, PLAYER_HITBOX.y);
 
     this.anims.create({
       key: 'bobOmbTwitch',
@@ -61,7 +62,12 @@ function startGame() {
     const scoreBoardTextPosY = 17;
     textHandler.createText(10, scoreBoardTextPosY, GAME_NAME);
     textHandler.createText(575, scoreBoardTextPosY, 'Score:');
-    scoreCounterText = textHandler.createText(685, scoreBoardTextPosY, formatScore());
+
+    scoreCounterText = textHandler.createText(
+      685,
+      scoreBoardTextPosY,
+      formatScore()
+    );
   }
 
   /**
