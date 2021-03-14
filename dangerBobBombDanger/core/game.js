@@ -18,7 +18,8 @@ function startGame() {
       preload: preload,
       create: create,
       update: update
-    }
+    },
+    pixelArt: true
   };
 
   function preload() {
@@ -26,7 +27,8 @@ function startGame() {
 
     this.load.spritesheet(
       'bobOmb',
-      'assets/bobOmb.png', { frameWidth: 32, frameHeight: 32 }
+      'assets/bobOmb.png',
+      { frameWidth: 32, frameHeight: 32 }
     );
 
     this.load.image('lava', 'assets/stage/game_background.png');
@@ -46,8 +48,9 @@ function startGame() {
     $this = this;
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
     player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
+    player.setScale(1.7);
     player.setSize(PLAYER_HITBOX.x, PLAYER_HITBOX.y);
-    player.setOffset(PLAYER_HITBOX.x - 1, PLAYER_HITBOX.y);
+    player.setOffset(PLAYER_HITBOX_OFFSET.x, PLAYER_HITBOX_OFFSET.y);
 
     this.anims.create({
       key: 'bobOmbTwitch',
