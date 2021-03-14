@@ -1,6 +1,7 @@
 var $this = null;
 var $score = 0;
 var $soundHandler = null;
+var $laserCrystal = null;
 
 function startGame() {
   var config = {
@@ -23,19 +24,29 @@ function startGame() {
   };
 
   function preload() {
+    $this = this;
+    loadSpritesheets();
     this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
+    this.load.image('lava', 'assets/stage/game_background.png');
+    this.load.image('fireball', 'assets/mob/fireball.png');
+    this.load.image('firelaser', 'assets/mob/firelaser_spritesheet.png');
+    this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
+    this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
+    this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
+  }
 
-    this.load.spritesheet(
+  function loadSpritesheets() {
+    $this.load.spritesheet(
       'bobOmb',
       'assets/bobOmb.png',
       { frameWidth: 32, frameHeight: 32 }
     );
 
-    this.load.image('lava', 'assets/stage/game_background.png');
-    this.load.image('fireball', 'assets/mob/fireball.png');
-    this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
-    this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
-    this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
+    $this.load.spritesheet(
+      'crystal',
+      'assets/mob/red_crystal.png',
+      { frameWidth: 80, frameHeight: 80 }
+    );
   }
 
   var game = new Phaser.Game(config);
@@ -60,6 +71,19 @@ function startGame() {
     });
 
     player.anims.play('bobOmbTwitch');
+
+    this.anims.create({
+      key: 'crystalBuild',
+      frames: this.anims.generateFrameNumbers('crystal', { start: 0, end: 2 }),
+      frameRate: 1
+    });
+
+    /*
+     * TO-DO: The current implementation sticks the player to the mouse. By
+     * leaving the canvas with the mouse, the player character can be
+     * teleported. A better implementation would be to accellerate the players
+     * movement into the mouse cursors direction.
+     */
     this.input.on('pointermove', limitPlayerMovement, this);
     const textHandler = new TextHandler(this);
     const scoreBoardTextPosY = 17;
@@ -106,7 +130,7 @@ function startGame() {
     }
 
     if (isAllowedToShootFirestream(game)) {
-      showFirestreamWarning(this);
+      buildLaserCrystal();
       increaseScoreForFirestream();
     }
   }

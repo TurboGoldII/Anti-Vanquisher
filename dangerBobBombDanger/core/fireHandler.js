@@ -106,11 +106,14 @@ function isAllowedToShootFirestream(game) {
   return isSecondsPassed(intervalForNextShot, game);
 }
 
-function showFirestreamWarning(_this) {
+function buildLaserCrystal() {
   var streamPos = calculateStreamStartPos();
+  $laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
+  $laserCrystal.setScale(1.5);
+  $laserCrystal.anims.play('crystalBuild');
 
   setTimeout(() => {
-    shootFirestream(_this.physics);
+    shootFirestream();
   }, FIRESTREAM_WARNING_TIME);
 }
 
@@ -122,10 +125,15 @@ function calculateStreamStartPos() {
 
   return {
     x: (FIRESTREAM_X_AXLE_RANGE.start + FIRESTREAM_STAGE_OFFSET) + randomStart,
-    y: 24
+    y: 60
   }
 }
 
-function shootFirestream(physics) {
+function shootFirestream() {
   //TO-DO
+  $this.physics;
+
+  setTimeout(() => {
+    $laserCrystal.destroy();
+  }, FIRESTREAM_WARNING_TIME);
 }
