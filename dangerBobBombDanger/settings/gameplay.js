@@ -5,10 +5,15 @@ const FIREBALL_FIRE_RATE_OFFSET_BEFORE_INCREASE = 20;
 const FIREBALL_FIRE_RATE_INCREMENT = 0.1;
 
 //Firestream constants
-const FIRESTREAM_FIRE_RATE = 0.1;
+const FIRESTREAM_FIRE_RATE = 10;
 const FIRESTREAM_WARNING_TIME = 3000;
 const FIRESTREAM_VELOCITY = FIREBALL_VELOCITY;
-const FIRESTREAM_STAGE_OFFSET = 70;
+
+/**
+ * Determines the pixel offset on both sides of the top of the stage where
+ * the firestream is allowed to be.
+ */
+const FIRESTREAM_STAGE_OFFSET = 50;
 
 //Score constants
 const SCORE_MAXIMUM = 999999;

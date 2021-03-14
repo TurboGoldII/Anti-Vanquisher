@@ -7,12 +7,7 @@ const FONT = 'pixel_font';
  * Determines the sound volume multiplier of all played sounds of the game. Will
  * probably be replaced by a volume slider later on.
  */
-const SOUND_VOLUME = 0.1;
-
-const FIRESTREAM_X_AXLE_RANGE = {
-  start: 145,
-  end: 655
-};
+const SOUND_VOLUME = 0.05;
 
 /*
  * These are the coordinates of the middle of the game. This is the middle of
@@ -33,6 +28,35 @@ const GAME_CENTER = {
 const FLOOR_CENTER = {
   x: GAME_CENTER.x,
   y: GAME_HEIGHT - GAME_HEIGHT / 4 * 3 / 2
+};
+
+const FLOOR_EDGE_POINT_OFFSET = {
+  x: 340,
+  y: 170
+}
+
+const FLOOR_EDGE_POINTS = {
+  topLeft: {
+    x: FLOOR_CENTER.x - FLOOR_EDGE_POINT_OFFSET.x,
+    y: FLOOR_CENTER.y - FLOOR_EDGE_POINT_OFFSET.y
+  },
+  topRight: {
+    x: FLOOR_CENTER.x + FLOOR_EDGE_POINT_OFFSET.x,
+    y: FLOOR_CENTER.y - FLOOR_EDGE_POINT_OFFSET.y
+  },
+  bottomLeft: {
+    x: FLOOR_CENTER.x - FLOOR_EDGE_POINT_OFFSET.x,
+    y: FLOOR_CENTER.y + FLOOR_EDGE_POINT_OFFSET.y
+  },
+  bottomRight: {
+    x: FLOOR_CENTER.x + FLOOR_EDGE_POINT_OFFSET.x,
+    y: FLOOR_CENTER.y + FLOOR_EDGE_POINT_OFFSET.y
+  }
+};
+
+const FLOOR_SIZE = {
+  x: FLOOR_EDGE_POINTS.topRight.x - FLOOR_EDGE_POINTS.topLeft.x,
+  y: FLOOR_EDGE_POINTS.bottomLeft.y - FLOOR_EDGE_POINTS.topLeft.y
 };
 
 const FIREBALL_TTL = 10000;

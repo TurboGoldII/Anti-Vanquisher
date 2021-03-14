@@ -1,7 +1,6 @@
 var $this = null;
 var $score = 0;
 var $soundHandler = null;
-var $laserCrystal = null;
 
 function startGame() {
   var config = {
@@ -25,17 +24,20 @@ function startGame() {
 
   function preload() {
     $this = this;
-    loadSpritesheets();
-    this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
-    this.load.image('lava', 'assets/stage/game_background.png');
-    this.load.image('fireball', 'assets/mob/fireball.png');
-    this.load.image('firelaser', 'assets/mob/firelaser_spritesheet.png');
-    this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
-    this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
-    this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
+    preloadImages();
+    preloadSpritesheets();
   }
 
-  function loadSpritesheets() {
+  function preloadImages() {
+    $this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
+    $this.load.image('lava', 'assets/stage/game_background.png');
+    $this.load.image('fireball', 'assets/mob/fireball.png');
+    $this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
+    $this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
+    $this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
+  }
+
+  function preloadSpritesheets() {
     $this.load.spritesheet(
       'bobOmb',
       'assets/bobOmb.png',
@@ -44,6 +46,12 @@ function startGame() {
 
     $this.load.spritesheet(
       'crystal',
+      'assets/mob/red_crystal.png',
+      { frameWidth: 80, frameHeight: 80 }
+    );
+
+    $this.load.spritesheet(
+      'firelaser_building',
       'assets/mob/red_crystal.png',
       { frameWidth: 80, frameHeight: 80 }
     );
@@ -56,7 +64,6 @@ function startGame() {
   function create() {
     $soundHandler = new SoundHandler(this);
     $soundHandler.playBackgroundMusic();
-    $this = this;
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
     player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
     player.setScale(1.7);
@@ -104,20 +111,16 @@ function startGame() {
    * @param {object} pointer 
    */
   function limitPlayerMovement(pointer) {
-    const coordXDiff = 340;
-
     player.x = Phaser.Math.Clamp(
       pointer.x,
-      FLOOR_CENTER.x - coordXDiff,
-      FLOOR_CENTER.x + coordXDiff
+      FLOOR_EDGE_POINTS.topLeft.x,
+      FLOOR_EDGE_POINTS.topRight.x
     );
-
-    const coordYDiff = 170;
 
     player.y = Phaser.Math.Clamp(
       pointer.y,
-      FLOOR_CENTER.y - coordYDiff,
-      FLOOR_CENTER.y + coordYDiff
+      FLOOR_EDGE_POINTS.topLeft.y,
+      FLOOR_EDGE_POINTS.bottomLeft.y
     );
   }
 

@@ -108,32 +108,32 @@ function isAllowedToShootFirestream(game) {
 
 function buildLaserCrystal() {
   var streamPos = calculateStreamStartPos();
-  $laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
-  $laserCrystal.setScale(1.5);
-  $laserCrystal.anims.play('crystalBuild');
+  var laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
+  laserCrystal.setScale(1.3);
+  laserCrystal.anims.play('crystalBuild');
 
   setTimeout(() => {
-    shootFirestream();
+    shootFirestream(laserCrystal);
   }, FIRESTREAM_WARNING_TIME);
 }
 
 function calculateStreamStartPos() {
-  var rangeXAxle = (FIRESTREAM_X_AXLE_RANGE.end - FIRESTREAM_STAGE_OFFSET)
-    - (FIRESTREAM_X_AXLE_RANGE.start + FIRESTREAM_STAGE_OFFSET);
+  var rangeXAxle = (FLOOR_EDGE_POINTS.topRight.x - FIRESTREAM_STAGE_OFFSET)
+    - (FLOOR_EDGE_POINTS.topLeft.x + FIRESTREAM_STAGE_OFFSET);
 
   var randomStart = Math.floor(Math.random() * rangeXAxle);
 
   return {
-    x: (FIRESTREAM_X_AXLE_RANGE.start + FIRESTREAM_STAGE_OFFSET) + randomStart,
-    y: 60
+    x: (FLOOR_EDGE_POINTS.topLeft.x + FIRESTREAM_STAGE_OFFSET) + randomStart,
+    y: 52
   }
 }
 
-function shootFirestream() {
+function shootFirestream(laserCrystal) {
   //TO-DO
   $this.physics;
 
   setTimeout(() => {
-    $laserCrystal.destroy();
+    laserCrystal.destroy();
   }, FIRESTREAM_WARNING_TIME);
 }
