@@ -2,10 +2,10 @@
 var fireRate = FIREBALL_START_FIRE_RATE;
 var fireballsShot = 0;
 
-function isAllowedToShootFireball(game) {
+function isAllowedToShootFireball() {
   //Convert fire rate into seconds for next shot
   var intervalForNextShot = 1 / fireRate;
-  return isSecondsPassed(intervalForNextShot, game);
+  return isSecondsPassed(intervalForNextShot, $this.game);
 }
 
 function fireballHitPlayer() {
@@ -49,11 +49,8 @@ function getRandomFireballTurretPosition() {
  * Shoots a fireball in the players direction. The current implementation
  * increases the firerate exponentially because it is increased everytime a
  * certain amount of fireballs is shot.
- * 
- * @param {object} physics 
- * @param {object} player 
  */
-function shootFireball(physics, player) {
+function shootFireball() {
   ++fireballsShot;
 
   if (fireballsShot === FIREBALL_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
@@ -63,19 +60,19 @@ function shootFireball(physics, player) {
 
   var rndTurretPos = getRandomFireballTurretPosition();
 
-  var fireballTexture = physics.add.image(
+  var fireballTexture = $this.physics.add.image(
     rndTurretPos.x,
     rndTurretPos.y,
     'fireball'
   );
 
   fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
-  $this.physics.add.collider(player, fireballTexture, fireballHitPlayer);
+  $this.physics.add.collider($player, fireballTexture, fireballHitPlayer);
 
   //The fireball shall fly to the players current position
   var dest = {
-    x: player.x,
-    y: player.y
+    x: $player.x,
+    y: $player.y
   };
 
   var angle = {
@@ -100,10 +97,10 @@ function shootFireball(physics, player) {
   }, FIREBALL_TTL);
 }
 
-function isAllowedToShootFirestream(game) {
+function isAllowedToShootFirestream() {
   //Convert fire rate into seconds for next stream
   var intervalForNextShot = 1 / FIRESTREAM_FIRE_RATE;
-  return isSecondsPassed(intervalForNextShot, game);
+  return isSecondsPassed(intervalForNextShot, $this.game);
 }
 
 function buildLaserCrystal() {
@@ -113,8 +110,8 @@ function buildLaserCrystal() {
   laserCrystal.anims.play('crystalBuild');
 
   setTimeout(() => {
-    shootFirestream(laserCrystal);
-  }, FIRESTREAM_WARNING_TIME);
+    initFirestream(laserCrystal, streamPos);
+  }, CRYSTAL_BUILDING_TIME);
 }
 
 function calculateStreamStartPos() {
@@ -129,11 +126,38 @@ function calculateStreamStartPos() {
   }
 }
 
-function shootFirestream(laserCrystal) {
-  //TO-DO
-  $this.physics;
+function initFirestream(laserCrystal, streamPos) {
+  var firelaserBuilding = $this.physics.add.sprite(
+    streamPos.x - 3.5,
+    streamPos.y + 384,
+    'firelaser_building'
+  );
+
+  firelaserBuilding.setScale(2);
+  firelaserBuilding.anims.play('firelaserBuilding');
+  $this.physics.add.collider($player, firelaserBuilding, fireballHitPlayer);
+
+  setTimeout(() => {
+    shootFirestream(laserCrystal, streamPos, firelaserBuilding);
+  }, FIRESTREAM_INIT_TIME)
+
+
+}
+
+function shootFirestream(laserCrystal, streamPos, firelaserBuilding) {
+  var firelaserShooting = $this.physics.add.sprite(
+    streamPos.x - 3.5,
+    streamPos.y + 384,
+    'firelaser_full_size'
+  );
+
+  firelaserShooting.setScale(2);
+  firelaserShooting.anims.play('firelaserShooting');
+  firelaserBuilding.destroy();
+  $this.physics.add.collider($player, firelaserShooting, fireballHitPlayer);
 
   setTimeout(() => {
     laserCrystal.destroy();
-  }, FIRESTREAM_WARNING_TIME);
+    firelaserShooting.destroy();
+  }, FIRESTREAM_SHOOTING_TIME);
 }

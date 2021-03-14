@@ -1,6 +1,7 @@
 var $this = null;
 var $score = 0;
 var $soundHandler = null;
+var $player = null;
 
 function startGame() {
   var config = {
@@ -52,23 +53,28 @@ function startGame() {
 
     $this.load.spritesheet(
       'firelaser_building',
-      'assets/mob/red_crystal.png',
-      { frameWidth: 80, frameHeight: 80 }
+      'assets/mob/firelaser_building.png',
+      { frameWidth: 27, frameHeight: 332 }
+    );
+
+    $this.load.spritesheet(
+      'firelaser_full_size',
+      'assets/mob/firelaser_full_size.png',
+      { frameWidth: 27, frameHeight: 332 }
     );
   }
 
   var game = new Phaser.Game(config);
-  var player = null;
   var scoreCounterText = null;
 
   function create() {
-    $soundHandler = new SoundHandler(this);
+    $soundHandler = new SoundHandler();
     $soundHandler.playBackgroundMusic();
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
-    player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
-    player.setScale(1.7);
-    player.setSize(PLAYER_HITBOX.x, PLAYER_HITBOX.y);
-    player.setOffset(PLAYER_HITBOX_OFFSET.x, PLAYER_HITBOX_OFFSET.y);
+    $player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
+    $player.setScale(1.7);
+    $player.setSize(PLAYER_HITBOX.x, PLAYER_HITBOX.y);
+    $player.setOffset(PLAYER_HITBOX_OFFSET.x, PLAYER_HITBOX_OFFSET.y);
 
     this.anims.create({
       key: 'bobOmbTwitch',
@@ -77,12 +83,25 @@ function startGame() {
       repeat: -1
     });
 
-    player.anims.play('bobOmbTwitch');
+    $player.anims.play('bobOmbTwitch');
 
     this.anims.create({
       key: 'crystalBuild',
       frames: this.anims.generateFrameNumbers('crystal', { start: 0, end: 2 }),
       frameRate: 1
+    });
+
+    this.anims.create({
+      key: 'firelaserBuilding',
+      frames: this.anims.generateFrameNumbers('firelaser_building', { start: 0, end: 2 }),
+      frameRate: 1
+    });
+
+    this.anims.create({
+      key: 'firelaserShooting',
+      frames: this.anims.generateFrameNumbers('firelaser_full_size', { start: 0, end: 3 }),
+      frameRate: 25,
+      repeat: -1
     });
 
     /*
@@ -111,13 +130,13 @@ function startGame() {
    * @param {object} pointer 
    */
   function limitPlayerMovement(pointer) {
-    player.x = Phaser.Math.Clamp(
+    $player.x = Phaser.Math.Clamp(
       pointer.x,
       FLOOR_EDGE_POINTS.topLeft.x,
       FLOOR_EDGE_POINTS.topRight.x
     );
 
-    player.y = Phaser.Math.Clamp(
+    $player.y = Phaser.Math.Clamp(
       pointer.y,
       FLOOR_EDGE_POINTS.topLeft.y,
       FLOOR_EDGE_POINTS.bottomLeft.y
@@ -127,12 +146,12 @@ function startGame() {
   function update() {
     resetTimer();
 
-    if (isAllowedToShootFireball(game)) {
-      shootFireball(this.physics, player);
+    if (isAllowedToShootFireball()) {
+      shootFireball();
       increaseScoreForFireball();
     }
 
-    if (isAllowedToShootFirestream(game)) {
+    if (isAllowedToShootFirestream()) {
       buildLaserCrystal();
       increaseScoreForFirestream();
     }

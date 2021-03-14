@@ -7,7 +7,7 @@ const FONT = 'pixel_font';
  * Determines the sound volume multiplier of all played sounds of the game. Will
  * probably be replaced by a volume slider later on.
  */
-const SOUND_VOLUME = 0.05;
+const SOUND_VOLUME = 0.1;
 
 /*
  * These are the coordinates of the middle of the game. This is the middle of
