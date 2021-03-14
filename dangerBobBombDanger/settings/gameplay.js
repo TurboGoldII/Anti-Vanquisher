@@ -1,6 +1,8 @@
 //Fireball constants
 const FIREBALL_START_FIRE_RATE = 2;
 const FIREBALL_VELOCITY = 100;
+const FIREBALL_FIRE_RATE_OFFSET_BEFORE_INCREASE = 20;
+const FIREBALL_FIRE_RATE_INCREMENT = 0.1;
 
 //Firestream constants
 const FIRESTREAM_FIRE_RATE = 0.1;

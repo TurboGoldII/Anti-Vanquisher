@@ -11,9 +11,13 @@ function isAllowedToShootFireball(game) {
 function fireballHitPlayer() {
   $score = 0;
   $soundHandler.stopBackgroundMusic();
-  $this.registry.destroy(); // destroy registry
-  $this.events.off(); // disable all active events
-  $this.scene.restart(); // restart current scene
+  fireRate = FIREBALL_START_FIRE_RATE;
+  //Destroy registry
+  $this.registry.destroy();
+  //Disable all active events
+  $this.events.off();
+  //Restart current scene
+  $this.scene.restart();
 }
 
 function getRandomFireballTurretPosition() {
@@ -41,12 +45,20 @@ function getRandomFireballTurretPosition() {
   return { x: x, y: y };
 }
 
+/**
+ * Shoots a fireball in the players direction. The current implementation
+ * increases the firerate exponentially because it is increased everytime a
+ * certain amount of fireballs is shot.
+ * 
+ * @param {object} physics 
+ * @param {object} player 
+ */
 function shootFireball(physics, player) {
   ++fireballsShot;
 
-  if (fireballsShot === 20) {
+  if (fireballsShot === FIREBALL_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
     fireballsShot = 0;
-    fireRate += 0.1;
+    fireRate += FIREBALL_FIRE_RATE_INCREMENT;
   }
 
   var rndTurretPos = getRandomFireballTurretPosition();
