@@ -12,7 +12,7 @@ function startGame() {
     physics: {
       default: 'arcade',
       arcade: {
-        debug: true
+        debug: false
       }
     },
     scene: {
@@ -33,6 +33,7 @@ function startGame() {
     $this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
     $this.load.image('lava', 'assets/stage/game_background.png');
     $this.load.image('fireball', 'assets/mob/fireball.png');
+    $this.load.image('iceball', 'assets/mob/iceball.png');
     $this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
     $this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
     $this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
@@ -42,6 +43,12 @@ function startGame() {
     $this.load.spritesheet(
       'bobOmb',
       'assets/bobOmb.png',
+      { frameWidth: 32, frameHeight: 32 }
+    );
+
+    $this.load.spritesheet(
+      'frozenBobOmb',
+      'assets/frozenBobOmb.png',
       { frameWidth: 32, frameHeight: 32 }
     );
 
@@ -110,7 +117,7 @@ function startGame() {
      * teleported. A better implementation would be to accellerate the players
      * movement into the mouse cursors direction.
      */
-    this.input.on('pointermove', limitPlayerMovement, this);
+    this.input.on('pointermove', limitPlayerMovement);
     const textHandler = new TextHandler(this);
     const scoreBoardTextPosY = 17;
     textHandler.createText(10, scoreBoardTextPosY, GAME_NAME);
@@ -147,7 +154,7 @@ function startGame() {
     resetTimer();
 
     if (isAllowedToShootFireball()) {
-      shootFireball();
+      Projectiles.shootRandomProjectile();
       increaseScoreForFireball();
     }
 
