@@ -126,38 +126,53 @@ function calculateStreamStartPos() {
   }
 }
 
+const FIRESTREAM_OFFSET = {
+  x: -3.5,
+  y: 384
+};
+
 function initFirestream(laserCrystal, streamPos) {
-  var firelaserBuilding = $this.physics.add.sprite(
-    streamPos.x - 3.5,
-    streamPos.y + 384,
+  var firestreamBuilding = $this.physics.add.sprite(
+    streamPos.x + FIRESTREAM_OFFSET.x,
+    streamPos.y + FIRESTREAM_OFFSET.y,
     'firelaser_building'
   );
 
-  firelaserBuilding.setScale(2);
-  firelaserBuilding.anims.play('firelaserBuilding');
-  $this.physics.add.collider($player, firelaserBuilding, fireballHitPlayer);
+  firestreamBuilding.setScale(2);
+  firestreamBuilding.anims.play('firelaserBuilding');
+
+  firestreamBuilding.setSize(
+    FIRESTREAM_BUILDING_HITBOX.x,
+    FIRESTREAM_BUILDING_HITBOX.y
+  );
+
+  $this.physics.add.collider($player, firestreamBuilding, fireballHitPlayer);
 
   setTimeout(() => {
-    shootFirestream(laserCrystal, streamPos, firelaserBuilding);
+    shootFirestream(laserCrystal, streamPos, firestreamBuilding);
   }, FIRESTREAM_INIT_TIME)
-
-
 }
 
-function shootFirestream(laserCrystal, streamPos, firelaserBuilding) {
-  var firelaserShooting = $this.physics.add.sprite(
-    streamPos.x - 3.5,
-    streamPos.y + 384,
+function shootFirestream(laserCrystal, streamPos, firestreamBuilding) {
+  var firestreamShooting = $this.physics.add.sprite(
+    streamPos.x + FIRESTREAM_OFFSET.x,
+    streamPos.y + FIRESTREAM_OFFSET.y,
     'firelaser_full_size'
   );
 
-  firelaserShooting.setScale(2);
-  firelaserShooting.anims.play('firelaserShooting');
-  firelaserBuilding.destroy();
-  $this.physics.add.collider($player, firelaserShooting, fireballHitPlayer);
+  firestreamShooting.setScale(2);
+  firestreamShooting.anims.play('firelaserShooting');
+
+  firestreamShooting.setSize(
+    FIRESTREAM_HITBOX.x,
+    FIRESTREAM_HITBOX.y
+  );
+
+  firestreamBuilding.destroy();
+  $this.physics.add.collider($player, firestreamShooting, fireballHitPlayer);
 
   setTimeout(() => {
     laserCrystal.destroy();
-    firelaserShooting.destroy();
+    firestreamShooting.destroy();
   }, FIRESTREAM_SHOOTING_TIME);
 }

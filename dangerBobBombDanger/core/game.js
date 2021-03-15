@@ -64,7 +64,8 @@ function startGame() {
     );
   }
 
-  var game = new Phaser.Game(config);
+  /* The game can be placed in a variable here but is not necessary yet. */
+  new Phaser.Game(config);
   var scoreCounterText = null;
 
   function create() {
@@ -72,7 +73,7 @@ function startGame() {
     $soundHandler.playBackgroundMusic();
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
     $player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
-    $player.setScale(2.2);
+    $player.setScale(2.4);
     $player.setSize(PLAYER_HITBOX.x, PLAYER_HITBOX.y);
     $player.setOffset(PLAYER_HITBOX_OFFSET.x, PLAYER_HITBOX_OFFSET.y);
 
