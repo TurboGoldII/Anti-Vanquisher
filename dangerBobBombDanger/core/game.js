@@ -41,9 +41,9 @@ function startGame() {
 
   function preloadSpritesheets() {
     $this.load.spritesheet(
-      'bobOmb',
+      'bob_omb',
       'assets/bobOmb.png',
-      { frameWidth: 32, frameHeight: 32 }
+      { frameWidth: 21, frameHeight: 24 }
     );
 
     $this.load.spritesheet(
@@ -71,7 +71,8 @@ function startGame() {
     );
   }
 
-  var game = new Phaser.Game(config);
+  /* The game can be placed in a variable here but is not necessary yet. */
+  new Phaser.Game(config);
   var scoreCounterText = null;
 
   function create() {
@@ -79,14 +80,14 @@ function startGame() {
     $soundHandler.playBackgroundMusic();
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
     $player = this.physics.add.sprite(FLOOR_CENTER.x, FLOOR_CENTER.y, 'bobOmb');
-    $player.setScale(1.7);
+    $player.setScale(2.4);
     $player.setSize(PLAYER_HITBOX.x, PLAYER_HITBOX.y);
     $player.setOffset(PLAYER_HITBOX_OFFSET.x, PLAYER_HITBOX_OFFSET.y);
 
     this.anims.create({
       key: 'bobOmbTwitch',
-      frames: this.anims.generateFrameNumbers('bobOmb', { start: 0, end: 1 }),
-      frameRate: 8,
+      frames: this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 7 }),
+      frameRate: 10,
       repeat: -1
     });
 
@@ -107,7 +108,7 @@ function startGame() {
     this.anims.create({
       key: 'firelaserShooting',
       frames: this.anims.generateFrameNumbers('firelaser_full_size', { start: 0, end: 3 }),
-      frameRate: 25,
+      frameRate: 10,
       repeat: -1
     });
 
