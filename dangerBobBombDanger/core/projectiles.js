@@ -19,7 +19,7 @@ class Projectiles {
 
   static setFireRate(num) {
     if (typeof num !== 'number') {
-      console.log('Projectiles.fireRate must be type number');
+      console.log('Warning: Projectiles.fireRate must be type number');
       return;
     }
     this.#fireRate = num;

@@ -20,10 +20,10 @@ class Iceball extends Projectiles {
     this.#player.setTexture('frozenBobOmb');
     $this.input._events.pointermove = null;
     setTimeout((_this) => {
-      _this.#player.setTexture('bobOmb');
+      _this.#player.setTexture('bob_omb');
       $this.anims.create({
         key: 'bobOmbTwitch',
-        frames: $this.anims.generateFrameNumbers('bobOmb', { start: 0, end: 1 }),
+        frames: $this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 1 }),
         frameRate: 8,
         repeat: -1
       });
