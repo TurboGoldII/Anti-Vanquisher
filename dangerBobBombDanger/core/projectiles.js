@@ -24,7 +24,7 @@ class Projectiles {
   }
 
   static #projectileHitPlayer() {
-    $score = 0;
+    $this.resetScore();
     $soundHandler.stopBackgroundMusic();
     Projectiles.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectiles.#projectilesShot = 0;

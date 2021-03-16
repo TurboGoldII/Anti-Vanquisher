@@ -1,5 +1,4 @@
 var $this = null;
-var $score = 0;
 var $soundHandler = null;
 var $player = null;
 var $gameID = 0;
@@ -26,6 +25,12 @@ function startGame() {
 
   function preload() {
     $this = this;
+    Object.defineProperty($this, 'resetScore', {
+      value: resetScore,
+      writable : false,
+      enumerable : true,
+      configurable : false
+    });
     preloadImages();
     preloadSpritesheets();
   }
@@ -75,6 +80,7 @@ function startGame() {
   /* The game can be placed in a variable here but is not necessary yet. */
   new Phaser.Game(config);
   var scoreCounterText = null;
+  
   function create() {
     ++$gameID;
     $soundHandler = new SoundHandler();
@@ -128,7 +134,7 @@ function startGame() {
     scoreCounterText = textHandler.createText(
       685,
       scoreBoardTextPosY,
-      formatScore()
+      formatScore(0)
     );
   }
 
@@ -152,18 +158,24 @@ function startGame() {
     );
   }
 
+  var score = 0;
+
   function update() {
     resetTimer();
 
     if (isAllowedToShootProjectile()) {
       shootRandomProjectile();
-      increaseScoreForFireball();
+      score = increaseScoreForFireball(score);
     }
 
     if (isAllowedToShootFirestream()) {
       new Firestream($player);
-      increaseScoreForFirestream();
+      score = increaseScoreForFirestream(score);
     }
+  }
+
+  const resetScore = function() {
+    score = 0;
   }
 
   /**
@@ -171,29 +183,31 @@ function startGame() {
    * 
    * TO-DO: Implement a new scorer class for more future scoring mechanics.
    */
-  function increaseScoreForFireball() {
-    $score += SCORE_INCREMENT_FIREBALL;
-    var formattedScore = formatScore();
+  const increaseScoreForFireball = function(score) {
+    score += SCORE_INCREMENT_FIREBALL;
+    var formattedScore = formatScore(score);
     scoreCounterText.setText(formattedScore);
+    return score;
   }
 
-  function increaseScoreForFirestream() {
-    $score += SCORE_INCREMENT_FIRESTREAM;
-    var formattedScore = formatScore();
+  const increaseScoreForFirestream = function(score) {
+    score += SCORE_INCREMENT_FIRESTREAM;
+    var formattedScore = formatScore(score);
     scoreCounterText.setText(formattedScore);
+    return score;
   }
 
   /**
    * According to the current score length, zeros are added to make the score
    * look cooler.
    */
-  function formatScore() {
-    if ($score >= SCORE_MAXIMUM) {
+  const formatScore = function(score) {
+    if (score >= SCORE_MAXIMUM) {
       return SCORE_MAXIMUM;
     }
 
     //TO-DO: Improve this with string padding
-    var formattedScore = $score.toString();
+    var formattedScore = score.toString();
     var formattedScoreLength = formattedScore.length;
 
     var formattedMaxScoreLength = SCORE_MAXIMUM
