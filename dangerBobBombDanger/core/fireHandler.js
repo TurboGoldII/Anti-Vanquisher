@@ -1,5 +1,5 @@
 //The firerate is fireRate per second
-var fireRate = FIREBALL_START_FIRE_RATE;
+var fireRate = PROJECTILE_START_FIRE_RATE;
 var fireballsShot = 0;
 
 function isAllowedToShootFireball() {
@@ -11,7 +11,7 @@ function isAllowedToShootFireball() {
 function fireballHitPlayer() {
   $score = 0;
   $soundHandler.stopBackgroundMusic();
-  fireRate = FIREBALL_START_FIRE_RATE;
+  fireRate = PROJECTILE_START_FIRE_RATE;
   //Destroy registry
   $this.registry.destroy();
   //Disable all active events
@@ -53,9 +53,9 @@ function getRandomFireballTurretPosition() {
 function shootFireball() {
   ++fireballsShot;
 
-  if (fireballsShot === FIREBALL_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
+  if (fireballsShot === PROJECTILE_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
     fireballsShot = 0;
-    fireRate += FIREBALL_FIRE_RATE_INCREMENT;
+    fireRate += PROJECTILE_FIRE_RATE_INCREMENT;
   }
 
   var rndTurretPos = getRandomFireballTurretPosition();
@@ -84,7 +84,7 @@ function shootFireball() {
   var speedY = Math.abs(angle.y);
 
   var speedMultiplier = Math.sqrt(
-    (FIREBALL_VELOCITY ** 2) /
+    (PROJECTILE_VELOCITY ** 2) /
     ((speedX ** 2) + (speedY ** 2))
   );
 

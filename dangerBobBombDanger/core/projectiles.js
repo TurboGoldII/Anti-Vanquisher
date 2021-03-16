@@ -1,98 +1,33 @@
 class Projectiles {
+  // private variables
+  player = null;
+  projectileHitPlayer = null;
+
+  // private static variables
   static #projectilesShot = 0;
-  static #fireRate = FIREBALL_FIRE_RATE_INCREMENT;
-  #player = null
+  static #fireRate = PROJECTILE_START_FIRE_RATE;
+  
 
   constructor (player) {
-    if (new.target === Projectiles) throw TypeError("new of abstract class Node");
-    this.#player = player;
+    if (new.target === Projectiles || !player) throw TypeError("Projectiles Error");
+      this.player = player;
+      this.#initFunctions();
+      Projectiles.#increaseProjectilesShot();
   }
 
-  static increaseProjectilesShot() {
-    ++this.#projectilesShot;
-  
-    if (this.#projectilesShot === FIREBALL_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
-      this.#projectilesShot = 0;
-      this.#fireRate += FIREBALL_FIRE_RATE_INCREMENT;
-    }
+  static get fireRate() {
+    return Projectiles.#fireRate;
   }
 
-  static setFireRate(num) {
-    if (typeof num !== 'number') {
-      console.log('Warning: Projectiles.fireRate must be type number');
-      return;
-    }
-    this.#fireRate = num;
+  #initFunctions() {
+    this.projectileHitPlayer = Projectiles.#projectileHitPlayer;
   }
 
-  static getFireRate() {
-    return this.#fireRate;
-  }
-
-  getVelocityToPlayer(rndTurretPos) {
-    var dest = {
-      x: this.#player.x,
-      y: this.#player.y
-    };
-  
-    var angle = {
-      x: dest.x - rndTurretPos.x,
-      y: dest.y - rndTurretPos.y
-    };
-  
-    var speedX = Math.abs(angle.x);
-    var speedY = Math.abs(angle.y);
-  
-    var speedMultiplier = Math.sqrt(
-      (FIREBALL_VELOCITY ** 2) /
-      ((speedX ** 2) + (speedY ** 2))
-    );
-
-    return { x: angle.x * speedMultiplier, y: angle.y * speedMultiplier };
-  }
-
-  static shootRandomProjectile() {
-    Projectiles.increaseProjectilesShot();
-    var random = Math.random();
-    var offset = 0;
-    for (var i = 0; i < PROJECTILES_PROBABILITIES.length; i++) {
-      if (random <=  PROJECTILES_PROBABILITIES[i].probability + offset) {
-        PROJECTILES_PROBABILITIES[i].function();
-        return;
-      }
-      offset += PROJECTILES_PROBABILITIES[i].probability;
-    }
-  }
-
-  static getRandomBorderPositionPosition() {
-    var x = 0;
-    var y = 0;
-  
-    if (Math.random() < 0.5) {
-      y = Math.floor(Math.random() * GAME_HEIGHT * 100) % GAME_HEIGHT;
-  
-      if (Math.random() < 0.5) {
-        x = FIREBALL_TURRET_POSITIONS.x.left;
-      } else {
-        x = FIREBALL_TURRET_POSITIONS.x.right;
-      }
-    } else {
-      x = Math.floor(Math.random() * GAME_WIDTH * 100) % GAME_WIDTH;
-  
-      if (Math.random() < 0.5) {
-          y = FIREBALL_TURRET_POSITIONS.y.top;
-      } else {
-          y = FIREBALL_TURRET_POSITIONS.y.bottom;
-      }
-    }
-  
-    return { x: x, y: y };
-  }
-
-  static projectileHitPlayer() {
+  static #projectileHitPlayer() {
     $score = 0;
     $soundHandler.stopBackgroundMusic();
-    Projectiles.setFireRate(FIREBALL_START_FIRE_RATE);
+    Projectiles.#fireRate = PROJECTILE_START_FIRE_RATE;
+    Projectiles.#projectilesShot = 0;
     //Destroy registry
     $this.registry.destroy();
     //Disable all active events
@@ -100,5 +35,82 @@ class Projectiles {
     //Restart current scene
     $this.scene.restart();
   }
+
+  static #increaseProjectilesShot() {
+    ++this.#projectilesShot;
+  
+    if (this.#projectilesShot === PROJECTILE_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
+      this.#projectilesShot = 0;
+      Projectiles.#fireRate += PROJECTILE_FIRE_RATE_INCREMENT;
+    }
+  }
 }
 
+const isAllowedToShootProjectile = function() {
+  //Convert fire rate into seconds for next shot
+  var intervalForNextShot = 1 / Projectiles.fireRate;
+  return isSecondsPassed(intervalForNextShot, $this.game);
+}
+
+const getVelocityToPlayer = function(src, player, velocity) {
+  if (!velocity) {
+    velocity = PROJECTILE_VELOCITY;
+  }
+  var dest = {
+    x: player.x,
+    y: player.y
+  };
+
+  var angle = {
+    x: dest.x - src.x,
+    y: dest.y - src.y
+  };
+
+  var speedX = Math.abs(angle.x);
+  var speedY = Math.abs(angle.y);
+
+  var speedMultiplier = Math.sqrt(
+    (velocity ** 2) /
+    ((speedX ** 2) + (speedY ** 2))
+  );
+
+  return { x: angle.x * speedMultiplier, y: angle.y * speedMultiplier };
+}
+
+
+const shootRandomProjectile = function() {
+  var random = Math.random();
+  var offset = 0;
+  for (var i = 0; i < PROJECTILES_PROBABILITIES.length; i++) {
+    if (random <=  PROJECTILES_PROBABILITIES[i].probability + offset) {
+      PROJECTILES_PROBABILITIES[i].function();
+      return;
+    }
+    offset += PROJECTILES_PROBABILITIES[i].probability;
+  }
+}
+
+const getRandomBorderPositionPosition = function() {
+  var x = 0;
+  var y = 0;
+
+  if (Math.random() < 0.5) {
+    y = Math.floor(Math.random() * GAME_HEIGHT * 100) % GAME_HEIGHT;
+
+    if (Math.random() < 0.5) {
+      x = FIREBALL_TURRET_POSITIONS.x.left;
+    } else {
+      x = FIREBALL_TURRET_POSITIONS.x.right;
+    }
+  } else {
+    x = Math.floor(Math.random() * GAME_WIDTH * 100) % GAME_WIDTH;
+
+    if (Math.random() < 0.5) {
+        y = FIREBALL_TURRET_POSITIONS.y.top;
+    } else {
+        y = FIREBALL_TURRET_POSITIONS.y.bottom;
+    }
+  }
+
+  return { x: x, y: y };
+}

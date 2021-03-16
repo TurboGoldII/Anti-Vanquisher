@@ -2,6 +2,7 @@ var $this = null;
 var $score = 0;
 var $soundHandler = null;
 var $player = null;
+var $gameID = 0;
 
 function startGame() {
   var config = {
@@ -74,8 +75,8 @@ function startGame() {
   /* The game can be placed in a variable here but is not necessary yet. */
   new Phaser.Game(config);
   var scoreCounterText = null;
-
   function create() {
+    ++$gameID;
     $soundHandler = new SoundHandler();
     $soundHandler.playBackgroundMusic();
     this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
@@ -154,8 +155,8 @@ function startGame() {
   function update() {
     resetTimer();
 
-    if (isAllowedToShootFireball()) {
-      Projectiles.shootRandomProjectile();
+    if (isAllowedToShootProjectile()) {
+      shootRandomProjectile();
       increaseScoreForFireball();
     }
 

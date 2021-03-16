@@ -1,13 +1,6 @@
 class Fireball extends Projectiles {
-  #player = null;
-
   constructor (player) {
     super(player);
-    if (!player) {
-      console.log('Warning: Can´t shoot fireball without player.');
-      return;
-    }
-    this.#player = player;
     this.#shootFireball();
   }
 
@@ -16,20 +9,20 @@ class Fireball extends Projectiles {
    * increases the firerate exponentially because it is increased everytime a
    * certain amount of fireballs is shot.
    */
-  #shootFireball() {  
-    var rndTurretPos = Projectiles.getRandomBorderPositionPosition();
+  #shootFireball() {
+    var rndTurretPos = getRandomBorderPositionPosition();
   
     var fireballTexture = $this.physics.add.image(
       rndTurretPos.x,
       rndTurretPos.y,
       'fireball'
     );
-  
+
+    var that = this;
     fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
-    $this.physics.add.collider(this.#player, fireballTexture, Projectiles.projectileHitPlayer);
-  
+    $this.physics.add.collider(this.player, fireballTexture, function() { that.projectileHitPlayer() });
     //The fireball shall fly to the players current position
-    var dest = this.getVelocityToPlayer(rndTurretPos);
+    var dest = getVelocityToPlayer(rndTurretPos, this.player);
   
     fireballTexture.setVelocityX(dest.x);
     fireballTexture.setVelocityY(dest.y);
