@@ -161,7 +161,7 @@ function startGame() {
     }
 
     if (isAllowedToShootFirestream()) {
-      buildLaserCrystal();
+      new Firestream($player);
       increaseScoreForFirestream();
     }
   }

@@ -1,5 +1,5 @@
 class Projectiles {
-  // private variables
+  // public variables
   player = null;
   projectileHitPlayer = null;
 
