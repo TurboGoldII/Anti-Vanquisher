@@ -21,13 +21,13 @@ class Fireball extends Projectiles {
     var that = this;
     fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     $this.physics.add.collider(this.player, fireballTexture, function() { that.projectileHitPlayer() });
-    //The fireball shall fly to the players current position
+    // The fireball shall fly to the players current position
     var dest = getVelocityToPlayer(rndTurretPos, this.player);
   
     fireballTexture.setVelocityX(dest.x);
     fireballTexture.setVelocityY(dest.y);
   
-    //Removes the fireball texture after a time to keep the memory clean
+    // Removes the fireball texture after a time to keep the memory clean
     setTimeout(() => {
       fireballTexture.destroy();
     }, FIREBALL_TTL);

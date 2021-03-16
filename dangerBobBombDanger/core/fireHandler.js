@@ -108,8 +108,9 @@ function buildLaserCrystal() {
   var laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
   laserCrystal.setScale(1.3);
   laserCrystal.anims.play('crystalBuild');
-
+  var gameID = $gameID;
   setTimeout(() => {
+    if (gameID !== $gameID) return;
     initFirestream(laserCrystal, streamPos);
   }, CRYSTAL_BUILDING_TIME);
 }
@@ -147,8 +148,9 @@ function initFirestream(laserCrystal, streamPos) {
   );
 
   $this.physics.add.collider($player, firestreamBuilding, fireballHitPlayer);
-
+  var gameID = $gameID;
   setTimeout(() => {
+    if (gameID !== $gameID) return;
     shootFirestream(laserCrystal, streamPos, firestreamBuilding);
   }, FIRESTREAM_INIT_TIME)
 }
