@@ -1,10 +1,55 @@
-// Projectiles constants
-const PROBABILITIES_ARRAY = [
-  { name: 'fireball', probability: 0.8, function() { new Fireball($player); } },
-  { name: 'iceball', probability: 0.2, function() { new Iceball($player); } }
-]
+const getReadOnlyObject = function(object) {
+  var result = null;
+  if (Array.isArray(object)) {
+    result = [];
+  } else if (typeof object === 'object') {
+    result = {};
+  } else {
+    return object;
+  }
 
-function checkPropabilitiesArray() {
+  for (var prop in object) {
+    var v = object[prop];
+    if (typeof v === 'object') {
+      v = getReadOnlyObject(v);
+    }
+
+    Object.defineProperty(result, prop, {
+      value: v,
+      writable : false,
+      enumerable : true,
+      configurable : false
+    });
+  }
+
+  return result;
+}
+
+// Projectiles constants
+const PROBABILITIES_ARRAY = getReadOnlyObject([
+  { 
+    name: 'fireball', 
+    probability: 0.8, 
+    function(queues) { 
+      new Fireball($player);
+      queues.score.push(SCORE_INCREMENT_FIREBALL);
+    } 
+  },
+  { 
+    name: 'iceball', 
+    probability: 0.2, 
+    function(queues) { 
+      if (scoreSingleton.getScore() > 1000) {
+        new Iceball($player); 
+      } else {
+        new Fireball($player);
+      }
+      queues.score.push(SCORE_INCREMENT_FIREBALL);
+    } 
+  }
+]);
+
+const checkPropabilitiesArray = function() {
   var probability = 0;
   for (var i = 0; i < PROBABILITIES_ARRAY.length; i++) {
     probability += PROBABILITIES_ARRAY[i].probability;
@@ -20,7 +65,9 @@ function checkPropabilitiesArray() {
 
 checkPropabilitiesArray();
 
-const PROJECTILES_PROBABILITIES = PROBABILITIES_ARRAY.sort((a, b) => a.probability - b.probability);
+var probabilitiesArray = PROBABILITIES_ARRAY.slice(0, PROBABILITIES_ARRAY.length);
+
+const PROJECTILES_PROBABILITIES = probabilitiesArray.sort((a, b) => a.probability - b.probability);
 const PROJECTILE_FIRE_RATE_OFFSET_BEFORE_INCREASE = 20;
 const PROJECTILE_FIRE_RATE_INCREMENT = 0.1;
 const PROJECTILE_START_FIRE_RATE = 2;

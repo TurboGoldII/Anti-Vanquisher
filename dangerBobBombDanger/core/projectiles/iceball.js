@@ -20,7 +20,7 @@ class Iceball extends Projectiles {
       this.player.setTexture('bob_omb');
       $this.anims.create({
         key: 'bobOmbTwitch',
-        frames: $this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 1 }),
+        frames: $this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 7 }),
         frameRate: 8,
         repeat: -1
       });
@@ -60,26 +60,6 @@ class Iceball extends Projectiles {
       if (this.iceballTexture) {
         this.iceballTexture.destroy();
       }
-    }, FIREBALL_TTL);
+    }, FIREBALL_TTL * 2);
   }
 }
-
-  /**
-   * Sadly, these stage bounds here always have to be fine-tuned by the
-   * programmer. Test it out, once the right textures are installed.
-   * 
-   * @param {object} pointer 
-   */
-   function limitPlayerMovement(pointer) {
-    $player.x = Phaser.Math.Clamp(
-      pointer.x,
-      FLOOR_EDGE_POINTS.topLeft.x,
-      FLOOR_EDGE_POINTS.topRight.x
-    );
-
-    $player.y = Phaser.Math.Clamp(
-      pointer.y,
-      FLOOR_EDGE_POINTS.topLeft.y,
-      FLOOR_EDGE_POINTS.bottomLeft.y
-    );
-  }
