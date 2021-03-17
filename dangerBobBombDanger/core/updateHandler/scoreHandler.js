@@ -68,6 +68,9 @@ const scoreSingleton = (function() {
       scoreQ.push(score);
       handleScoreQ();
     },
+    /**
+     * reset should be called if the game is over
+     */
     reset: function() {
       scoreCounterText = null;
       actualScore = 0;
@@ -76,6 +79,10 @@ const scoreSingleton = (function() {
       scoreQ = [];
       queues.score = [];
     },
+    /**
+     * init function should be called in the create function
+     * @param {*} q = queues to communicate
+     */
     init: function(q) {
       if (scoreCounterText) return;
       queues = q;

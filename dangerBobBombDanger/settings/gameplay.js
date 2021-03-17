@@ -23,7 +23,7 @@ const getReadOnlyObject = function(object) {
   }
 
   return result;
-}
+};
 
 // Projectiles constants
 const PROBABILITIES_ARRAY = getReadOnlyObject([
@@ -39,15 +39,19 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     name: 'iceball', 
     probability: 0.2, 
     function(queues) { 
-      if (scoreSingleton.getScore() > 1000) {
+      if (scoreSingleton.getScore() > 500) {
         new Iceball($player); 
+        queues.score.push(Math.ceil(SCORE_INCREMENT_FIREBALL * 0.75));
       } else {
-        new Fireball($player);
+        getProbabilitiesArrayEntry('fireball').function(queues);
       }
-      queues.score.push(SCORE_INCREMENT_FIREBALL);
     } 
   }
 ]);
+
+const getProbabilitiesArrayEntry = function(name) {
+  return PROBABILITIES_ARRAY.find(o => o.name === name);
+};
 
 const checkPropabilitiesArray = function() {
   var probability = 0;
@@ -61,7 +65,7 @@ const checkPropabilitiesArray = function() {
   if (probability < 1.0) {
     throw TypeError("PROBABILITIES_ARRAY probabilities are blow 1.0");
   }
-}
+};
 
 checkPropabilitiesArray();
 
