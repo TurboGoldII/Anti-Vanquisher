@@ -1,6 +1,6 @@
 class Firestream extends Projectiles {
-  constructor (player) {
-    super(player);
+  constructor (player, EventBus) {
+    super(player, EventBus);
     this.#buildLaserCrystal();
   }
 
@@ -9,14 +9,11 @@ class Firestream extends Projectiles {
     var laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
     laserCrystal.setScale(1.3);
     laserCrystal.anims.play('crystalBuild');
-    var gameID = $gameID;
-    setTimeout(() => {
-      if (gameID !== $gameID) {
-        laserCrystal.destroy();
-        return;
-      }
+    SetTimeout(() => {
       this.#initFirestream(laserCrystal, streamPos);
-    }, CRYSTAL_BUILDING_TIME);
+    }, CRYSTAL_BUILDING_TIME, () => {
+      laserCrystal.destroy();
+    });
   }
 
   #initFirestream(laserCrystal, streamPos) {
@@ -35,15 +32,13 @@ class Firestream extends Projectiles {
     );
     var that = this;
     $this.physics.add.collider($player, firestreamBuilding, function() { that.projectileHitPlayer() });
-    var gameID = $gameID;
-    setTimeout(() => {
-      if (gameID !== $gameID) {
-        laserCrystal.destroy();
-        firestreamBuilding.destroy();
-        return;
-      } 
+    
+    SetTimeout(() => {
       this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
-    }, FIRESTREAM_INIT_TIME)
+    }, FIRESTREAM_INIT_TIME, () => {
+      laserCrystal.destroy();
+      firestreamBuilding.destroy();
+    });
   }
 
   #shootFirestream(laserCrystal, streamPos, firestreamBuilding) {

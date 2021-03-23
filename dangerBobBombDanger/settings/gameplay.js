@@ -30,20 +30,20 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   { 
     name: 'fireball', 
     probability: 0.8, 
-    function(queues) { 
-      new Fireball($player);
-      queues.score.push(SCORE_INCREMENT_FIREBALL);
+    function(EventBus) { 
+      new Fireball($player, EventBus);
+      EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
     } 
   },
   { 
     name: 'iceball', 
     probability: 0.2, 
-    function(queues) { 
+    function(EventBus) { 
       if (scoreSingleton.getScore() > 500) {
-        new Iceball($player); 
-        queues.score.push(Math.ceil(SCORE_INCREMENT_FIREBALL * 0.75));
+        new Iceball($player, EventBus);
+        EventBus.emit('score', { score: Math.ceil(SCORE_INCREMENT_FIREBALL * 0.75) });
       } else {
-        getProbabilitiesArrayEntry('fireball').function(queues);
+        getProbabilitiesArrayEntry('fireball').function(EventBus);
       }
     } 
   }

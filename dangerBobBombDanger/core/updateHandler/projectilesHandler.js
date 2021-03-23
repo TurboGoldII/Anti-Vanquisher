@@ -1,20 +1,20 @@
-const handleProjectiles = function(queues) {
+const handleProjectiles = function(EventBus) {
   if (isAllowedToShootProjectile()) {
-      shootRandomProjectile(queues);
+      shootRandomProjectile(EventBus);
     }
 
     if (isAllowedToShootFirestream()) {
-      new Firestream($player);
-      queues.score.push(SCORE_INCREMENT_FIRESTREAM);
+      new Firestream($player, EventBus);
+      EventBus.emit('score', { score: SCORE_INCREMENT_FIRESTREAM });
     }
 }
 
-const shootRandomProjectile = function(queues) {
+const shootRandomProjectile = function(EventBus) {
   var random = Math.random();
   var offset = 0;
   for (var i = 0; i < PROJECTILES_PROBABILITIES.length; i++) {
     if (random <=  PROJECTILES_PROBABILITIES[i].probability + offset) {
-      PROJECTILES_PROBABILITIES[i].function(queues);
+      PROJECTILES_PROBABILITIES[i].function(EventBus);
       return;
     }
     offset += PROJECTILES_PROBABILITIES[i].probability;

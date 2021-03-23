@@ -1,8 +1,8 @@
 class Iceball extends Projectiles {  
   iceballTexture = null;
 
-  constructor (player) {
-    super(player);
+  constructor (player, EventBus) {
+    super(player, EventBus);
     this.#shootIceball();
   }
 
@@ -14,9 +14,7 @@ class Iceball extends Projectiles {
     $this.anims.remove('bobOmbTwitch');
     this.player.setTexture('frozenBobOmb');
     $this.input._events.pointermove = null;
-    var gameID = $gameID
-    setTimeout(() => {
-      if (gameID !== $gameID) return;
+    SetTimeout(() => {
       this.player.setTexture('bob_omb');
       $this.anims.create({
         key: 'bobOmbTwitch',
@@ -28,7 +26,7 @@ class Iceball extends Projectiles {
       $this.game.input.x =  this.player.x;
       $this.game.input.y =  this.player.y;
       $this.input.on('pointermove', limitPlayerMovement, $this);
-    }, ICEBALL_FROZEN_TIME)
+    }, ICEBALL_FROZEN_TIME);
   }
 
   /**

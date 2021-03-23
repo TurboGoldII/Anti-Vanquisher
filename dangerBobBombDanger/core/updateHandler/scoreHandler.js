@@ -10,7 +10,6 @@ const scoreSingleton = (function() {
   var displayedScore = 0;
   var scoreQ = [];
   var flow = true;
-  var queues = null;
 
   const handleScoreQ = function() {
     if (flow && scoreQ.length) {
@@ -20,9 +19,7 @@ const scoreSingleton = (function() {
       if (scoreQ[0] === 0) {
         scoreQ.shift();
       }
-      var gameID = $gameID;
-      setTimeout(() => {
-        if (gameID !== $gameID) return;
+      SetTimeout(() => {
         flow = true;
       }, 25);
     }
@@ -59,13 +56,6 @@ const scoreSingleton = (function() {
   // public interface
   return getReadOnlyObject({
     increaseScore: function() {
-      if (!scoreCounterText || !queues || !queues.score.length) {
-        handleScoreQ();
-        return;
-      }
-      var score = queues.score.shift();
-      actualScore += score;
-      scoreQ.push(score);
       handleScoreQ();
     },
     /**
@@ -77,15 +67,18 @@ const scoreSingleton = (function() {
       displayedScore = 0;
       flow = true;
       scoreQ = [];
-      queues.score = [];
     },
     /**
      * init function should be called in the create function
      * @param {*} q = queues to communicate
      */
-    init: function(q) {
+    init: function(EventBus) {
       if (scoreCounterText) return;
-      queues = q;
+      EventBus.on('score', ev => {
+        var score = ev.score;
+        actualScore += score;
+        scoreQ.push(score);
+      });
       var textHandler = new TextHandler($this);
       const scoreBoardTextPosY = 17;
       textHandler.createText(10, scoreBoardTextPosY, GAME_NAME);

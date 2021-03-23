@@ -31,17 +31,56 @@ function startGame() {
   /* The game can be placed in a variable here but is not necessary yet. */
   new Phaser.Game(config);
 
+  const EventBus = (function() {
+    // private interface
+
+    var queues = {};
+
+    // public interface
+    return getReadOnlyObject({
+      reset: function() {
+        queues = {};
+      },
+      updateFunctions: [],
+      // should be in initialization / create
+      on: function(key, eventFunction) {
+        if (!queues[key]) {
+          queues[key] = [];
+        }
+        queues[key].push(eventFunction);
+      },
+      // should be in update loop
+      emit: function(key, event) {
+        if (queues[key]) {
+          for (let i = 0; i < queues[key].length; i++) {
+            queues[key][i](event);
+          }
+        }
+      }
+    })
+  })();
+
   // private variables/constants of game
-  const queues = {
-    score: []
-  }
 
   function create() {
-    handlerCreate({ queues: queues });
+    handlerCreate({ EventBus: EventBus });
   }
 
   function update() {
     resetTimer();
-    handleUpdate(queues);
+    handleUpdate({ EventBus: EventBus });
   }
+}
+
+const SetTimeout = function(eventFunction, timeout, breakFunction) {
+  var gameID = $gameID;
+  setTimeout(() => {
+    if (gameID !== $gameID) {
+      if (breakFunction) {
+        breakFunction();
+      }
+      return;
+    }
+    eventFunction();
+  }, timeout);
 }

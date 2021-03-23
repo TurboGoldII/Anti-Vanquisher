@@ -1,6 +1,6 @@
 class Fireball extends Projectiles {
-  constructor (player) {
-    super(player);
+  constructor (player, EventBus) {
+    super(player, EventBus);
     this.#shootFireball();
   }
 

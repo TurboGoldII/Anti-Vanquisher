@@ -15,7 +15,7 @@ const handlerCreate = function(p) {
    * movement into the mouse cursors direction.
    */
   $this.input.on('pointermove', limitPlayerMovement);
-  scoreSingleton.init(p.queues);
+  scoreSingleton.init(p.EventBus);
   createAnimations();
 }
 

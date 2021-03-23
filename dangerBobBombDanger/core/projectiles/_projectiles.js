@@ -2,15 +2,16 @@ class Projectiles {
   // public variables
   player = null;
   projectileHitPlayer = null;
-
+  #EventBus = null
   // private static variables
   static #projectilesShot = 0;
   static #fireRate = PROJECTILE_START_FIRE_RATE;
   
 
-  constructor (player) {
+  constructor (player, EventBus) {
     if (new.target === Projectiles || !player) throw TypeError("Projectiles Error");
       this.player = player;
+      this.#EventBus = EventBus;
       this.#initFunctions();
       Projectiles.#increaseProjectilesShot();
   }
@@ -24,6 +25,7 @@ class Projectiles {
   }
 
   static #projectileHitPlayer() {
+    this.#EventBus.reset();
     scoreSingleton.reset();
     $soundHandler.stopBackgroundMusic();
     Projectiles.#fireRate = PROJECTILE_START_FIRE_RATE;
