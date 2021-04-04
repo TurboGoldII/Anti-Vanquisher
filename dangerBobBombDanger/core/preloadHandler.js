@@ -1,19 +1,24 @@
-const handlePreload = function() {
+const handlePreload = function () {
+  setWebsiteSettings();
   preloadImages();
   preloadSpritesheets();
 }
 
-const preloadImages = function() {
-    $this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
-    $this.load.image('lava', 'assets/stage/game_background.png');
-    $this.load.image('fireball', 'assets/mob/fireball.png');
-    $this.load.image('iceball', 'assets/mob/iceball.png');
-    $this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
-    $this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
-    $this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
-  }
+const setWebsiteSettings = () => {
+  document.addEventListener('contextmenu', event => event.preventDefault());
+};
 
-const preloadSpritesheets = function() {
+const preloadImages = function () {
+  $this.load.image('debug_x', '../engine/assets/callouts/debug_x.png');
+  $this.load.image('lava', 'assets/stage/game_background.png');
+  $this.load.image('fireball', 'assets/mob/fireball.png');
+  $this.load.image('iceball', 'assets/mob/iceball.png');
+  $this.load.image('loudspeaker_on', 'assets/callouts/loudspeaker_on.png');
+  $this.load.image('loudspeaker_off', 'assets/callouts/loudspeaker_off.png');
+  $this.load.audio('backgroundMusic', 'assets/music/danger_bomb_danger_demo_soundtrack.mp3');
+}
+
+const preloadSpritesheets = function () {
   $this.load.spritesheet(
     'bob_omb',
     'assets/bobOmb.png',
