@@ -51,8 +51,16 @@ const scoreSingleton = (function () {
         formattedScore = '0' + formattedScore;
       }
     }
-    if (scoreCounterText) {
+
+    /*
+     * This had to be changed to a try-catch-block because scoreCounterText can
+     * already be deleted while it tries to change text.
+     */
+    try {
       scoreCounterText.setText(formattedScore);
+    }
+    catch (ex) {
+
     }
   }
 

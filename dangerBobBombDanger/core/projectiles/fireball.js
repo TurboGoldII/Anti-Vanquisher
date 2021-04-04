@@ -10,7 +10,7 @@ class Fireball extends Projectile {
    * certain amount of fireballs is shot.
    */
   #shootFireball() {
-    var rndTurretPos = getRandomBorderPositionPosition();
+    var rndTurretPos = getRandomBorderPos();
 
     var fireballTexture = $this.physics.add.image(
       rndTurretPos.x,

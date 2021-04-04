@@ -73,7 +73,7 @@ const getVelocityToPlayer = function (src, player, velocity) {
   return { x: angle.x * speedMultiplier, y: angle.y * speedMultiplier };
 }
 
-const getRandomBorderPositionPosition = function () {
+const getRandomBorderPos = function () {
   var x = 0;
   var y = 0;
 

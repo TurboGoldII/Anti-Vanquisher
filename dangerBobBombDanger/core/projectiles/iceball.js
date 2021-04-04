@@ -9,6 +9,11 @@ class Iceball extends Projectile {
   #iceballHitPlayer() {
     this.iceballTexture.destroy();
     this.iceballTexture = null;
+
+    /*
+     * The arcade physics transfer a part of the iceballs velocity to the
+     * player thus is must be reset on every hit.
+     */
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
     $this.anims.remove('bobOmbTwitch');
@@ -17,6 +22,7 @@ class Iceball extends Projectile {
 
     setGameTimeout(() => {
       this.player.setTexture('bob_omb');
+
       $this.anims.create({
         key: 'bobOmbTwitch',
         frames: $this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 7 }),
@@ -35,7 +41,7 @@ class Iceball extends Projectile {
    * certain amount of fireballs is shot.
    */
   #shootIceball() {
-    var rndTurretPos = getRandomBorderPositionPosition();
+    var rndTurretPos = getRandomBorderPos();
 
     this.iceballTexture = $this.physics.add.image(
       rndTurretPos.x,
