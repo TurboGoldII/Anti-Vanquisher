@@ -1,7 +1,7 @@
-class Iceball extends Projectiles {  
+class Iceball extends Projectile {
   iceballTexture = null;
 
-  constructor (player, EventBus) {
+  constructor(player, EventBus) {
     super(player, EventBus);
     this.#shootIceball();
   }
@@ -14,7 +14,8 @@ class Iceball extends Projectiles {
     $this.anims.remove('bobOmbTwitch');
     this.player.setTexture('frozenBobOmb');
     $this.input._events.pointermove = null;
-    SetTimeout(() => {
+
+    setGameTimeout(() => {
       this.player.setTexture('bob_omb');
       $this.anims.create({
         key: 'bobOmbTwitch',
@@ -22,9 +23,8 @@ class Iceball extends Projectiles {
         frameRate: 8,
         repeat: -1
       });
+
       this.player.anims.play('bobOmbTwitch');
-      $this.game.input.x =  this.player.x;
-      $this.game.input.y =  this.player.y;
       $this.input.on('pointermove', limitPlayerMovement, $this);
     }, ICEBALL_FROZEN_TIME);
   }
@@ -36,23 +36,23 @@ class Iceball extends Projectiles {
    */
   #shootIceball() {
     var rndTurretPos = getRandomBorderPositionPosition();
-  
+
     this.iceballTexture = $this.physics.add.image(
       rndTurretPos.x,
       rndTurretPos.y,
       'iceball'
     );
-  
+
     this.iceballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     var that = this;
-    $this.physics.add.collider(this.player, this.iceballTexture, function() { that.#iceballHitPlayer() });
-  
+    $this.physics.add.collider(this.player, this.iceballTexture, function () { that.#iceballHitPlayer() });
+
     //The fireball shall fly to the players current position
     var dest = getVelocityToPlayer(rndTurretPos, this.player, PROJECTILE_VELOCITY * 0.75);
 
     this.iceballTexture.setVelocityX(dest.x);
     this.iceballTexture.setVelocityY(dest.y);
-  
+
     //Removes the fireball texture after a time to keep the memory clean
     setTimeout(() => {
       if (this.iceballTexture) {

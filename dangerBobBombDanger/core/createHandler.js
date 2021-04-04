@@ -1,5 +1,5 @@
-const handlerCreate = function(p) {
-  ++$gameID;
+const handlerCreate = function (p) {
+  ++$gameId;
   $soundHandler = new SoundHandler();
   $soundHandler.playBackgroundMusic();
   $this.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
@@ -25,7 +25,7 @@ const handlerCreate = function(p) {
  * 
  * @param {object} pointer 
  */
-  const limitPlayerMovement = function(pointer) {
+const limitPlayerMovement = function (pointer) {
   $player.x = Phaser.Math.Clamp(
     pointer.x,
     FLOOR_EDGE_POINTS.topLeft.x,
@@ -39,7 +39,7 @@ const handlerCreate = function(p) {
   );
 }
 
-const createAnimations = function() {
+const createAnimations = function () {
   $this.anims.create({
     key: 'bobOmbTwitch',
     frames: $this.anims.generateFrameNumbers('bob_omb', { start: 0, end: 7 }),

@@ -1,4 +1,4 @@
-class Projectiles {
+class Projectile {
   // public variables
   player = null;
   projectileHitPlayer = null;
@@ -6,30 +6,30 @@ class Projectiles {
   // private static variables
   static #projectilesShot = 0;
   static #fireRate = PROJECTILE_START_FIRE_RATE;
-  
 
-  constructor (player, EventBus) {
-    if (new.target === Projectiles || !player) throw TypeError("Projectiles Error");
-      this.player = player;
-      this.#EventBus = EventBus;
-      this.#initFunctions();
-      Projectiles.#increaseProjectilesShot();
+
+  constructor(player, EventBus) {
+    if (new.target === Projectile || !player) throw TypeError("Projectile Error");
+    this.player = player;
+    this.#EventBus = EventBus;
+    this.#initFunctions();
+    Projectile.#increaseProjectilesShot();
   }
 
   static get fireRate() {
-    return Projectiles.#fireRate;
+    return Projectile.#fireRate;
   }
 
   #initFunctions() {
-    this.projectileHitPlayer = Projectiles.#projectileHitPlayer;
+    this.projectileHitPlayer = Projectile.#projectileHitPlayer;
   }
 
   static #projectileHitPlayer() {
     this.#EventBus.reset();
     scoreSingleton.reset();
     $soundHandler.stopBackgroundMusic();
-    Projectiles.#fireRate = PROJECTILE_START_FIRE_RATE;
-    Projectiles.#projectilesShot = 0;
+    Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
+    Projectile.#projectilesShot = 0;
     //Destroy registry
     $this.registry.destroy();
     //Disable all active events
@@ -40,15 +40,15 @@ class Projectiles {
 
   static #increaseProjectilesShot() {
     ++this.#projectilesShot;
-  
+
     if (this.#projectilesShot === PROJECTILE_FIRE_RATE_OFFSET_BEFORE_INCREASE) {
       this.#projectilesShot = 0;
-      Projectiles.#fireRate += PROJECTILE_FIRE_RATE_INCREMENT;
+      Projectile.#fireRate += PROJECTILE_FIRE_RATE_INCREMENT;
     }
   }
 }
-  
-const getVelocityToPlayer = function(src, player, velocity) {
+
+const getVelocityToPlayer = function (src, player, velocity) {
   if (!velocity) {
     velocity = PROJECTILE_VELOCITY;
   }
@@ -73,7 +73,7 @@ const getVelocityToPlayer = function(src, player, velocity) {
   return { x: angle.x * speedMultiplier, y: angle.y * speedMultiplier };
 }
 
-const getRandomBorderPositionPosition = function() {
+const getRandomBorderPositionPosition = function () {
   var x = 0;
   var y = 0;
 
@@ -89,12 +89,11 @@ const getRandomBorderPositionPosition = function() {
     x = Math.floor(Math.random() * GAME_WIDTH * 100) % GAME_WIDTH;
 
     if (Math.random() < 0.5) {
-        y = FIREBALL_TURRET_POSITIONS.y.top;
+      y = FIREBALL_TURRET_POSITIONS.y.top;
     } else {
-        y = FIREBALL_TURRET_POSITIONS.y.bottom;
+      y = FIREBALL_TURRET_POSITIONS.y.bottom;
     }
   }
 
   return { x: x, y: y };
 }
-  

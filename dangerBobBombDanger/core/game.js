@@ -1,7 +1,7 @@
 var $this = null;
 var $soundHandler = null;
 var $player = null;
-var $gameID = 0;
+var $gameId = 0;
 
 function startGame() {
   var config = {
@@ -12,7 +12,7 @@ function startGame() {
     physics: {
       default: 'arcade',
       arcade: {
-        debug: false
+        debug: true
       }
     },
     scene: {
@@ -31,26 +31,25 @@ function startGame() {
   /* The game can be placed in a variable here but is not necessary yet. */
   new Phaser.Game(config);
 
-  const EventBus = (function() {
-    // private interface
-
+  const EventBus = (function () {
+    /* Private interface */
     var queues = {};
 
     // public interface
     return getReadOnlyObject({
-      reset: function() {
+      reset: function () {
         queues = {};
       },
       updateFunctions: [],
       // should be in initialization / create
-      on: function(key, eventFunction) {
+      on: function (key, eventFunction) {
         if (!queues[key]) {
           queues[key] = [];
         }
         queues[key].push(eventFunction);
       },
       // should be in update loop
-      emit: function(key, event) {
+      emit: function (key, event) {
         if (queues[key]) {
           for (let i = 0; i < queues[key].length; i++) {
             queues[key][i](event);
@@ -60,27 +59,30 @@ function startGame() {
     })
   })();
 
-  // private variables/constants of game
+  /* Private variables/constants of game */
 
   function create() {
-    handlerCreate({ EventBus: EventBus });
+    handlerCreate({ EventBus });
   }
 
   function update() {
     resetTimer();
-    handleUpdate({ EventBus: EventBus });
+    handleUpdate({ EventBus });
   }
 }
 
-const SetTimeout = function(eventFunction, timeout, breakFunction) {
-  var gameID = $gameID;
+const setGameTimeout = function (eventFunction, timeout, breakFunction) {
+  var gameId = $gameId;
+
   setTimeout(() => {
-    if (gameID !== $gameID) {
+    if (gameId !== $gameId) {
       if (breakFunction) {
         breakFunction();
       }
+
       return;
     }
+
     eventFunction();
   }, timeout);
 }

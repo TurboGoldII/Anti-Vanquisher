@@ -1,5 +1,5 @@
-class Firestream extends Projectiles {
-  constructor (player, EventBus) {
+class Firestream extends Projectile {
+  constructor(player, EventBus) {
     super(player, EventBus);
     this.#buildLaserCrystal();
   }
@@ -9,7 +9,8 @@ class Firestream extends Projectiles {
     var laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
     laserCrystal.setScale(1.3);
     laserCrystal.anims.play('crystalBuild');
-    SetTimeout(() => {
+
+    setGameTimeout(() => {
       this.#initFirestream(laserCrystal, streamPos);
     }, CRYSTAL_BUILDING_TIME, () => {
       laserCrystal.destroy();
@@ -22,18 +23,18 @@ class Firestream extends Projectiles {
       streamPos.y + FIRESTREAM_OFFSET.y,
       'firelaser_building'
     );
-  
+
     firestreamBuilding.setScale(2);
     firestreamBuilding.anims.play('firelaserBuilding');
-  
+
     firestreamBuilding.setSize(
       FIRESTREAM_BUILDING_HITBOX.x,
       FIRESTREAM_BUILDING_HITBOX.y
     );
     var that = this;
-    $this.physics.add.collider($player, firestreamBuilding, function() { that.projectileHitPlayer() });
-    
-    SetTimeout(() => {
+    $this.physics.add.collider($player, firestreamBuilding, function () { that.projectileHitPlayer() });
+
+    setGameTimeout(() => {
       this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
     }, FIRESTREAM_INIT_TIME, () => {
       laserCrystal.destroy();
@@ -47,19 +48,19 @@ class Firestream extends Projectiles {
       streamPos.y + FIRESTREAM_OFFSET.y,
       'firelaser_full_size'
     );
-  
+
     firestreamShooting.setScale(2);
     firestreamShooting.anims.play('firelaserShooting');
-  
+
     firestreamShooting.setSize(
       FIRESTREAM_HITBOX.x,
       FIRESTREAM_HITBOX.y
     );
-  
+
     firestreamBuilding.destroy();
     var that = this;
-    $this.physics.add.collider($player, firestreamShooting, function() { that.projectileHitPlayer() });
-  
+    $this.physics.add.collider($player, firestreamShooting, function () { that.projectileHitPlayer() });
+
     setTimeout(() => {
       laserCrystal.destroy();
       firestreamShooting.destroy();
@@ -67,13 +68,13 @@ class Firestream extends Projectiles {
   }
 }
 
-const isAllowedToShootFirestream = function() {
-    //Convert fire rate into seconds for next stream
-    var intervalForNextShot = 1 / FIRESTREAM_FIRE_RATE;
-    return isSecondsPassed(intervalForNextShot, $this.game);
-  };
+const isAllowedToShootFirestream = function () {
+  //Convert fire rate into seconds for next stream
+  var intervalForNextShot = 1 / FIRESTREAM_FIRE_RATE;
+  return isSecondsPassed(intervalForNextShot, $this.game);
+};
 
-const calculateStreamStartPos = function() {
+const calculateStreamStartPos = function () {
   var rangeXAxle = (FLOOR_EDGE_POINTS.topRight.x - FIRESTREAM_STAGE_OFFSET)
     - (FLOOR_EDGE_POINTS.topLeft.x + FIRESTREAM_STAGE_OFFSET);
 
@@ -84,7 +85,7 @@ const calculateStreamStartPos = function() {
     y: 52
   }
 };
-  
+
 const FIRESTREAM_OFFSET = {
   x: -3.5,
   y: 384

@@ -1,9 +1,9 @@
-const handleScore = function() {
+const handleScore = function () {
   scoreSingleton.increaseScore();
 }
 
 // singleton
-const scoreSingleton = (function() {
+const scoreSingleton = (function () {
   // private interface
   var scoreCounterText = null;
   var actualScore = 0;
@@ -11,25 +11,27 @@ const scoreSingleton = (function() {
   var scoreQ = [];
   var flow = true;
 
-  const handleScoreQ = function() {
+  const handleScoreQ = function () {
     if (flow && scoreQ.length) {
       flow = false;
       --scoreQ[0];
       formatScore(++displayedScore);
+
       if (scoreQ[0] === 0) {
         scoreQ.shift();
       }
-      SetTimeout(() => {
+
+      setGameTimeout(() => {
         flow = true;
       }, 25);
     }
   }
 
-   /**
+  /**
    * According to the current score length, zeros are added to make the score
    * look cooler.
    */
-  const formatScore = function(score) {
+  const formatScore = function (score) {
     if (score >= SCORE_MAXIMUM) {
       return SCORE_MAXIMUM;
     }
@@ -53,15 +55,16 @@ const scoreSingleton = (function() {
       scoreCounterText.setText(formattedScore);
     }
   }
+
   // public interface
   return getReadOnlyObject({
-    increaseScore: function() {
+    increaseScore: function () {
       handleScoreQ();
     },
     /**
      * reset should be called if the game is over
      */
-    reset: function() {
+    reset: function () {
       scoreCounterText = null;
       actualScore = 0;
       displayedScore = 0;
@@ -72,7 +75,7 @@ const scoreSingleton = (function() {
      * init function should be called in the create function
      * @param {*} q = queues to communicate
      */
-    init: function(EventBus) {
+    init: function (EventBus) {
       if (scoreCounterText) return;
       EventBus.on('score', ev => {
         var score = ev.score;
@@ -93,7 +96,7 @@ const scoreSingleton = (function() {
         sratrScore
       );
     },
-    getScore: function() {
+    getScore: function () {
       return actualScore;
     }
   });
