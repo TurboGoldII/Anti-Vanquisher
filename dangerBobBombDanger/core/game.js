@@ -25,7 +25,9 @@ function startGame() {
 
   function preload() {
     $this = this;
-    handlePreload();
+    data.game = this;
+    data.players = [];
+    handlePreload(data);
   }
 
   /* The game can be placed in a variable here but is not necessary yet. */
@@ -60,14 +62,21 @@ function startGame() {
   })();
 
   /* Private variables/constants of game */
+  const data = {
+    playerSettings:[
+      CHARACTERS[0]
+    ],
+    EventBus,
+    players: []
+  };
 
   function create() {
-    handlerCreate({ EventBus });
+    handlerCreate(data);
   }
 
   function update() {
     resetTimer();
-    handleUpdate({ EventBus });
+    handleUpdate(data);
   }
 }
 

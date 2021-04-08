@@ -1,8 +1,8 @@
-const handleUpdate = function (p) {
-  handleProjectiles(p.EventBus);
+const handleUpdate = function (data) {
+  handleProjectiles(data);
   handleScore();
 
-  for (let i = 0; i < p.EventBus.updateFunctions.length; i++) {
-    p.EventBus.updateFunctions[i]();
+  for (let i = 0; i < data.EventBus.updateFunctions.length; i++) {
+    data.EventBus.updateFunctions[i]();
   }
 }

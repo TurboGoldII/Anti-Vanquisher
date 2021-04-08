@@ -1,6 +1,13 @@
 class Fireball extends Projectile {
-  constructor(player, EventBus) {
-    super(player, EventBus);
+  #shootToPos = null;
+  #game = null;
+  #projectileHitPlayer = null;
+
+  constructor(shootToPos, collideWithPlayers, game) {
+    super(collideWithPlayers);
+    this.#shootToPos = shootToPos;
+    this.#game = game;
+    this.#projectileHitPlayer = this.projectileHitPlayer;
     this.#shootFireball();
   }
 
@@ -12,7 +19,7 @@ class Fireball extends Projectile {
   #shootFireball() {
     var rndTurretPos = getRandomBorderPos();
 
-    var fireballTexture = $this.physics.add.image(
+    var fireballTexture = this.#game.physics.add.image(
       rndTurretPos.x,
       rndTurretPos.y,
       'fireball'
@@ -20,9 +27,13 @@ class Fireball extends Projectile {
 
     var that = this;
     fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
-    $this.physics.add.collider(this.player, fireballTexture, function () { that.projectileHitPlayer() });
+    
+    for (let i = 0; i < this.collideWithPlayers.length; i++) {
+      this.#game.physics.add.collider(this.collideWithPlayers[i], fireballTexture, function () { that.#projectileHitPlayer() });
+    }
+
     // The fireball shall fly to the players current position
-    var dest = getVelocityToPlayer(rndTurretPos, this.player);
+    var dest = getVelocityToPlayer(rndTurretPos, this.#shootToPos);
 
     fireballTexture.setVelocityX(dest.x);
     fireballTexture.setVelocityY(dest.y);

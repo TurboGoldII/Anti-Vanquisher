@@ -1,17 +1,18 @@
 class Projectile {
   // public variables
-  player = null;
+  collideWithPlayers = null;
   projectileHitPlayer = null;
-  #EventBus = null
+  
   // private static variables
+  static #EventBus = null
   static #projectilesShot = 0;
   static #fireRate = PROJECTILE_START_FIRE_RATE;
+  static #isInit = false;
+  static #game = null
 
-
-  constructor(player, EventBus) {
-    if (new.target === Projectile || !player) throw TypeError("Projectile Error");
-    this.player = player;
-    this.#EventBus = EventBus;
+  constructor(collideWithPlayers) {
+    if (new.target === Projectile) throw TypeError("Projectile Error");
+    this.collideWithPlayers = collideWithPlayers;
     this.#initFunctions();
     Projectile.#increaseProjectilesShot();
   }
@@ -24,18 +25,26 @@ class Projectile {
     this.projectileHitPlayer = Projectile.#projectileHitPlayer;
   }
 
+  static init(data) {
+    if (!Projectile.#isInit) {
+      Projectile.#isInit = true;
+      Projectile.#EventBus = data.EventBus;
+      Projectile.#game = data.game;
+    }
+  }
+
   static #projectileHitPlayer() {
-    this.#EventBus.reset();
+    Projectile.#EventBus.reset();
     scoreSingleton.reset();
     $soundHandler.stopBackgroundMusic();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
     //Destroy registry
-    $this.registry.destroy();
+    Projectile.#game.registry.destroy();
     //Disable all active events
-    $this.events.off();
+    Projectile.#game.events.off();
     //Restart current scene
-    $this.scene.restart();
+    Projectile.#game.scene.restart();
   }
 
   static #increaseProjectilesShot() {

@@ -1,14 +1,19 @@
 class Firestream extends Projectile {
-  constructor(player, EventBus) {
-    super(player, EventBus);
+  #game = null;
+  #projectileHitPlayer = null;
+
+  constructor(collideWithPlayers, game) {
+    super(collideWithPlayers);
+    this.#game = game;
+    this.#projectileHitPlayer = this.projectileHitPlayer;
     this.#buildLaserCrystal();
   }
 
   #buildLaserCrystal() {
     var streamPos = calculateStreamStartPos();
-    var laserCrystal = $this.add.sprite(streamPos.x, streamPos.y, 'crystal');
+    var laserCrystal = this.#game.add.sprite(streamPos.x, streamPos.y, 'crystal');
     laserCrystal.setScale(1.3);
-    laserCrystal.anims.play('crystalBuild');
+    laserCrystal.anims.play('crystal');
 
     setGameTimeout(() => {
       this.#initFirestream(laserCrystal, streamPos);
@@ -18,21 +23,24 @@ class Firestream extends Projectile {
   }
 
   #initFirestream(laserCrystal, streamPos) {
-    var firestreamBuilding = $this.physics.add.sprite(
+    var firestreamBuilding = this.#game.physics.add.sprite(
       streamPos.x + FIRESTREAM_OFFSET.x,
       streamPos.y + FIRESTREAM_OFFSET.y,
       'firelaser_building'
     );
 
     firestreamBuilding.setScale(2);
-    firestreamBuilding.anims.play('firelaserBuilding');
+    firestreamBuilding.anims.play('firelaser_building');
 
     firestreamBuilding.setSize(
       FIRESTREAM_BUILDING_HITBOX.x,
       FIRESTREAM_BUILDING_HITBOX.y
     );
     var that = this;
-    $this.physics.add.collider($player, firestreamBuilding, function () { that.projectileHitPlayer() });
+    
+    for (let i = 0; i < this.collideWithPlayers.length; i++) {
+      this.#game.physics.add.collider(this.collideWithPlayers[i], firestreamBuilding, function () { that.#projectileHitPlayer() });
+    }
 
     setGameTimeout(() => {
       this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
@@ -43,14 +51,14 @@ class Firestream extends Projectile {
   }
 
   #shootFirestream(laserCrystal, streamPos, firestreamBuilding) {
-    var firestreamShooting = $this.physics.add.sprite(
+    var firestreamShooting = this.#game.physics.add.sprite(
       streamPos.x + FIRESTREAM_OFFSET.x,
       streamPos.y + FIRESTREAM_OFFSET.y,
       'firelaser_full_size'
     );
 
     firestreamShooting.setScale(2);
-    firestreamShooting.anims.play('firelaserShooting');
+    firestreamShooting.anims.play('firelaser_full_size');
 
     firestreamShooting.setSize(
       FIRESTREAM_HITBOX.x,
@@ -59,7 +67,10 @@ class Firestream extends Projectile {
 
     firestreamBuilding.destroy();
     var that = this;
-    $this.physics.add.collider($player, firestreamShooting, function () { that.projectileHitPlayer() });
+
+    for (let i = 0; i < this.collideWithPlayers.length; i++) {
+      this.#game.physics.add.collider(this.collideWithPlayers[i], firestreamShooting, function () { that.projectileHitPlayer() });
+    }
 
     setTimeout(() => {
       laserCrystal.destroy();
@@ -68,10 +79,10 @@ class Firestream extends Projectile {
   }
 }
 
-const isAllowedToShootFirestream = function () {
+const isAllowedToShootFirestream = function (game) {
   //Convert fire rate into seconds for next stream
   var intervalForNextShot = 1 / FIRESTREAM_FIRE_RATE;
-  return isSecondsPassed(intervalForNextShot, $this.game);
+  return isSecondsPassed(intervalForNextShot, game.game);
 };
 
 const calculateStreamStartPos = function () {

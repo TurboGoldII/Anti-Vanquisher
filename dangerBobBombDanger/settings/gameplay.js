@@ -32,20 +32,20 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
     name: 'fireball',
     probability: 0.8,
-    function(EventBus) {
-      new Fireball($player, EventBus);
-      EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
+    function(data) {
+      new Fireball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
+      data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
     }
   },
   {
     name: 'iceball',
     probability: 0.2,
-    function(EventBus) {
+    function(data) {
       if (scoreSingleton.getScore() > 500) {
-        new Iceball($player, EventBus);
-        EventBus.emit('score', { score: SCORE_INCREMENT_ICEBALL });
+        new Iceball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
+        data.EventBus.emit('score', { score: SCORE_INCREMENT_ICEBALL });
       } else {
-        getProbabilitiesArrayEntry('fireball').function(EventBus);
+        getProbabilitiesArrayEntry('fireball').function(data);
       }
     }
   }
@@ -72,6 +72,10 @@ const checkPropabilitiesArray = function () {
 checkPropabilitiesArray();
 
 var probabilitiesArray = PROBABILITIES_ARRAY.slice(0, PROBABILITIES_ARRAY.length);
+
+const START_POS = getReadOnlyObject([
+  { x: FLOOR_CENTER.x, y: FLOOR_CENTER.y }
+]);
 
 /* Projectile constants */
 const PROJECTILES_PROBABILITIES = probabilitiesArray.sort((a, b) => a.probability - b.probability);
