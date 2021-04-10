@@ -72,8 +72,7 @@ const limitPlayerMovement = function (player, pointer) {
 
 const createPlayerAnimation = function (game, player, sprite) {
   if (!game || !player || !sprite) {
-    cl('createPlayerAnimation error: !game || !player || !sprite');
-    return;
+    throw 'Insufficient data for player animation given (game, player or sprite was empty)';
   }
 
   /* animObject = { frames, frameRate, repeat } */
@@ -81,8 +80,7 @@ const createPlayerAnimation = function (game, player, sprite) {
   const name = sprite.name;
 
   if (!name || !animObject || !animObject.frames) {
-    cl('createPlayerAnimation error: !name || !animObject || !animObject.frames');
-    return;
+    throw 'Insufficient data for player animation given (name, animObject or animObject.frames was empty)';
   }
 
   const frames = animObject.frames;
