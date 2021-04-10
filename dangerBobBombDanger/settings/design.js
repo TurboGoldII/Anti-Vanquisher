@@ -1,4 +1,4 @@
-const GAME_NAME = 'Danger! Bomb! Danger!';
+const GAME_NAME = 'Anti-Vanquisher';
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 const FONT = 'pixel_font';
