@@ -25,10 +25,6 @@ class Iceball extends Projectile {
 
     if (player.$data.settings.frozenSprite) {
       player.setTexture(player.$data.settings.frozenSprite.name);
-
-      if (player.$data.settings.frozenSprite.anim) {
-        createPlayerAnimation(this.#game, player, player.$data.settings.frozenSprite);
-      }
     }
 
     this.#game.input._events.pointermove = null;

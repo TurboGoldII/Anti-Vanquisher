@@ -37,25 +37,28 @@ function startGame() {
     /* Private interface */
     var queues = {};
 
-    // public interface
+    /* Public interface */
     return getReadOnlyObject({
       reset: function () {
         queues = {};
       },
       updateFunctions: [],
-      // should be in initialization / create
+      /* Should be in initialization / create */
       on: function (key, eventFunction) {
         if (!queues[key]) {
           queues[key] = [];
         }
+
         queues[key].push(eventFunction);
       },
-      // should be in update loop
+      /* Should be in update loop */
       emit: function (key, event) {
-        if (queues[key]) {
-          for (let i = 0; i < queues[key].length; i++) {
-            queues[key][i](event);
-          }
+        if (!queues[key]) {
+          return;
+        }
+
+        for (let i = 0; i < queues[key].length; i++) {
+          queues[key][i](event);
         }
       }
     })
@@ -63,7 +66,7 @@ function startGame() {
 
   /* Private variables/constants of game */
   const data = {
-    playerSettings:[
+    playerSettings: [
       CHARACTERS[0]
     ],
     EventBus,
