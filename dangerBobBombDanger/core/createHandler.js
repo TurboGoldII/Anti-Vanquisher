@@ -25,13 +25,27 @@ const handlerCreate = function (data) {
 
 const createPlayers = (data) => {
   for (let i = 0; i < data.playerSettings.length; i++) {
-    let player = data.game.physics.add.sprite(START_POS[i].x, START_POS[i].y, data.playerSettings[i].sprite.name);
+    let player = data.game.physics.add.sprite(
+      START_POS[i].x,
+      START_POS[i].y,
+      data.playerSettings[i].sprite.name
+    );
+
     player.$data = {};
     player.setScale(data.playerSettings[i].context.scale);
-    player.setSize(data.playerSettings[i].context.hitbox.x, data.playerSettings[i].context.hitbox.y);
-    player.setOffset(data.playerSettings[i].context.offset.x, data.playerSettings[i].context.offset.y);
+
+    player.setSize(
+      data.playerSettings[i].context.hitbox.x,
+      data.playerSettings[i].context.hitbox.y
+    );
+
+    player.setOffset(
+      data.playerSettings[i].context.offset.x,
+      data.playerSettings[i].context.offset.y
+    );
+
     player.$data.settings = data.playerSettings[i];
-    createPlayerAnimation(data.game, player.$data.settings.sprite);
+    createPlayerAnimation(data.game, player);
     data.players.push(player);
   }
 }
@@ -56,13 +70,22 @@ const limitPlayerMovement = function (player, pointer) {
   );
 }
 
-const createPlayerAnimation = function (game, animObject) {
-  /* animObject = { name, frames, frameRate, repeate } */
-  if (!animObject.name || !animObject.frames) return;
+const createPlayerAnimation = function (game, player) {
+  animObject = player.$data.settings.sprite;
+  cl('reached play anim');
+
+  /* animObject = { name, frames, frameRate, repeat } */
+  if (!animObject.name || !animObject.frames) {
+    cl('reached sucky');
+    return;
+  }
+
+  cl('reached good stuff');
   const name = animObject.name;
-  const frames =  animObject.frames;
-  const frameRate = animObject.frameRate || 1;
-  const repeat = animObject.repeat || 0;
+  const frames = animObject.frames;
+  const frameRate = animObject.frameRate;
+  const repeat = animObject.repeat;
+
   game.anims.create({
     key: name,
     frames: game.anims.generateFrameNumbers(name, frames),

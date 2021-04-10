@@ -22,23 +22,29 @@ class Iceball extends Projectile {
     player.setVelocityX(0);
     player.setVelocityY(0);
     this.#game.anims.remove(player.$data.settings.sprite.name);
+
     if (player.$data.settings.frozenSprite) {
       player.setTexture(player.$data.settings.frozenSprite.name);
+
       if (player.$data.settings.frozenSprite.anim) {
-        createPlayerAnimation(this.#game, player.$data.settings.frozenSprite.anim);
+        createPlayerAnimation(this.#game, player);
       }
     }
+
     this.#game.input._events.pointermove = null;
 
     setGameTimeout(() => {
       if (player.$data.settings.frozenSprite && player.$data.settings.frozenSprite.anim) {
         this.#game.anims.remove(player.$data.settings.frozenSprite.name);
       }
+
       player.setTexture(player.$data.settings.sprite.name);
-      createPlayerAnimation(this.#game, player.$data.settings.sprite.anim);
+      createPlayerAnimation(this.#game, player);
+
       const limitPlayerMovementEvent = (pointer) => {
         limitPlayerMovement(player, pointer)
       }
+
       this.#game.input.on('pointermove', limitPlayerMovementEvent, this.#game);
     }, ICEBALL_FROZEN_TIME);
   }
@@ -59,7 +65,7 @@ class Iceball extends Projectile {
 
     this.iceballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     var that = this;
-    
+
     for (let i = 0; i < this.collideWithPlayers.length; i++) {
       this.#game.physics.add.collider(this.collideWithPlayers[i], this.iceballTexture, function () { that.#iceballHitPlayer(that.collideWithPlayers[i]) });
     }
