@@ -45,7 +45,7 @@ const createPlayers = (data) => {
     );
 
     player.$data.settings = data.playerSettings[i];
-    createPlayerAnimation(data.game, player);
+    createPlayerAnimation(data.game, player, player.$data.settings.sprite);
     data.players.push(player);
   }
 }
@@ -70,21 +70,24 @@ const limitPlayerMovement = function (player, pointer) {
   );
 }
 
-const createPlayerAnimation = function (game, player) {
-  animObject = player.$data.settings.sprite;
-  cl('reached play anim');
-
-  /* animObject = { name, frames, frameRate, repeat } */
-  if (!animObject.name || !animObject.frames) {
-    cl('reached sucky');
+const createPlayerAnimation = function (game, player, sprite) {
+  if (!game || !player || !sprite) {
+    cl('createPlayerAnimation error: !game || !player || !sprite');
     return;
   }
 
-  cl('reached good stuff');
-  const name = animObject.name;
+  /* animObject = { frames, frameRate, repeat } */
+  const animObject = sprite.anim;
+  const name = sprite.name;
+
+  if (!name || !animObject || !animObject.frames) {
+    cl('createPlayerAnimation error: !name || !animObject || !animObject.frames');
+    return;
+  }
+
   const frames = animObject.frames;
-  const frameRate = animObject.frameRate;
-  const repeat = animObject.repeat;
+  const frameRate = animObject.frameRate || 1;
+  const repeat = animObject.repeat || 0;
 
   game.anims.create({
     key: name,

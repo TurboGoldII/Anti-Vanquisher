@@ -27,7 +27,7 @@ class Iceball extends Projectile {
       player.setTexture(player.$data.settings.frozenSprite.name);
 
       if (player.$data.settings.frozenSprite.anim) {
-        createPlayerAnimation(this.#game, player);
+        createPlayerAnimation(this.#game, player, player.$data.settings.frozenSprite);
       }
     }
 
@@ -39,7 +39,7 @@ class Iceball extends Projectile {
       }
 
       player.setTexture(player.$data.settings.sprite.name);
-      createPlayerAnimation(this.#game, player);
+      createPlayerAnimation(this.#game, player, player.$data.settings.sprite);
 
       const limitPlayerMovementEvent = (pointer) => {
         limitPlayerMovement(player, pointer)
