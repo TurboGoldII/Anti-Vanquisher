@@ -31,6 +31,9 @@ const createPlayers = (data) => {
       data.playerSettings[i].sprite.name
     );
 
+    /* Disables the automatic physics pushing from the Phaser physics */
+    player.setImmovable();
+
     player.$data = {};
     player.setScale(data.playerSettings[i].context.scale);
 

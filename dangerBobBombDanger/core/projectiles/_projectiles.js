@@ -2,7 +2,7 @@ class Projectile {
   // public variables
   collideWithPlayers = null;
   projectileHitPlayer = null;
-  
+
   // private static variables
   static #EventBus = null
   static #projectilesShot = 0;
@@ -34,16 +34,20 @@ class Projectile {
   }
 
   static #projectileHitPlayer() {
+    if (GOD_MODE) {
+      return;
+    }
+
     Projectile.#EventBus.reset();
     scoreSingleton.reset();
     $soundHandler.stopBackgroundMusic();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
-    //Destroy registry
+    /* Destroy registry */
     Projectile.#game.registry.destroy();
-    //Disable all active events
+    /* Disable all active events */
     Projectile.#game.events.off();
-    //Restart current scene
+    /* Restart current scene */
     Projectile.#game.scene.restart();
   }
 

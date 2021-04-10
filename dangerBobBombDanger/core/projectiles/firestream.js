@@ -36,18 +36,27 @@ class Firestream extends Projectile {
       FIRESTREAM_BUILDING_HITBOX.x,
       FIRESTREAM_BUILDING_HITBOX.y
     );
+
     var that = this;
-    
+
     for (let i = 0; i < this.collideWithPlayers.length; i++) {
-      this.#game.physics.add.collider(this.collideWithPlayers[i], firestreamBuilding, function () { that.#projectileHitPlayer() });
+      this.#game.physics.add.collider(
+        this.collideWithPlayers[i],
+        firestreamBuilding,
+        () => { that.#projectileHitPlayer() }
+      );
     }
 
-    setGameTimeout(() => {
-      this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
-    }, FIRESTREAM_INIT_TIME, () => {
-      laserCrystal.destroy();
-      firestreamBuilding.destroy();
-    });
+    setGameTimeout(
+      () => {
+        this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
+      },
+      FIRESTREAM_INIT_TIME,
+      () => {
+        laserCrystal.destroy();
+        firestreamBuilding.destroy();
+      }
+    );
   }
 
   #shootFirestream(laserCrystal, streamPos, firestreamBuilding) {
@@ -69,7 +78,11 @@ class Firestream extends Projectile {
     var that = this;
 
     for (let i = 0; i < this.collideWithPlayers.length; i++) {
-      this.#game.physics.add.collider(this.collideWithPlayers[i], firestreamShooting, function () { that.projectileHitPlayer() });
+      this.#game.physics.add.collider(
+        this.collideWithPlayers[i],
+        firestreamShooting,
+        function () { that.projectileHitPlayer() }
+      );
     }
 
     setTimeout(() => {

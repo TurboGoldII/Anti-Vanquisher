@@ -3,6 +3,9 @@ const PLAYER_HITBOX = {
   y: 10
 };
 
+/**
+ * The hitbox offset is used to place the hitbox in the middle of the sprite.
+ */
 const PLAYER_HITBOX_OFFSET = {
   x: PLAYER_HITBOX.x - 4.5,
   y: PLAYER_HITBOX.y - 0.5
@@ -27,8 +30,8 @@ const CHARACTERS = getReadOnlyObject([
   {
     context: {
       scale: 2.4,
-      hitbox: { x: 10, y: 10 },
-      offset: { x: 10 - 4.5, y: 10 - 0.5 }
+      hitbox: { x: PLAYER_HITBOX.x, y: PLAYER_HITBOX.y },
+      offset: { x: PLAYER_HITBOX_OFFSET.x, y: PLAYER_HITBOX_OFFSET.y }
     },
     sprite: {
       name: 'bobOmb',
@@ -45,6 +48,6 @@ const CHARACTERS = getReadOnlyObject([
       path: 'assets/frozenBobOmb.png',
       frame: { frameWidth: 21, frameHeight: 24 },
       anim: null
-    },
+    }
   }
 ]);
