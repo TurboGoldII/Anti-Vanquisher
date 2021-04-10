@@ -11,7 +11,10 @@ class Projectile {
   static #game = null
 
   constructor(collideWithPlayers) {
-    if (new.target === Projectile) throw TypeError("Projectile Error");
+    if (new.target === Projectile) {
+      throw TypeError("The class Projectile is abstract and cannot be instanced.");
+    }
+
     this.collideWithPlayers = collideWithPlayers;
     this.#initFunctions();
     Projectile.#increaseProjectilesShot();

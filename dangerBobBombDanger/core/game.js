@@ -1,9 +1,15 @@
+/* TO-DO: The global $this shall not be used and removed in the future. */
 var $this = null;
+/* The game shall start in the menu. */
+//const $sceneSwitcher = new SceneSwitcher(SCENE_MAIN_MENU);
+const $sceneSwitcher = new SceneSwitcher(SCENE_CORE_GAME);
 var $soundHandler = null;
 var $player = null;
 var $gameId = 0;
 
-function startGame() {
+function renderGame() {
+  let scene = $sceneSwitcher.getCurrentScene();
+
   var config = {
     type: Phaser.AUTO,
     width: GAME_WIDTH,
@@ -23,64 +29,25 @@ function startGame() {
     pixelArt: true
   };
 
+  /**
+   * Sadly, the preload function must be called extra here, so that the global
+   * $this can be set for all game scenes.
+   */
   function preload() {
     $this = this;
-    data.game = this;
-    data.players = [];
-    handlePreload(data);
+    scene.preload(this);
+  }
+
+  function create() {
+    scene.create();
+  }
+
+  function update() {
+    scene.update();
   }
 
   /* The game can be placed in a variable here but is not necessary yet. */
   new Phaser.Game(config);
-
-  const EventBus = (function () {
-    /* Private interface */
-    var queues = {};
-
-    /* Public interface */
-    return getReadOnlyObject({
-      reset: function () {
-        queues = {};
-      },
-      updateFunctions: [],
-      /* Should be in initialization / create */
-      on: function (key, eventFunction) {
-        if (!queues[key]) {
-          queues[key] = [];
-        }
-
-        queues[key].push(eventFunction);
-      },
-      /* Should be in update loop */
-      emit: function (key, event) {
-        if (!queues[key]) {
-          return;
-        }
-
-        for (let i = 0; i < queues[key].length; i++) {
-          queues[key][i](event);
-        }
-      }
-    })
-  })();
-
-  /* Private variables/constants of game */
-  const data = {
-    playerSettings: [
-      CHARACTERS[0]
-    ],
-    EventBus,
-    players: []
-  };
-
-  function create() {
-    handlerCreate(data);
-  }
-
-  function update() {
-    resetTimer();
-    handleUpdate(data);
-  }
 }
 
 const setGameTimeout = function (eventFunction, timeout, breakFunction) {
