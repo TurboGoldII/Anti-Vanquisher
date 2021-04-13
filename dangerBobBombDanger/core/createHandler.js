@@ -52,7 +52,12 @@ const createPlayers = (data) => {
     player.setPipeline('Light2D');
     player.$data.settings = data.playerSettings[i];
 
-    let light = data.game.lights.addLight(player.x, player.y, 200);
+    let light = data.game.lights.addLight(
+      player.x,
+      player.y,
+      LIGHT_RADIUS_PLAYER
+    );
+
     player.$data.light = light;
 
     createPlayerAnimation(data.game, player, player.$data.settings.sprite);

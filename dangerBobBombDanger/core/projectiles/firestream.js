@@ -69,6 +69,7 @@ class Firestream extends Projectile {
     );
 
     firestreamShooting.setScale(2);
+    firestreamShooting.setPipeline('Light2D');
     firestreamShooting.anims.play('firelaser_full_size');
 
     firestreamShooting.setSize(
