@@ -1,9 +1,11 @@
 const handlerCreate = function (data) {
+  data.game.lights.enable().setAmbientColor(LIGHT_COLOR);
   ++$gameId;
   $soundHandler = new SoundHandler();
   $soundHandler.playBackgroundMusic();
 
-  data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
+  let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
+  floor.setPipeline('Light2D');
   createPlayers(data);
 
   /*
@@ -47,7 +49,12 @@ const createPlayers = (data) => {
       data.playerSettings[i].context.offset.y
     );
 
+    player.setPipeline('Light2D');
     player.$data.settings = data.playerSettings[i];
+
+    let light = data.game.lights.addLight(player.x, player.y, 200);
+    player.$data.light = light;
+
     createPlayerAnimation(data.game, player, player.$data.settings.sprite);
     data.players.push(player);
   }
@@ -71,6 +78,9 @@ const limitPlayerMovement = function (player, pointer) {
     FLOOR_EDGE_POINTS.topLeft.y,
     FLOOR_EDGE_POINTS.bottomLeft.y
   );
+
+  player.$data.light.x = player.x;
+  player.$data.light.y = player.y;
 }
 
 const createPlayerAnimation = function (game, player, sprite) {

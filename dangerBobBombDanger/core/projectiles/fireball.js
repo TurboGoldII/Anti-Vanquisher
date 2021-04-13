@@ -25,6 +25,7 @@ class Fireball extends Projectile {
       'fireball'
     );
 
+    fireballTexture.setPipeline('Light2D');
     fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     fireballTexture.setImmovable();
 

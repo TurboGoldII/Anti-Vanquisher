@@ -2,6 +2,7 @@ const GAME_NAME = 'Anti-Vanquisher';
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 const FONT = 'pixel_font';
+const LIGHT_COLOR = 0x555555;
 
 /**
  * Determines the sound volume multiplier of all played sounds of the game. Will
