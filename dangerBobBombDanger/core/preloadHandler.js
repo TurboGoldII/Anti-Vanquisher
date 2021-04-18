@@ -12,7 +12,6 @@ const setWebsiteSettings = () => {
 const IMAGES = getReadOnlyObject([
   { name: 'debug_x', path: '../engine/assets/callouts/debug_x.png' },
   { name: 'lava', path: 'assets/stage/game_background.png' },
-  { name: 'fireball', path: 'assets/mob/fireball.png' },
   { name: 'iceball', path: 'assets/mob/iceball.png' },
   { name: 'homingball', path: 'assets/mob/homingball.png' },
   { name: 'loudspeaker_on', path: 'assets/callouts/loudspeaker_on.png' },
@@ -36,6 +35,16 @@ const preloadAudio = function (game) {
 };
 
 const SPRITE_SHEETS = getReadOnlyObject([
+  {
+    name: 'fireball',
+    path: 'assets/mob/fireball.png',
+    frame: { frameWidth: 16, frameHeight: 16 },
+    anim: {
+      frames: { start: 0, end: 1 },
+      frameRate: 5,
+      repeat: -1
+    }
+  },
   {
     name: 'crystal',
     path: 'assets/mob/red_crystal.png',

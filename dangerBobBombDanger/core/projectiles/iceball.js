@@ -50,7 +50,7 @@ class Iceball extends Projectile {
   #shootIceball() {
     var rndTurretPos = getRandomBorderPos();
 
-    this.iceballTexture = this.#game.physics.add.image(
+    this.iceballTexture = this.#game.physics.add.sprite(
       rndTurretPos.x,
       rndTurretPos.y,
       'iceball'

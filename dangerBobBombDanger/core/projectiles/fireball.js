@@ -19,12 +19,13 @@ class Fireball extends Projectile {
   #shootFireball() {
     var rndTurretPos = getRandomBorderPos();
 
-    var fireballTexture = this.#game.physics.add.image(
+    var fireballTexture = this.#game.physics.add.sprite(
       rndTurretPos.x,
       rndTurretPos.y,
       'fireball'
     );
 
+    fireballTexture.anims.play('fireball');
     fireballTexture.setPipeline('Light2D');
     fireballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     fireballTexture.setImmovable();
