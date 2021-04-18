@@ -7,7 +7,12 @@ class SceneSwitcher {
     this.setCurrentScene(sceneId);
   }
 
-  switchToScene(sceneId) {
+  switchToScene(oldScene, sceneId) {
+    /*
+     * TO-DO: Dayum! This in unperformant as hell. I found out that Phaser can
+     * swap scenes without having to re-render the entire game. Too bad.
+     */
+    oldScene.sys.game.destroy(true);
     this.setCurrentScene(sceneId);
     renderGame();
   }

@@ -1,7 +1,7 @@
 /* TO-DO: The global $this shall not be used and removed in the future. */
 var $this = null;
 /* The game shall start in the menu. */
-const $sceneSwitcher = new SceneSwitcher(SCENE_CORE_GAME);
+const $sceneSwitcher = new SceneSwitcher(SCENE_MAIN_MENU);
 var $soundHandler = null;
 var $player = null;
 var $gameId = 0;
@@ -34,6 +34,10 @@ function renderGame() {
    */
   function preload() {
     $this = this;
+
+    /* Assets used by every scene */
+    this.load.image('button', '../engine/assets/callouts/flixel_button.png');
+
     scene.preload(this);
   }
 
