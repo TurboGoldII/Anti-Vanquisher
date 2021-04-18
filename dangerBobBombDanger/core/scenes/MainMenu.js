@@ -13,7 +13,7 @@ class MainMenu extends Scene {
     let gameLogo = this.buttonFactory.createText(
       GAME_CENTER.x,
       50,
-      'Anti-Vanquisher',
+      GAME_NAME,
       { fill: '#bfffff' }
     );
 
