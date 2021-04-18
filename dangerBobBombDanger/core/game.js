@@ -1,7 +1,6 @@
 /* TO-DO: The global $this shall not be used and removed in the future. */
 var $this = null;
 /* The game shall start in the menu. */
-//const $sceneSwitcher = new SceneSwitcher(SCENE_MAIN_MENU);
 const $sceneSwitcher = new SceneSwitcher(SCENE_CORE_GAME);
 var $soundHandler = null;
 var $player = null;
@@ -14,7 +13,7 @@ function renderGame() {
     type: Phaser.AUTO,
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
-    backgroundColor: 0xbababa,
+    backgroundColor: 0x000000,
     physics: {
       default: 'arcade',
       arcade: {

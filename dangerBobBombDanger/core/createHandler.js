@@ -1,4 +1,4 @@
-const handlerCreate = function (data) {
+const handleCreate = function (data) {
   data.game.lights.enable().setAmbientColor(LIGHT_COLOR);
   ++$gameId;
   $soundHandler = new SoundHandler();

@@ -48,7 +48,7 @@ class CoreGame extends Scene {
   }
 
   create() {
-    handlerCreate(this.gameData);
+    handleCreate(this.gameData);
   }
 
   update() {

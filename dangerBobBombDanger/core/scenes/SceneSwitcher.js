@@ -43,6 +43,13 @@ class SceneSwitcher {
       case SCENE_HOW_TO:
         requestedScene = new HowTo();
         break;
+
+      case SCENE_CREDITS:
+        requestedScene = new Credits();
+        break;
+
+      default:
+        throw 'Scene not defined';
     }
 
     this.scenes[this.sceneId] = requestedScene;
