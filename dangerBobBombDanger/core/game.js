@@ -35,14 +35,30 @@ function startGame() {
 
   const EventBus = (function () {
     /* Private interface */
-    var queues = {};
-
+    var queues = {}
+    var updateQ = []
     // public interface
     return getReadOnlyObject({
       reset: function () {
         queues = {};
+        updateQ = [];
       },
-      updateFunctions: [],
+      updateFunctions: {
+        push: function (p) {
+          updateQ.push(p);
+        },
+        delete: function (h) {
+          const i = updateQ.findIndex(p => p.h === h);
+          if (i > -1) {
+            updateQ.splice(i, 1);
+          }
+        },
+        do: function () {
+          for (let i = 0; i < updateQ.length; i++) {
+            updateQ[i].f();
+          }
+        }
+      },
       // should be in initialization / create
       on: function (key, eventFunction) {
         if (!queues[key]) {
@@ -63,7 +79,7 @@ function startGame() {
 
   /* Private variables/constants of game */
   const data = {
-    playerSettings:[
+    playerSettings: [
       CHARACTERS[0]
     ],
     EventBus,
@@ -94,4 +110,14 @@ const setGameTimeout = function (eventFunction, timeout, breakFunction) {
 
     eventFunction();
   }, timeout);
+}
+
+const randomHash = (length) => {
+  var result = [];
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+  }
+  return result.join('');
 }

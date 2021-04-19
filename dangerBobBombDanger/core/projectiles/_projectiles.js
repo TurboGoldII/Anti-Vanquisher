@@ -2,13 +2,12 @@ class Projectile {
   // public variables
   collideWithPlayers = null;
   projectileHitPlayer = null;
-  
   // private static variables
   static #EventBus = null
   static #projectilesShot = 0;
   static #fireRate = PROJECTILE_START_FIRE_RATE;
   static #isInit = false;
-  static #game = null
+  static #game = null;
 
   constructor(collideWithPlayers) {
     if (new.target === Projectile) throw TypeError("Projectile Error");
