@@ -40,7 +40,7 @@ class Homingball extends Projectile {
 
   #huntPlayers() {
     try {
-      cl(this.#homingballTexture.body)
+      //cl(this.#homingballTexture.body)
       const o = this.#getNearesPlayerVelosity(50);
       if (o.distance2 < 50) {
         this.#homingballTexture.setVelocityX(o.vel.x);

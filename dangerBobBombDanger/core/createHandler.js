@@ -1,9 +1,11 @@
-const handlerCreate = function (data) {
+const handleCreate = function (data) {
+  data.game.lights.enable().setAmbientColor(LIGHT_COLOR);
   ++$gameId;
   $soundHandler = new SoundHandler();
   $soundHandler.playBackgroundMusic();
 
-  data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
+  let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
+  floor.setPipeline('Light2D');
   createPlayers(data);
 
   /*
@@ -31,6 +33,9 @@ const createPlayers = (data) => {
       data.playerSettings[i].sprite.name
     );
 
+    /* Disables the automatic physics pushing from the Phaser physics */
+    player.setImmovable();
+
     player.$data = {};
     player.setScale(data.playerSettings[i].context.scale);
 
@@ -44,7 +49,17 @@ const createPlayers = (data) => {
       data.playerSettings[i].context.offset.y
     );
 
+    player.setPipeline('Light2D');
     player.$data.settings = data.playerSettings[i];
+
+    let light = data.game.lights.addLight(
+      player.x,
+      player.y,
+      LIGHT_RADIUS_PLAYER
+    );
+
+    player.$data.light = light;
+
     createPlayerAnimation(data.game, player, player.$data.settings.sprite);
     data.players.push(player);
   }
@@ -68,12 +83,14 @@ const limitPlayerMovement = function (player, pointer) {
     FLOOR_EDGE_POINTS.topLeft.y,
     FLOOR_EDGE_POINTS.bottomLeft.y
   );
+
+  player.$data.light.x = player.x;
+  player.$data.light.y = player.y;
 }
 
 const createPlayerAnimation = function (game, player, sprite) {
   if (!game || !player || !sprite) {
-    cl('createPlayerAnimation error: !game || !player || !sprite');
-    return;
+    throw 'Insufficient data for player animation given (game, player or sprite was empty)';
   }
 
   /* animObject = { frames, frameRate, repeat } */
@@ -81,8 +98,7 @@ const createPlayerAnimation = function (game, player, sprite) {
   const name = sprite.name;
 
   if (!name || !animObject || !animObject.frames) {
-    cl('createPlayerAnimation error: !name || !animObject || !animObject.frames');
-    return;
+    throw 'Insufficient data for player animation given (name, animObject or animObject.frames was empty)';
   }
 
   const frames = animObject.frames;

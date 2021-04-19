@@ -14,21 +14,14 @@ class Iceball extends Projectile {
     this.iceballTexture.destroy();
     this.iceballTexture = null;
 
-    /*
-     * The arcade physics transfer a part of the iceballs velocity to the
-     * player thus is must be reset on every hit.
-     */
+    if (GOD_MODE) {
+      return;
+    }
 
-    player.setVelocityX(0);
-    player.setVelocityY(0);
     this.#game.anims.remove(player.$data.settings.sprite.name);
 
     if (player.$data.settings.frozenSprite) {
       player.setTexture(player.$data.settings.frozenSprite.name);
-
-      if (player.$data.settings.frozenSprite.anim) {
-        createPlayerAnimation(this.#game, player, player.$data.settings.frozenSprite);
-      }
     }
 
     this.#game.input._events.pointermove = null;
@@ -57,13 +50,14 @@ class Iceball extends Projectile {
   #shootIceball() {
     var rndTurretPos = getRandomBorderPos();
 
-    this.iceballTexture = this.#game.physics.add.image(
+    this.iceballTexture = this.#game.physics.add.sprite(
       rndTurretPos.x,
       rndTurretPos.y,
       'iceball'
     );
 
     this.iceballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
+    this.iceballTexture.setPipeline('Light2D');
     var that = this;
 
     for (let i = 0; i < this.collideWithPlayers.length; i++) {

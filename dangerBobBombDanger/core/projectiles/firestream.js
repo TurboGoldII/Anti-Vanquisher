@@ -13,6 +13,7 @@ class Firestream extends Projectile {
     var streamPos = calculateStreamStartPos();
     var laserCrystal = this.#game.add.sprite(streamPos.x, streamPos.y, 'crystal');
     laserCrystal.setScale(1.3);
+    laserCrystal.setPipeline('Light2D');
     laserCrystal.anims.play('crystal');
 
     setGameTimeout(() => {
@@ -30,24 +31,34 @@ class Firestream extends Projectile {
     );
 
     firestreamBuilding.setScale(2);
+    firestreamBuilding.setPipeline('Light2D');
     firestreamBuilding.anims.play('firelaser_building');
 
     firestreamBuilding.setSize(
       FIRESTREAM_BUILDING_HITBOX.x,
       FIRESTREAM_BUILDING_HITBOX.y
     );
+
     var that = this;
-    
+
     for (let i = 0; i < this.collideWithPlayers.length; i++) {
-      this.#game.physics.add.collider(this.collideWithPlayers[i], firestreamBuilding, function () { that.#projectileHitPlayer() });
+      this.#game.physics.add.collider(
+        this.collideWithPlayers[i],
+        firestreamBuilding,
+        () => { that.#projectileHitPlayer() }
+      );
     }
 
-    setGameTimeout(() => {
-      this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
-    }, FIRESTREAM_INIT_TIME, () => {
-      laserCrystal.destroy();
-      firestreamBuilding.destroy();
-    });
+    setGameTimeout(
+      () => {
+        this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
+      },
+      FIRESTREAM_INIT_TIME,
+      () => {
+        laserCrystal.destroy();
+        firestreamBuilding.destroy();
+      }
+    );
   }
 
   #shootFirestream(laserCrystal, streamPos, firestreamBuilding) {
@@ -58,6 +69,7 @@ class Firestream extends Projectile {
     );
 
     firestreamShooting.setScale(2);
+    firestreamShooting.setPipeline('Light2D');
     firestreamShooting.anims.play('firelaser_full_size');
 
     firestreamShooting.setSize(
@@ -69,7 +81,11 @@ class Firestream extends Projectile {
     var that = this;
 
     for (let i = 0; i < this.collideWithPlayers.length; i++) {
-      this.#game.physics.add.collider(this.collideWithPlayers[i], firestreamShooting, function () { that.projectileHitPlayer() });
+      this.#game.physics.add.collider(
+        this.collideWithPlayers[i],
+        firestreamShooting,
+        function () { that.projectileHitPlayer() }
+      );
     }
 
     setTimeout(() => {

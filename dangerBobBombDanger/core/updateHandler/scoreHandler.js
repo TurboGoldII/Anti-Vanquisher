@@ -84,28 +84,36 @@ const scoreSingleton = (function () {
      * @param {*} q = queues to communicate
      */
     init: function (EventBus) {
-      if (scoreCounterText) return;
+      if (scoreCounterText) {
+        return;
+      }
+
       EventBus.on('score', ev => {
         var score = ev.score;
         actualScore += score;
         scoreQ.push(score);
       });
+
       var textHandler = new TextHandler($this);
       const scoreBoardTextPosY = 17;
       textHandler.createText(10, scoreBoardTextPosY, GAME_NAME);
       textHandler.createText(575, scoreBoardTextPosY, 'Score:');
       var sratrScore = '';
+
       for (var i = 0; i < SCORE_MAXIMUM.toString().length; i++) {
         sratrScore += '0';
       }
+
       scoreCounterText = textHandler.createText(
         685,
         scoreBoardTextPosY,
         sratrScore
       );
     },
+
     getScore: function () {
       return actualScore;
     }
+
   });
 })();

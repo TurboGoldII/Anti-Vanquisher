@@ -5,7 +5,7 @@
   <meta charset="utf-8">
 
   <!-- HTML information -->
-  <title>Danger! Bomb! Danger!</title>
+  <title>Anti-Vanquisher</title>
   <link rel="icon" type="image/png" href="../engine/assets/logos/slacking_coders_logo_16x16.png" />
 
   <!-- JavaScript files -->
@@ -14,10 +14,12 @@
   <script src="../engine/api/utils/debug.js"></script>
   <script src="../engine/api/math/math.js"></script>
   <script src="../engine/api/utils/timer.js"></script>
+  <script src="../engine/api/utils/protection.js"></script>
+  <script src="../engine/settings/development.js"></script>
   <script src="settings/design.js"></script>
   <script src="settings/gameplay.js"></script>
   <script src="settings/hitboxes.js"></script>
-  <script src="core/game.js"></script>
+  <script src="core/scenes/scenes.js"></script>
   <script src="core/preloadHandler.js"></script>
   <script src="core/createHandler.js"></script>
   <script src="core/SoundHandler.js"></script>
@@ -25,11 +27,20 @@
   <script src="core/updateHandler/projectilesHandler.js"></script>
   <script src="core/updateHandler/scoreHandler.js"></script>
   <script src="core/TextHandler.js"></script>
+  <script src="gui/ButtonFactory.js"></script>
   <script src="core/projectiles/_projectiles.js"></script>
   <script src="core/projectiles/fireball.js"></script>
   <script src="core/projectiles/iceball.js"></script>
   <script src="core/projectiles/homingball.js"></script>
   <script src="core/projectiles/firestream.js"></script>
+  <script src="core/scenes/Scene.js"></script>
+  <script src="core/scenes/MainMenu.js"></script>
+  <script src="core/scenes/CoreGame.js"></script>
+  <script src="core/scenes/Highscores.js"></script>
+  <script src="core/scenes/HowTo.js"></script>
+  <script src="core/scenes/Credits.js"></script>
+  <script src="core/scenes/SceneSwitcher.js"></script>
+  <script src="core/game.js"></script>
 
   <!-- CSS files -->
   <link rel="stylesheet" href="gui/global.css">
@@ -52,7 +63,7 @@
   <div id="fontLoader">.</div>
 
   <script>
-    startGame();
+    renderGame();
   </script>
 
 </body>

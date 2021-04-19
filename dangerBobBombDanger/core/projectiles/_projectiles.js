@@ -2,6 +2,7 @@ class Projectile {
   // public variables
   collideWithPlayers = null;
   projectileHitPlayer = null;
+
   // private static variables
   static #EventBus = null
   static #projectilesShot = 0;
@@ -10,7 +11,10 @@ class Projectile {
   static #game = null;
 
   constructor(collideWithPlayers) {
-    if (new.target === Projectile) throw TypeError("Projectile Error");
+    if (new.target === Projectile) {
+      throw TypeError("The class Projectile is abstract and cannot be instanced.");
+    }
+
     this.collideWithPlayers = collideWithPlayers;
     this.#initFunctions();
     Projectile.#increaseProjectilesShot();
@@ -33,16 +37,20 @@ class Projectile {
   }
 
   static #projectileHitPlayer() {
+    if (GOD_MODE) {
+      return;
+    }
+
     Projectile.#EventBus.reset();
     scoreSingleton.reset();
     $soundHandler.stopBackgroundMusic();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
-    //Destroy registry
+    /* Destroy registry */
     Projectile.#game.registry.destroy();
-    //Disable all active events
+    /* Disable all active events */
     Projectile.#game.events.off();
-    //Restart current scene
+    /* Restart current scene */
     Projectile.#game.scene.restart();
   }
 
