@@ -1,4 +1,5 @@
 class MainMenu extends Scene {
+
   buttonFactory = null;
   #sceneSwitcher = null;
   #renderer = null;

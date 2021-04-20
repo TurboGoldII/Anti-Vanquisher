@@ -9,10 +9,10 @@ class SceneSwitcher {
 
   #initializeScenes(renderer) {
     this.#scenes[SCENE_MAIN_MENU] = new MainMenu(this, renderer);
-    this.#scenes[SCENE_CORE_GAME] = new CoreGame(renderer);
-    this.#scenes[SCENE_HIGHSCORES] = new Highscores();
-    this.#scenes[SCENE_HOW_TO] = new HowTo();
-    this.#scenes[SCENE_CREDITS] = new Credits(renderer);
+    this.#scenes[SCENE_CORE_GAME] = new CoreGame(this, renderer);
+    this.#scenes[SCENE_HIGHSCORES] = new Highscores(this, renderer);
+    this.#scenes[SCENE_HOW_TO] = new HowTo(this, renderer);
+    this.#scenes[SCENE_CREDITS] = new Credits(this, renderer);
   }
 
   get sceneId() {
@@ -44,16 +44,4 @@ class SceneSwitcher {
     this.#renderer.scene.restart();
   }
 
-  getCurrentScene() {
-    return this.#getSceneFromCache()
-  }
-
-  #getSceneFromCache() {
-    if (this.scenes[this.sceneId]) {
-      return this.scenes[this.sceneId];
-    }
-    else {
-      throw 'Scene not defined'
-    }
-  }
 }

@@ -1,10 +1,12 @@
 class Credits extends Scene {
 
   texter = null;
-  #renderer = null
+  #sceneSwitcher = null;
+  #renderer = null;
 
-  constructor(renderer) {
+  constructor(sceneSwitcher, renderer) {
     super();
+    this.#sceneSwitcher = sceneSwitcher;
     this.#renderer = renderer;
   }
 
