@@ -6,6 +6,8 @@ const handlePreload = function (data) {
 }
 
 const setWebsiteSettings = () => {
+  /* Removes the cursor from the game */
+  document.getElementsByTagName('canvas')[0].style.cursor = 'none';
   document.addEventListener('contextmenu', event => event.preventDefault());
 };
 

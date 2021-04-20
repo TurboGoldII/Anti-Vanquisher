@@ -2,7 +2,7 @@
 const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
     name: 'fireball',
-    probability: 0.8,
+    probability: 0.7,
     function(data) {
       new Fireball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
       data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
@@ -10,7 +10,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'iceball',
-    probability: 0.1,
+    probability: 0.2,
     function(data) {
       if (scoreSingleton.getScore() > 500) {
         new Iceball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
@@ -34,16 +34,18 @@ const getProbabilitiesArrayEntry = function (name) {
 };
 
 const checkPropabilitiesArray = function () {
-  var probability = 0;
+  let probability = 0.0;
+
   for (var i = 0; i < PROBABILITIES_ARRAY.length; i++) {
-    probability += PROBABILITIES_ARRAY[i].probability;
+    probability = sumFloats(probability, PROBABILITIES_ARRAY[i].probability);
+
     if (probability > 1.0) {
       throw TypeError("PROBABILITIES_ARRAY probabilities are over 1.0");
     }
   }
 
   if (probability < 1.0) {
-    throw TypeError("PROBABILITIES_ARRAY probabilities are blow 1.0");
+    throw TypeError("PROBABILITIES_ARRAY probabilities are below 1.0");
   }
 };
 
