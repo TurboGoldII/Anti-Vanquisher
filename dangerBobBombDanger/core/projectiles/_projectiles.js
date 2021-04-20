@@ -68,6 +68,7 @@ const getVelocityToPlayer = function (src, player, velocity) {
   if (!velocity) {
     velocity = PROJECTILE_VELOCITY;
   }
+
   var dest = {
     x: player.x,
     y: player.y
