@@ -23,18 +23,21 @@ class Homingball extends Projectile {
     let minDistance = Number.MAX_SAFE_INTEGER;
     let vel = null;
     let player = null;
+
     for (let i = 0; i < this.#playersHunt.length; i++) {
       const playerPos = { x: this.#playersHunt[i].x, y: this.#playersHunt[i].y };
       let dest = getVelocityToPlayer(ballPos, playerPos, v);
       const a = dest.x - ballPos.x;
       const b = dest.y - ballPos.y;
       let distance = Math.sqrt(a * a + b * b);
+
       if (distance < minDistance) {
         minDistance = distance;
         vel = dest;
         player = this.#playersHunt[i];
       }
     }
+
     return { vel, player, distance: minDistance, distance2: Phaser.Math.Distance.Between(ballPos.x, ballPos.y, player.x, player.y) };
   }
 
@@ -42,6 +45,7 @@ class Homingball extends Projectile {
     try {
       //cl(this.#homingballTexture.body)
       const o = this.#getNearesPlayerVelosity(50);
+
       if (o.distance2 < 50) {
         this.#homingballTexture.setVelocityX(o.vel.x);
         this.#homingballTexture.setVelocityY(o.vel.y);
@@ -66,6 +70,8 @@ class Homingball extends Projectile {
       rndTurretPos.y,
       'homingball'
     );
+
+    this.#homingballTexture.setImmovable();
 
     const that = this;
     this.#homingballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);

@@ -38,7 +38,7 @@ class Fireball extends Projectile {
 
     /* The fireball shall fly to the players current position */
     let velocityHandler = new VelocityHandler(fireballTexture);
-    velocityHandler.move(this.#shootToPos, PROJECTILE_VELOCITY);
+    velocityHandler.shoot(this.#shootToPos, PROJECTILE_VELOCITY);
 
     /* Removes the fireball texture after a time to keep the memory clean */
     setTimeout(() => {

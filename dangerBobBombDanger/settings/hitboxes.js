@@ -1,14 +1,14 @@
 const PLAYER_HITBOX = {
-  x: 10,
-  y: 10
+  x: 9,
+  y: 9
 };
 
 /**
  * The hitbox offset is used to place the hitbox in the middle of the sprite.
  */
 const PLAYER_HITBOX_OFFSET = {
-  x: PLAYER_HITBOX.x - 4.5,
-  y: PLAYER_HITBOX.y - 0.5
+  x: PLAYER_HITBOX.x - 3,
+  y: PLAYER_HITBOX.y + 1
 };
 
 const FIREBALL_HITBOX = getReadOnlyObject({

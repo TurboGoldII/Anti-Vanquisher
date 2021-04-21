@@ -33,12 +33,7 @@ class Iceball extends Projectile {
 
       player.setTexture(player.$data.settings.sprite.name);
       createPlayerAnimation(this.#game, player, player.$data.settings.sprite);
-
-      const limitPlayerMovementEvent = (pointer) => {
-        limitPlayerMovement(player, pointer)
-      }
-
-      this.#game.input.on('pointermove', limitPlayerMovementEvent, this.#game);
+      //TO-DO: Implement freezing to new movement system
     }, ICEBALL_FROZEN_TIME);
   }
 
@@ -55,6 +50,8 @@ class Iceball extends Projectile {
       rndTurretPos.y,
       'iceball'
     );
+
+    this.iceballTexture.setImmovable();
 
     this.iceballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     this.iceballTexture.setPipeline('Light2D');

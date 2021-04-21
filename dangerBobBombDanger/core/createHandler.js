@@ -7,19 +7,6 @@ const handleCreate = function (data) {
   let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
   floor.setPipeline('Light2D');
   createPlayers(data);
-
-  /*
-   * TO-DO: The current implementation sticks the player to the mouse. By
-   * leaving the canvas with the mouse, the player character can be
-   * teleported. A better implementation would be to accellerate the players
-   * movement into the mouse cursors direction.
-   */
-
-  const limitPlayerMovementEvent = (pointer) => {
-    limitPlayerMovement(data.players[0], pointer)
-  }
-
-  data.game.input.on('pointermove', limitPlayerMovementEvent);
   scoreSingleton.init(data.EventBus);
   Projectile.init(data);
   createAnimations(data.game);
@@ -63,29 +50,6 @@ const createPlayers = (data) => {
     createPlayerAnimation(data.game, player, player.$data.settings.sprite);
     data.players.push(player);
   }
-}
-
-/**
- * Sadly, these stage bounds here always have to be fine-tuned by the
- * programmer. Test it out, once the right textures are installed.
- * 
- * @param {object} pointer 
- */
-const limitPlayerMovement = function (player, pointer) {
-  player.x = Phaser.Math.Clamp(
-    pointer.x,
-    FLOOR_EDGE_POINTS.topLeft.x,
-    FLOOR_EDGE_POINTS.topRight.x
-  );
-
-  player.y = Phaser.Math.Clamp(
-    pointer.y,
-    FLOOR_EDGE_POINTS.topLeft.y,
-    FLOOR_EDGE_POINTS.bottomLeft.y
-  );
-
-  player.$data.light.x = player.x;
-  player.$data.light.y = player.y;
 }
 
 const createPlayerAnimation = function (game, player, sprite) {

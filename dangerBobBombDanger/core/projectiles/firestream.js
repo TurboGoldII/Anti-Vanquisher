@@ -34,6 +34,8 @@ class Firestream extends Projectile {
     firestreamBuilding.setPipeline('Light2D');
     firestreamBuilding.anims.play('firelaser_building');
 
+    firestreamBuilding.setImmovable();
+
     firestreamBuilding.setSize(
       FIRESTREAM_BUILDING_HITBOX.x,
       FIRESTREAM_BUILDING_HITBOX.y
@@ -71,6 +73,8 @@ class Firestream extends Projectile {
     firestreamShooting.setScale(2);
     firestreamShooting.setPipeline('Light2D');
     firestreamShooting.anims.play('firelaser_full_size');
+
+    firestreamShooting.setImmovable();
 
     firestreamShooting.setSize(
       FIRESTREAM_HITBOX.x,
