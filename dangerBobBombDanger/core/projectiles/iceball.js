@@ -24,16 +24,16 @@ class Iceball extends Projectile {
       player.setTexture(player.$data.settings.frozenSprite.name);
     }
 
-    this.#game.input._events.pointermove = null;
+    player.isFrozen = true;
 
     setGameTimeout(() => {
       if (player.$data.settings.frozenSprite && player.$data.settings.frozenSprite.anim) {
         this.#game.anims.remove(player.$data.settings.frozenSprite.name);
       }
 
+      player.isFrozen = false;
       player.setTexture(player.$data.settings.sprite.name);
       createPlayerAnimation(this.#game, player, player.$data.settings.sprite);
-      //TO-DO: Implement freezing to new movement system
     }, ICEBALL_FROZEN_TIME);
   }
 
@@ -52,7 +52,6 @@ class Iceball extends Projectile {
     );
 
     this.iceballTexture.setImmovable();
-
     this.iceballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
     this.iceballTexture.setPipeline('Light2D');
     var that = this;
@@ -63,9 +62,7 @@ class Iceball extends Projectile {
 
     //The fireball shall fly to the players current position
     var dest = getVelocityToPlayer(rndTurretPos, this.#shootToPos, PROJECTILE_VELOCITY * 0.75);
-
-    this.iceballTexture.setVelocityX(dest.x);
-    this.iceballTexture.setVelocityY(dest.y);
+    this.iceballTexture.setVelocity(dest.x, dest.y);
 
     //Removes the fireball texture after a time to keep the memory clean
     setTimeout(() => {
