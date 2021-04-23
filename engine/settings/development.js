@@ -1,4 +1,4 @@
-/* 
+/*
  * This file contains all options that are useful for development but
  * should be disabled in the live version of the game.
  */

@@ -62,12 +62,6 @@ const START_POS = getReadOnlyObject([
  * it he is accelerated every frame anyway.
  */
 PLAYER_MOVEMENT_SPEED = 1;
-/**
- * Cannot be set to 0 because then the player would fiddle around the cursor
- * due to rounding errors. The higher this is set, the more unresponsive
- * the controls get, therefore act with caution.
- */
-PLAYER_ALLOWED_DEVIATION_TO_POINTER = 2;
 
 /* Projectile constants */
 const PROJECTILES_PROBABILITIES = probabilitiesArray.sort((a, b) => a.probability - b.probability);

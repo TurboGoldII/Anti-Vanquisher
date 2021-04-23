@@ -47,7 +47,9 @@ class VelocityHandler {
    * 
    * TO-DO: This feature would be really hard to implement. The complete game
    * loop would have to be adjusted with the engine in mind, so that the object
-   * can be stopped at the right moment in the queue.
+   * can be stopped at the right moment in the queue. It must be implemented
+   * by taking the vector length to the target point and cap the velocity
+   * and therefore the actual vector length to the exact requested distance.
    * 
    * @param {object} target 
    * @param {integer} velocity 
