@@ -7,8 +7,8 @@ const PLAYER_HITBOX = {
  * The hitbox offset is used to place the hitbox in the middle of the sprite.
  */
 const PLAYER_HITBOX_OFFSET = {
-  x: PLAYER_HITBOX.x - 3,
-  y: PLAYER_HITBOX.y + 1
+  x: PLAYER_HITBOX.x - 2,
+  y: PLAYER_HITBOX.y
 };
 
 const FIREBALL_HITBOX = getReadOnlyObject({
@@ -29,17 +29,17 @@ const FIRESTREAM_HITBOX = getReadOnlyObject({
 const CHARACTERS = getReadOnlyObject([
   {
     context: {
-      scale: 2.4,
+      scale: 2,
       hitbox: { x: PLAYER_HITBOX.x, y: PLAYER_HITBOX.y },
       offset: { x: PLAYER_HITBOX_OFFSET.x, y: PLAYER_HITBOX_OFFSET.y }
     },
     sprite: {
       name: 'bobOmb',
       path: 'assets/bobOmb.png',
-      frame: { frameWidth: 21, frameHeight: 24 },
+      frame: { frameWidth: 24, frameHeight: 24 },
       anim: {
         frames: { start: 0, end: 7 },
-        frameRate: 10,
+        frameRate: 8,
         repeat: -1
       }
     },
