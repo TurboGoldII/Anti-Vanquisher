@@ -2,15 +2,16 @@ class CoreGame extends Scene {
 
   gameData = null;
   #sceneSwitcher = null;
-  #renderer = null;
+  renderer = null;
 
   constructor(sceneSwitcher, renderer) {
     super();
     this.#sceneSwitcher = sceneSwitcher;
-    this.#renderer = renderer;
+    this.renderer = renderer;
   }
 
   preload() {
+    super.preload();
     const EventBus = (function () {
       /* Private interface */
       var queues = {}
@@ -61,7 +62,7 @@ class CoreGame extends Scene {
         CHARACTERS[0]
       ],
       EventBus,
-      game: this.#renderer,
+      game: this.renderer,
       players: []
     };
 
@@ -69,10 +70,12 @@ class CoreGame extends Scene {
   }
 
   create() {
+    super.create();
     handleCreate(this.gameData);
   }
 
   update() {
+    super.update();
     resetTimer();
     handleUpdate(this.gameData);
   }

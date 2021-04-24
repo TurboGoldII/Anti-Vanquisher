@@ -2,16 +2,17 @@ class MainMenu extends Scene {
 
   buttonFactory = null;
   #sceneSwitcher = null;
-  #renderer = null;
+  renderer = null;
 
   constructor(sceneSwitcher, renderer) {
     super();
     this.#sceneSwitcher = sceneSwitcher;
-    this.#renderer = renderer;
+    this.renderer = renderer;
   }
 
   preload() {
-    this.buttonFactory = new ButtonFactory(this.#renderer);
+    super.preload();
+    this.buttonFactory = new ButtonFactory(this.renderer);
   }
 
   create() {
@@ -50,6 +51,9 @@ class MainMenu extends Scene {
       'Credits',
       () => { this.#sceneSwitcher.scene = SCENE_CREDITS; }
     );
+
+    /* Must be called at the end, so that the cursor is above the buttons */
+    super.create();
   }
 
   #addMenuButton(posY, label, onclick) {
@@ -63,7 +67,7 @@ class MainMenu extends Scene {
   }
 
   update() {
-
+    super.update();
   }
 
 }

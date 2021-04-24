@@ -2,9 +2,13 @@ body {
   background-color: dimgrey;
 }
 
+canvas {
+  cursor: none;
+}
+
 #fontLoader {
-  font-family: pixel_font; 
-  position: absolute; 
-  left: -1000px; 
+  font-family: pixel_font;
+  position: absolute;
+  left: -1000px;
   visibility: hidden;
 }

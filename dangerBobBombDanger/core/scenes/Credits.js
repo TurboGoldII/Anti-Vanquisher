@@ -2,16 +2,17 @@ class Credits extends Scene {
 
   texter = null;
   #sceneSwitcher = null;
-  #renderer = null;
+  renderer = null;
 
   constructor(sceneSwitcher, renderer) {
     super();
     this.#sceneSwitcher = sceneSwitcher;
-    this.#renderer = renderer;
+    this.renderer = renderer;
   }
 
   preload() {
-    this.texter = new TextHandler(this.#renderer);
+    super.preload();
+    this.texter = new TextHandler(this.renderer);
 
     /*
      * It takes the Phaser engine a really short time to load the font. The font
@@ -26,12 +27,14 @@ class Credits extends Scene {
     let linePos = 50;
     let categoryLineOffset = 35;
     let categoryProps = { fill: '#bfffff' };
+
     let headline = this.texter.createText(
       GAME_CENTER.x,
       linePos,
       'CREDITS',
       categoryProps
     );
+
     headline.setOrigin(0.5);
     let lineOffset = 35;
 
@@ -74,11 +77,11 @@ class Credits extends Scene {
   }
 
   create() {
-
+    super.create();
   }
 
   update() {
-
+    super.update();
   }
 
 }

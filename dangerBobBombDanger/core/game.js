@@ -1,12 +1,11 @@
 /* TO-DO: The global $this shall not be used and removed in the future. */
 var $this = null;
-/* The game shall start in the menu. */
-// const $sceneSwitcher = new SceneSwitcher(SCENE_MAIN_MENU);
 var $soundHandler = null;
 var $player = null;
 var $gameId = 0;
 
 function renderGame() {
+  /* The game shall start in the menu. */
   const sceneSwitcher = new SceneSwitcher(SCENE_MAIN_MENU);
 
   var config = {
