@@ -12,15 +12,6 @@ class Credits extends MenuNavigation {
 
   preload() {
     super.preload();
-    this.texter = new TextHandler(this.renderer);
-
-    /*
-     * It takes the Phaser engine a really short time to load the font. The font
-     * must be loaded asynchronously here.
-     */
-    setTimeout(() => {
-      this.#printText();
-    }, 0);
   }
 
   #printText() {
@@ -77,6 +68,8 @@ class Credits extends MenuNavigation {
   }
 
   create() {
+    this.texter = new TextHandler(this.renderer);
+    this.#printText();
     super.create();
   }
 
