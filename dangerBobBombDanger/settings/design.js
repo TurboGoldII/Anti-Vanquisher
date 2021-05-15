@@ -3,12 +3,12 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 const FONT = 'pixel_font';
 const FONT_FILL = '#ffffff';
-const LIGHT_RADIUS_PLAYER = 150;
+const LIGHT_RADIUS_PLAYER = 130;
 /*
  * The light for the firefly cannot be smaller than 70 because then it is not
  * visible anymore.
  */
-const LIGHT_RADIUS_FIREFLY = 70;
+const LIGHT_RADIUS_FIREFLY = 40;
 const LIGHT_COLOR = 0x555555;
 
 /**

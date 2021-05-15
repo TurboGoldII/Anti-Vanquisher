@@ -53,7 +53,6 @@ const createPlayers = (data) => {
       data.playerSettings[i].context.offset.y
     );
 
-    player.setPipeline('Light2D');
     player.$data.settings = data.playerSettings[i];
 
     let playerLight = data.game.lights.addLight(
