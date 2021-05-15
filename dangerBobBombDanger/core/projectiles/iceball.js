@@ -14,10 +14,6 @@ class Iceball extends Projectile {
     this.iceballTexture.destroy();
     this.iceballTexture = null;
 
-    if (GOD_MODE) {
-      return;
-    }
-
     this.#game.anims.remove(player.$data.settings.sprite.name);
 
     if (player.$data.settings.frozenSprite) {

@@ -51,7 +51,7 @@ const CHARACTERS = getReadOnlyObject([
     frozenSprite: {
       name: 'frozenBobOmb',
       path: 'assets/frozenBobOmb.png',
-      frame: { frameWidth: 21, frameHeight: 24 },
+      frame: { frameWidth: 24, frameHeight: 24 },
       anim: null
     }
   }
