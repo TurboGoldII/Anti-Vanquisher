@@ -11,7 +11,6 @@ class SceneSwitcher {
     this.#scenes[SCENE_MAIN_MENU] = new MainMenu(this, renderer);
     this.#scenes[SCENE_CORE_GAME] = new CoreGame(this, renderer);
     this.#scenes[SCENE_HIGHSCORES] = new Highscores(this, renderer);
-    this.#scenes[SCENE_HOW_TO] = new HowTo(this, renderer);
     this.#scenes[SCENE_CREDITS] = new Credits(this, renderer);
   }
 

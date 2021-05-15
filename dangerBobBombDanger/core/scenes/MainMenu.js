@@ -26,18 +26,12 @@ class MainMenu extends Scene {
 
     gameLogo.setOrigin(0.5);
     let linePos = 170;
-    let lineOffset = 100;
+    let lineOffset = 130;
 
     this.#addMenuButton(
       linePos,
       'Play',
       () => { this.#sceneSwitcher.scene = SCENE_CORE_GAME; }
-    );
-
-    this.#addMenuButton(
-      (linePos += lineOffset),
-      'How to play',
-      () => { this.#sceneSwitcher.scene = SCENE_HOW_TO; }
     );
 
     this.#addMenuButton(

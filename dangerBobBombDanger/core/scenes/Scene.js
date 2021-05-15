@@ -39,6 +39,12 @@ class Scene {
     const mousePos = this.renderer.input.mousePointer;
     this.#firefly.x = mousePos.x;
     this.#firefly.y = mousePos.y;
+
+    this.renderer.lights.addLight(
+      this.#firefly.x,
+      this.#firefly.y,
+      LIGHT_RADIUS_FIREFLY
+    );
   }
 
 }
