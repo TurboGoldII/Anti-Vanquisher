@@ -73,14 +73,9 @@ class Firestream extends Projectile {
     firestreamShooting.setScale(2);
     firestreamShooting.setPipeline('Light2D');
     firestreamShooting.anims.play('firelaser_full_size');
-
     firestreamShooting.setImmovable();
-
-    firestreamShooting.setSize(
-      FIRESTREAM_HITBOX.x,
-      FIRESTREAM_HITBOX.y
-    );
-
+    firestreamShooting.setSize(FIRESTREAM_HITBOX.x, FIRESTREAM_HITBOX.y);
+    firestreamShooting.setOffset(FIRESTREAM_HITBOX_OFFSET.x, FIRESTREAM_HITBOX_OFFSET.y);
     firestreamBuilding.destroy();
     var that = this;
 

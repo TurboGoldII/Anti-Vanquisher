@@ -26,6 +26,11 @@ const FIRESTREAM_HITBOX = getReadOnlyObject({
   y: FIRESTREAM_BUILDING_HITBOX.y
 });
 
+const FIRESTREAM_HITBOX_OFFSET = getReadOnlyObject({
+  x: 4,
+  y: 0
+});
+
 const CHARACTERS = getReadOnlyObject([
   {
     context: {
