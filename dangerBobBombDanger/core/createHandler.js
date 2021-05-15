@@ -10,7 +10,8 @@ const handleCreate = function (data) {
   scoreSingleton.init(data.EventBus);
   Projectile.init(data);
   createAnimations(data.game);
-}
+  printStartCountdown(data);
+};
 
 const createPlayers = (data) => {
   for (let i = 0; i < data.playerSettings.length; i++) {
@@ -65,7 +66,7 @@ const createPlayers = (data) => {
     createPlayerAnimation(data.game, player, player.$data.settings.sprite);
     data.players.push(player);
   }
-}
+};
 
 const createPlayerAnimation = function (game, player, sprite) {
   if (!game || !player || !sprite) {
@@ -92,7 +93,7 @@ const createPlayerAnimation = function (game, player, sprite) {
   });
 
   player.anims.play(name);
-}
+};
 
 const createAnimations = function (game) {
   for (let i = 0; i < SPRITE_SHEETS.length; i++) {
@@ -105,4 +106,34 @@ const createAnimations = function (game) {
       });
     }
   }
-}
+};
+
+/**
+ * Prints the 3 - 2 - 1 - GO start countdown. The setTimeout cluster is not
+ * very beautiful.
+ *
+ * @param {object} data Full game data
+ */
+const printStartCountdown = (data) => {
+  data.game.scene.pause();
+  let texter = new TextHandler(data.game);
+  let text = texter.createText(GAME_CENTER.x, GAME_CENTER.y, '3');
+  text.setOrigin(0.5);
+
+  setTimeout(() => {
+    text.text = '2';
+
+    setTimeout(() => {
+      text.text = '1';
+
+      setTimeout(() => {
+        text.text = 'GO';
+
+        setTimeout(() => {
+          text.destroy();
+          data.game.scene.resume();
+        }, 1000);
+      }, 1000);
+    }, 1000);
+  }, 1000);
+};
