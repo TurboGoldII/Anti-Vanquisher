@@ -1,10 +1,10 @@
-class Highscores extends Scene {
+class Highscores extends MenuNavigation {
 
   #sceneSwitcher = null;
   renderer = null;
 
   constructor(sceneSwitcher, renderer) {
-    super();
+    super(sceneSwitcher);
     this.#sceneSwitcher = sceneSwitcher;
     this.renderer = renderer;
   }

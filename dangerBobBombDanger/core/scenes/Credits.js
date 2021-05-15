@@ -1,11 +1,11 @@
-class Credits extends Scene {
+class Credits extends MenuNavigation {
 
   texter = null;
   #sceneSwitcher = null;
   renderer = null;
 
   constructor(sceneSwitcher, renderer) {
-    super();
+    super(sceneSwitcher);
     this.#sceneSwitcher = sceneSwitcher;
     this.renderer = renderer;
   }

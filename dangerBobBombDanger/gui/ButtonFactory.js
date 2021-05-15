@@ -1,10 +1,12 @@
 class ButtonFactory extends TextHandler {
 
-  createButton(posX, posY, text, fontProps, onclick) {
-    let buttonBackground = this.game.add.image(posX, posY, 'button')
-      .setInteractive();
+  createButton(posX, posY, text, fontProps, onclick, texture) {
+    if (!texture) {
+      texture = 'button';
+    }
 
-    /* TO-DO The buttons look horrible. Create textures for these! */
+    let buttonBackground = this.game.add.image(posX, posY, texture)
+      .setInteractive();
 
     buttonBackground.on('pointerover', function (event) {
       this.setTintFill(0xebb92f);

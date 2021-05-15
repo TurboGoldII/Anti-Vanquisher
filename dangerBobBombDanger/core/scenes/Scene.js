@@ -3,14 +3,12 @@ class Scene {
   renderer = null;
   #firefly = null;
 
-  constructor() {
-    /* This guard simulates abstraction. */
-    if (new.target === Scene) {
-      throw "The class Scene is abstract and cannot be instanced.";
-    }
-  }
-
   preload() {
+    this.renderer.load.image(
+      'buttonSmall',
+      '../engine/assets/callouts/flixel_button_small.png'
+    );
+
     this.renderer.load.spritesheet(
       'firefly',
       'assets/mob/firefly.png',
