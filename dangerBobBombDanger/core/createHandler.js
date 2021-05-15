@@ -14,6 +14,22 @@ const handleCreate = function (data) {
 
 const createPlayers = (data) => {
   for (let i = 0; i < data.playerSettings.length; i++) {
+    let firefly = data.game.add.sprite(
+      START_POS[i].x,
+      START_POS[i].y,
+      'firefly'
+    );
+
+    let fireflyLight = data.game.lights.addLight(
+      firefly.x,
+      firefly.y,
+      LIGHT_RADIUS_FIREFLY
+    );
+
+    firefly.anims.play('firefly_bobbing');
+    firefly.$data = {};
+    firefly.$data.light = fireflyLight;
+
     let player = data.game.physics.add.sprite(
       START_POS[i].x,
       START_POS[i].y,
@@ -22,8 +38,8 @@ const createPlayers = (data) => {
 
     /* Disables the automatic physics pushing from the Phaser physics */
     player.setImmovable();
-
     player.$data = {};
+    player.$data.firefly = firefly;
     player.setScale(data.playerSettings[i].context.scale);
 
     player.setSize(
@@ -39,14 +55,13 @@ const createPlayers = (data) => {
     player.setPipeline('Light2D');
     player.$data.settings = data.playerSettings[i];
 
-    let light = data.game.lights.addLight(
+    let playerLight = data.game.lights.addLight(
       player.x,
       player.y,
       LIGHT_RADIUS_PLAYER
     );
 
-    player.$data.light = light;
-
+    player.$data.light = playerLight;
     createPlayerAnimation(data.game, player, player.$data.settings.sprite);
     data.players.push(player);
   }

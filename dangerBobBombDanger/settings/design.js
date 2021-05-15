@@ -4,6 +4,11 @@ const GAME_HEIGHT = 600;
 const FONT = 'pixel_font';
 const FONT_FILL = '#ffffff';
 const LIGHT_RADIUS_PLAYER = 150;
+/*
+ * The light for the firefly cannot be smaller than 70 because then it is not
+ * visible anymore.
+ */
+const LIGHT_RADIUS_FIREFLY = 70;
 const LIGHT_COLOR = 0x555555;
 
 /**
@@ -24,7 +29,7 @@ const GAME_CENTER = {
 /*
  * These are the coordinates of the middle of the floating floor on the lava.
  * It is the middle of the stage the player is able to move in.
- * 
+ *
  * The stage itself shall take up to 3/4 of the game, so that a beam laser
  * can be placed above the stage.
  */

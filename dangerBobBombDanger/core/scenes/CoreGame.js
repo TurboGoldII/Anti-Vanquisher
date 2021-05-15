@@ -16,7 +16,7 @@ class CoreGame extends Scene {
       /* Private interface */
       var queues = {}
       var updateQ = []
-      // public interface
+      /* Public interface */
       return getReadOnlyObject({
         reset: function () {
           queues = {};
@@ -28,6 +28,7 @@ class CoreGame extends Scene {
           },
           delete: function (h) {
             const i = updateQ.findIndex(p => p.h === h);
+
             if (i > -1) {
               updateQ.splice(i, 1);
             }
@@ -43,6 +44,7 @@ class CoreGame extends Scene {
           if (!queues[key]) {
             queues[key] = [];
           }
+
           queues[key].push(eventFunction);
         },
         // should be in update loop
@@ -70,12 +72,10 @@ class CoreGame extends Scene {
   }
 
   create() {
-    super.create();
     handleCreate(this.gameData);
   }
 
   update() {
-    super.update();
     resetTimer();
     handleUpdate(this.gameData);
   }
@@ -86,8 +86,10 @@ const randomHash = (length) => {
   var result = [];
   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var charactersLength = characters.length;
+
   for (var i = 0; i < length; i++) {
     result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
   }
+
   return result.join('');
 }
