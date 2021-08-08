@@ -2,7 +2,7 @@
 const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
     name: 'fireball',
-    probability: 0.7,
+    probability: 0.6,
     function(data) {
       new Fireball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
       data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
@@ -10,7 +10,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'iceball',
-    probability: 0.2,
+    probability: 0.35,
     function(data) {
       if (scoreSingleton.getScore() > 500) {
         new Iceball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
@@ -22,9 +22,14 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'homingball',
-    probability: 0.1,
+    probability: 0.14,
     function(data) {
-      new Homingball(data.players, data.players, data.game, data.EventBus);
+      if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < 11) {
+        new Homingball(data.players, data.players, data.game, data.EventBus);
+      }
+      else {
+        getProbabilitiesArrayEntry('iceball').function(data);
+      }
     }
   }
 ]);
@@ -40,12 +45,12 @@ const checkPropabilitiesArray = function () {
     probability = sumFloats(probability, PROBABILITIES_ARRAY[i].probability);
 
     if (probability > 1.0) {
-      throw TypeError("PROBABILITIES_ARRAY probabilities are over 1.0");
+      throw TypeError("PROBABILITIES_ARRAY probabilities are over 1.0 (prop: " + probability + ")");
     }
   }
 
   if (probability < 1.0) {
-    throw TypeError("PROBABILITIES_ARRAY probabilities are below 1.0");
+    throw TypeError("PROBABILITIES_ARRAY probabilities are below 1.0 (prop: " + probability + ")");
   }
 };
 

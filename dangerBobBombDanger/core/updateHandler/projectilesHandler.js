@@ -7,6 +7,18 @@ const handleProjectiles = function (data) {
     new Firestream(data.players, data.game);
     data.EventBus.emit('score', { score: SCORE_INCREMENT_FIRESTREAM });
   }
+
+  homingballRangeUpgrader();
+}
+
+const homingballRangeUpgrader = () => {
+  const score = scoreSingleton.getScore();
+
+  if (score > Homingball.scoreWhenRangeGetsBigger && Homingball.lightRange < 200) {
+    Homingball.scoreWhenRangeGetsBigger += 500;
+    Homingball.lightRange += 10;
+  }
+
 }
 
 const shootRandomProjectile = function (data) {

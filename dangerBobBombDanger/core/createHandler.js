@@ -114,6 +114,7 @@ const createAnimations = function (game) {
  * @param {object} data Full game data
  */
 const printStartCountdown = (data) => {
+  return
   data.game.scene.pause();
   let texter = new TextHandler(data.game);
   let text = texter.createText(GAME_CENTER.x, GAME_CENTER.y, '3');
