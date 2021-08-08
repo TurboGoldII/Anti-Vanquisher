@@ -24,7 +24,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     name: 'homingball',
     probability: 0.14,
     function(data) {
-      if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < 11) {
+      if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < Homingball.maxNumberOfBalls) {
         new Homingball(data.players, data.players, data.game, data.EventBus);
       }
       else {

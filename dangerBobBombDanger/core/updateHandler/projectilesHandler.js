@@ -14,7 +14,7 @@ const handleProjectiles = function (data) {
 const homingballRangeUpgrader = () => {
   const score = scoreSingleton.getScore();
 
-  if (score > Homingball.scoreWhenRangeGetsBigger && Homingball.lightRange < 200) {
+  if (score > Homingball.scoreWhenRangeGetsBigger && Homingball.lightRange < Homingball.maxRange) {
     Homingball.scoreWhenRangeGetsBigger += 500;
     Homingball.lightRange += 10;
   }

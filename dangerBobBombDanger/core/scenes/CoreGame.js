@@ -21,6 +21,7 @@ class CoreGame extends Scene {
         reset: function () {
           queues = {};
           updateQ = [];
+          Homingball.reset();
         },
         updateFunctions: {
           push: function (p) {

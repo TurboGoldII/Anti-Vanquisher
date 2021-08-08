@@ -7,10 +7,10 @@
  * Setting this option to true shows the hitboxes and the directional vectors
  * in the physics engine.
  */
-const DEBUG_BOXES = true;
+const DEBUG_BOXES = false;
 
 /**
  * The god mode should be implemented to make the player invincible in order
  * to speed up the development process.
  */
-const GOD_MODE = true;
+const GOD_MODE = false;

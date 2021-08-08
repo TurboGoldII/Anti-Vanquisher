@@ -2,6 +2,8 @@ class Homingball extends Projectile {
   static numberOfHomingBalls = 0;
   static lightRange = 75;
   static scoreWhenRangeGetsBigger = 1500;
+  static maxNumberOfBalls = 8;
+  static maxRange = 150;
   #game = null;
   #playersHunt = null;
   #homingballTexture = null;
@@ -24,6 +26,12 @@ class Homingball extends Projectile {
     this.#EventBus = EventBus;
     this.#projectileHitPlayer = this.projectileHitPlayer;
     this.#shootHomingball();
+  }
+
+  static reset() {
+    Homingball.numberOfHomingBalls = 0;
+    Homingball.lightRange = 75;
+    Homingball.scoreWhenRangeGetsBigger = 1500;
   }
 
   #getNearesPlayerVelosity(v) {
