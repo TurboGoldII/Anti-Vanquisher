@@ -1,5 +1,4 @@
 class VelocityHandler {
-
   /**
    * Moves the affected object into the targets direction with the given
    * velocity. It is called "shoot" because it DOES NOT stop at the target's
@@ -10,9 +9,16 @@ class VelocityHandler {
    * @param {integer} velocity
    */
   static shoot(affectedObject, target, velocity) {
+    let n = 0;
+
+    if (getRandomNumber(0, 1) < 0.5) {
+      const dif = 100;
+      n = getRandomNumber(-dif, dif);
+    }
+
     let angle = {
-      x: target.x - affectedObject.x,
-      y: target.y - affectedObject.y
+      x: target.x - affectedObject.x + n,
+      y: target.y - affectedObject.y + n
     };
 
     let speedX = Math.abs(angle.x);

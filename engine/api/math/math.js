@@ -29,3 +29,7 @@ function sumFloats(a, b, fractionDigits) {
   var result = parseFloat(a) + parseFloat(b);
   return result.toFixed(fractionDigits);
 }
+
+function getRandomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
