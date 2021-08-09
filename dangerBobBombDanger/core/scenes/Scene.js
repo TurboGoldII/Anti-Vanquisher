@@ -6,7 +6,7 @@ class Scene {
   preload() {
     this.renderer.load.image(
       'buttonSmall',
-      '../engine/assets/callouts/flixel_button_small.png'
+      'assets/callouts/flixel_button_small.png'
     );
 
     this.renderer.load.spritesheet(

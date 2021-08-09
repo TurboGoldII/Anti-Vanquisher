@@ -35,7 +35,7 @@ function renderGame() {
     sceneSwitcher.renderer = this;
     $this = this;
     /* Assets used by every scene */
-    this.load.image('button', '../engine/assets/callouts/flixel_button.png');
+    this.load.image('button', 'assets/callouts/flixel_button.png');
     sceneSwitcher.scene.preload();
   }
 

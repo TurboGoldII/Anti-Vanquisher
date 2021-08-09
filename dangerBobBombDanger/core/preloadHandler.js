@@ -10,7 +10,7 @@ const setWebsiteSettings = () => {
 };
 
 const IMAGES = getReadOnlyObject([
-  { name: 'debug_x', path: '../engine/assets/callouts/debug_x.png' },
+  { name: 'debug_x', path: 'assets/callouts/debug_x.png' },
   { name: 'lava', path: 'assets/stage/game_background.png' },
   { name: 'iceball', path: 'assets/mob/iceball.png' },
   { name: 'homingball', path: 'assets/mob/homingball.png' },
