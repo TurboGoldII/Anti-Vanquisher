@@ -4,3 +4,4 @@ dangerBobBombDanger/assets/mario_world_spritesheet.png
 .vs
 /.vscode
 node_modules
+development.js
