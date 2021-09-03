@@ -28,11 +28,16 @@ class VelocityHandler {
       velocity ** 2 /
       (speedX ** 2 + speedY ** 2)
     );
+    try {
+      affectedObject.setVelocity(
+        angle.x * angleMultiplier,
+        angle.y * angleMultiplier
+      );
+    }
+    catch (e) {
 
-    affectedObject.setVelocity(
-      angle.x * angleMultiplier,
-      angle.y * angleMultiplier
-    );
+    }
+
   }
 
   /**
