@@ -14,3 +14,4 @@ const DEBUG_BOXES = true;
  * to speed up the development process.
  */
 const GOD_MODE = true;
+const SHOW_START_COUNTER = false;

@@ -15,11 +15,7 @@ class Iceball extends Projectile {
     this.iceballTexture = null;
 
     this.#game.anims.remove(player.$data.settings.sprite.name);
-
-    if (player.$data.settings.frozenSprite) {
-      player.setTexture(player.$data.settings.frozenSprite.name);
-    }
-
+    player.setTexture(player.$data.settings.frozenSprite.name);
     player.isFrozen = true;
 
     setGameTimeout(() => {

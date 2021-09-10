@@ -25,7 +25,8 @@ const preloadImages = function (game) {
 };
 
 const AUDIO = getReadOnlyObject([
-  { name: 'backgroundMusic', path: 'assets/music/danger_bomb_danger_demo_soundtrack.mp3' }
+  { name: 'backgroundMusic', path: 'assets/music/danger_bomb_danger_demo_soundtrack.mp3' },
+  { name: 'gameOverJingle', path: 'assets/music/game_over.mp3' }
 ]);
 
 const preloadAudio = function (game) {

@@ -103,16 +103,14 @@ class Homingball extends Projectile {
       'homingball'
     );
 
-    this.#light = this.#game.lights.addLight(this.#homingballTexture.x, this.#homingballTexture.y, Homingball.lightRange, 0xcf00ff, 1.5);
+    this.#light = this.#game.lights.addLight(
+      this.#homingballTexture.x, this.#homingballTexture.y, Homingball.lightRange, LIGHT_COLOR_HOMINGBALL, LIGHT_INTENSITY_HOMINGBALL
+    );
 
     this.#lightHash = randomHash(10);
-
     const lf = function () { that.#updateLight() };
-
     this.#EventBus.updateFunctions.push({ h: that.#lightHash, f: lf });
-
     this.#homingballTexture.setImmovable();
-
     this.#homingballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
 
     for (let i = 0; i < this.collideWithPlayers.length; i++) {

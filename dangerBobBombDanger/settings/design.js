@@ -3,13 +3,16 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 const FONT = 'pixel_font';
 const FONT_FILL = '#ffffff';
+const LIGHT_INTENSITY_DEFAULT = 1;
+const LIGHT_INTENSITY_PLAYER = 2;
+const LIGHT_INTENSITY_HOMINGBALL = 1.5;
 const LIGHT_RADIUS_PLAYER = 130;
-/*
- * The light for the firefly cannot be smaller than 70 because then it is not
- * visible anymore.
- */
+const LIGHT_RADIUS_PLAYER_VANQUISH = 40;
 const LIGHT_RADIUS_FIREFLY = 40;
-const LIGHT_COLOR = 0x555555;
+const LIGHT_COLOR_AMBIENCE = 0x555555;
+const LIGHT_COLOR_PLAYER = 0xff6f00;
+const LIGHT_COLOR_FIREFLY = LIGHT_COLOR_PLAYER;
+const LIGHT_COLOR_HOMINGBALL = 0xcf00ff;
 
 /**
  * Determines the sound volume multiplier of all played sounds of the game. Will

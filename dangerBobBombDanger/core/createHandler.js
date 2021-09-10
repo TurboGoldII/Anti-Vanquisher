@@ -1,5 +1,5 @@
 const handleCreate = function (data) {
-  data.game.lights.enable().setAmbientColor(LIGHT_COLOR);
+  data.game.lights.enable().setAmbientColor(LIGHT_COLOR_AMBIENCE);
   ++$gameId;
   $soundHandler = new SoundHandler();
   $soundHandler.playBackgroundMusic();
@@ -56,9 +56,7 @@ const createPlayers = (data) => {
     player.$data.settings = data.playerSettings[i];
 
     let playerLight = data.game.lights.addLight(
-      player.x,
-      player.y,
-      LIGHT_RADIUS_PLAYER
+      player.x, player.y, LIGHT_RADIUS_PLAYER, LIGHT_COLOR_PLAYER, LIGHT_INTENSITY_PLAYER
     );
 
     player.$data.light = playerLight;
@@ -114,7 +112,11 @@ const createAnimations = function (game) {
  * @param {object} data Full game data
  */
 const printStartCountdown = (data) => {
-  return
+  if (!SHOW_START_COUNTER) {
+    data.game.scene.resume();
+    return;
+  }
+
   data.game.scene.pause();
   let texter = new TextHandler(data.game);
   let text = texter.createText(GAME_CENTER.x, GAME_CENTER.y, '3');

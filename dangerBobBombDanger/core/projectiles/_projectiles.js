@@ -9,6 +9,7 @@ class Projectile {
   static #fireRate = PROJECTILE_START_FIRE_RATE;
   static #isInit = false;
   static #game = null;
+  static #players = null;
 
   constructor(collideWithPlayers) {
     if (new.target === Projectile) {
@@ -33,6 +34,7 @@ class Projectile {
       Projectile.#isInit = true;
       Projectile.#EventBus = data.EventBus;
       Projectile.#game = data.game;
+      Projectile.#players = data.players;
     }
   }
 
@@ -41,9 +43,49 @@ class Projectile {
       return;
     }
 
+    return;
+
+    $soundHandler.stopBackgroundMusic();
+    $soundHandler.playGameOverJingle();
+    const player = Projectile.#players[0];
+
+    const vanquishAnim = Projectile.#game.add.sprite(
+      player.x, player.y, 'dudeVanquish'
+    );
+
+    /* TO-DO: Add light to vanquish */
+
+    player.setImmovable();
+    Projectile.#game.lights.addLight(player.x, player.y, LIGHT_RADIUS_PLAYER_VANQUISH, LIGHT_COLOR_PLAYER);
+    this.iceballTexture.destroy();
+    this.iceballTexture = null;
+
+    // this.#game.anims.remove(player.$data.settings.sprite.name);
+
+    // if (player.$data.settings.frozenSprite) {
+    //   player.setTexture(player.$data.settings.frozenSprite.name);
+    // }
+
+    // player.isFrozen = true;
+
+    // setGameTimeout(() => {
+    //   if (player.$data.settings.frozenSprite && player.$data.settings.frozenSprite.anim) {
+    //     this.#game.anims.remove(player.$data.settings.frozenSprite.name);
+    //   }
+
+    //   player.isFrozen = false;
+    //   player.setTexture(player.$data.settings.sprite.name);
+    //   createPlayerAnimation(this.#game, player, player.$data.settings.sprite);
+    // }, ICEBALL_FROZEN_TIME);
+    //firefly.anims.play('firefly_bobbing');
+
+    /* TO-DO: Open highscore uploader dialog */
+  }
+
+  static #resetGame() {
+    /* TO-DO: Use this function again */
     Projectile.#EventBus.reset();
     scoreSingleton.reset();
-    $soundHandler.stopBackgroundMusic();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
     /* Destroy registry */

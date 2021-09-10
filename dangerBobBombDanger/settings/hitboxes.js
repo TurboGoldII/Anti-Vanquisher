@@ -53,6 +53,16 @@ const CHARACTERS = getReadOnlyObject([
       path: 'assets/frozenBobOmb.png',
       frame: { frameWidth: 24, frameHeight: 24 },
       anim: null
+    },
+    vanquishSprite: {
+      name: 'dudeVanquish',
+      path: 'assets/mob/fire_dude_vanquish.png',
+      frame: { frameWidth: 24, frameHeight: 24 },
+      anim: {
+        frames: { start: 0, end: 5 },
+        frameRate: 6,
+        repeat: -1
+      }
     }
   }
 ]);

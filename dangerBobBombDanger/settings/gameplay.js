@@ -10,7 +10,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'iceball',
-    probability: 0.35,
+    probability: 0.3,
     function(data) {
       if (scoreSingleton.getScore() > 500) {
         new Iceball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
@@ -22,13 +22,13 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'homingball',
-    probability: 0.14,
+    probability: 0.1,
     function(data) {
       if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < Homingball.maxNumberOfBalls) {
         new Homingball(data.players, data.players, data.game, data.EventBus);
       }
       else {
-        getProbabilitiesArrayEntry('iceball').function(data);
+        getProbabilitiesArrayEntry('fireball').function(data);
       }
     }
   }

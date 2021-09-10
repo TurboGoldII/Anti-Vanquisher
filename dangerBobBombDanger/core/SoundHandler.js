@@ -1,8 +1,10 @@
 class SoundHandler {
   backgroundMusic = null;
+  gameOverJingle = null;
 
   constructor() {
     this.backgroundMusic = this.createSound('backgroundMusic');
+    this.gameOverJingle = this.createSound('gameOverJingle');
   }
 
   playBackgroundMusic() {
@@ -11,6 +13,10 @@ class SoundHandler {
 
   stopBackgroundMusic() {
     this.backgroundMusic.stop();
+  }
+
+  playGameOverJingle() {
+    this.gameOverJingle.play();
   }
 
   createSound(soundName) {
