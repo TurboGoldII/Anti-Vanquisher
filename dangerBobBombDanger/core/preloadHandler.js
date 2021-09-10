@@ -14,6 +14,7 @@ const IMAGES = getReadOnlyObject([
   { name: 'lava', path: 'assets/stage/game_background.png' },
   { name: 'iceball', path: 'assets/mob/iceball.png' },
   { name: 'homingball', path: 'assets/mob/homingball.png' },
+  { name: 'chaosball', path: 'assets/mob/chaosball.png' },
   { name: 'loudspeaker_on', path: 'assets/callouts/loudspeaker_on.png' },
   { name: 'loudspeaker_off', path: 'assets/callouts/loudspeaker_off.png' }
 ]);

@@ -2,7 +2,7 @@
 const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
     name: 'fireball',
-    probability: 0.6,
+    probability: 0.4,
     function(data) {
       new Fireball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
       data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
@@ -10,7 +10,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'iceball',
-    probability: 0.3,
+    probability: 0.2,
     function(data) {
       if (scoreSingleton.getScore() > 500) {
         new Iceball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
@@ -26,6 +26,20 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     function(data) {
       if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < Homingball.maxNumberOfBalls) {
         new Homingball(data.players, data.players, data.game, data.EventBus);
+        data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL * 2 });
+      }
+      else {
+        getProbabilitiesArrayEntry('fireball').function(data);
+      }
+    }
+  },
+  {
+    name: 'chaosball',
+    probability: 0.3,
+    function(data) {
+      if (scoreSingleton.getScore() > 750 && Chaosball.numberOfChaosBalls < Chaosball.maxNumberOfChaosBalls) {
+        new Chaosball(data.players, data);
+        data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL * 2 });
       }
       else {
         getProbabilitiesArrayEntry('fireball').function(data);
