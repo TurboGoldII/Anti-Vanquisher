@@ -40,7 +40,7 @@ const CHARACTERS = getReadOnlyObject([
     },
     sprite: {
       name: 'bobOmb',
-      path: 'assets/bobOmb.png',
+      path: 'assets/bobOmb2.png',
       frame: { frameWidth: 24, frameHeight: 24 },
       anim: {
         frames: { start: 0, end: 7 },
