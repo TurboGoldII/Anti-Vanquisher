@@ -63,7 +63,7 @@ class CoreGame extends Scene {
     /* Private variables/constants of game */
     this.gameData = {
       playerSettings: [
-        CHARACTERS[0]
+        CHARACTERS[this.renderer.$charackterIndex]
       ],
       EventBus,
       game: this.renderer,
