@@ -20,6 +20,7 @@ class ButtonFactory extends TextHandler {
     let buttonLabel = super.createText(posX, posY, text, fontProps);
     /* setOrigin places the text in the middle of the button */
     buttonLabel.setOrigin(0.5);
-  }
 
+    return buttonBackground;
+  }
 }

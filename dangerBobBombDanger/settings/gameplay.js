@@ -73,7 +73,8 @@ checkPropabilitiesArray();
 var probabilitiesArray = PROBABILITIES_ARRAY.slice(0, PROBABILITIES_ARRAY.length);
 
 const START_POS = getReadOnlyObject([
-  { x: FLOOR_CENTER.x, y: FLOOR_CENTER.y }
+  { x: FLOOR_CENTER.x, y: FLOOR_CENTER.y },
+  { x: FLOOR_CENTER.x + 50, y: FLOOR_CENTER.y + 50 }
 ]);
 
 /**
@@ -115,3 +116,21 @@ const FIREBALL_TURRET_POSITIONS = {
   x: { left: -20, right: GAME_WIDTH + 20 },
   y: { top: -20, bottom: GAME_HEIGHT + 20 }
 };
+
+/* KEYS / COOP */
+COOP_MULTIPLIER = 1.2;
+const VELOCITY = 5;
+const KEYS = [
+  {
+    'W': { keyObject: null, function: (player) => { player.y += -VELOCITY } },
+    'S': { keyObject: null, function: (player) => { player.y += VELOCITY } },
+    'A': { keyObject: null, function: (player) => { player.x += -VELOCITY } },
+    'D': { keyObject: null, function: (player) => { player.x += VELOCITY } },
+  },
+  {
+    'up': { keyObject: null, function: (player) => { player.y += -VELOCITY } },
+    'down': { keyObject: null, function: (player) => { player.y += VELOCITY } },
+    'left': { keyObject: null, function: (player) => { player.x += -VELOCITY } },
+    'right': { keyObject: null, function: (player) => { player.x += VELOCITY } },
+  }
+];

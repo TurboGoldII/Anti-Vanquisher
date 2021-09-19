@@ -7,7 +7,7 @@ const handleCreate = function (data) {
   let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
   floor.setPipeline('Light2D');
   createPlayers(data);
-  scoreSingleton.init(data.EventBus);
+  scoreSingleton.init(data.EventBus, data.playerSettings.length - 1);
   Projectile.init(data);
   createAnimations(data.game);
   printStartCountdown(data);

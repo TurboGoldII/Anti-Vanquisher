@@ -62,6 +62,7 @@ class MainMenu extends Scene {
     );
 
     this.#activeCharackter.linePos = linePos;
+    this.renderer.$charackterIndex = 0;
     this.#setCharackter(0);
 
     this.#addMenuButton(
@@ -91,22 +92,39 @@ class MainMenu extends Scene {
   }
 
   #switchCharackter(toLeft) {
-    this.#activeCharackter.sprite.destroy();
+    this.#activeCharackter.sprite?.destroy?.();
 
     let index = 0;
 
     if (toLeft) {
-      index = this.renderer.$charackterIndex ? --this.renderer.$charackterIndex : this.#CHARACTERS.length - 1;
+      index = this.renderer.$charackterIndex ? --this.renderer.$charackterIndex : this.#CHARACTERS.length;
     }
     else {
-      index = this.renderer.$charackterIndex === this.#CHARACTERS.length - 1 ? 0 : ++this.renderer.$charackterIndex;
+      index = this.renderer.$charackterIndex === this.#CHARACTERS.length ? 0 : ++this.renderer.$charackterIndex;
     }
 
-    this.#setCharackter(index);
+    this.renderer.$charackterIndex = index;
+
+    if (index === this.#CHARACTERS.length) {
+      this.#setCoop();
+    }
+    else {
+      this.#setCharackter(index);
+    }
+  }
+
+  #setCoop() {
+    this.#activeCharackter.sprite = this.buttonFactory.createButton(
+      GAME_CENTER.x,
+      (this.#activeCharackter.linePos),
+      'COOP',
+      { fill: '000000' },
+      () => { this.#sceneSwitcher.scene = SCENE_CORE_GAME; },
+      'buttonSmall'
+    );
   }
 
   #setCharackter(index) {
-    this.renderer.$charackterIndex = index;
     this.#activeCharackter.sprite = this.renderer.physics.add.sprite(
       GAME_CENTER.x,
       this.#activeCharackter.linePos,

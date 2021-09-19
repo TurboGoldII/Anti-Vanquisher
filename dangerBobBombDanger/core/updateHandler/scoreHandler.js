@@ -10,6 +10,7 @@ const scoreSingleton = (function () {
   var displayedScore = 0;
   var scoreQ = [];
   var flow = true;
+  let multiplier = 1;
 
   const handleScoreQ = function () {
     if (flow && scoreQ.length) {
@@ -83,13 +84,17 @@ const scoreSingleton = (function () {
      * init function should be called in the create function
      * @param {*} q = queues to communicate
      */
-    init: function (EventBus) {
+    init: function (EventBus, coop) {
       if (scoreCounterText) {
         return;
       }
 
+      if (coop) {
+        multiplier = COOP_MULTIPLIER
+      }
+
       EventBus.on('score', ev => {
-        var score = ev.score;
+        var score = Math.floor(ev.score * multiplier);
         actualScore += score;
         scoreQ.push(score);
       });

@@ -62,13 +62,30 @@ class CoreGame extends Scene {
 
     /* Private variables/constants of game */
     this.gameData = {
-      playerSettings: [
-        CHARACTERS[this.renderer.$charackterIndex]
-      ],
+      keys: [],
+      playerSettings: [],
       EventBus,
       game: this.renderer,
       players: []
     };
+
+    if (this.renderer.$charackterIndex >= CHARACTERS.length) {
+      handlePlayerMovement = handlePlayerMovementKoop;
+      this.gameData.playerSettings.push(CHARACTERS[0]);
+      this.gameData.playerSettings.push(CHARACTERS[1]);
+      for (let i = 0; i < KEYS.length; i++) {
+        for (const key in KEYS[i]) {
+          KEYS[i][key].keyObject = this.renderer.input.keyboard.addKey(key);
+        }
+      }
+      this.gameData.keys = KEYS
+    }
+    else {
+      handlePlayerMovement = handlePlayerMovementSinglePlayer;
+      this.gameData.playerSettings.push(CHARACTERS[this.renderer.$charackterIndex]);
+    }
+
+
 
     handlePreload(this.gameData);
   }
