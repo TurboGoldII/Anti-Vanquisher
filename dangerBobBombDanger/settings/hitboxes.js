@@ -40,7 +40,7 @@ const CHARACTERS = getReadOnlyObject([
     },
     sprite: {
       name: 'bobOmb',
-      path: 'assets/bobOmb2.png',
+      path: 'assets/bobOmb.png',
       frame: { frameWidth: 24, frameHeight: 24 },
       anim: {
         frames: { start: 0, end: 7 },
@@ -61,6 +61,33 @@ const CHARACTERS = getReadOnlyObject([
       anim: {
         frames: { start: 0, end: 5 },
         frameRate: 6,
+        repeat: -1
+      }
+    }
+  },
+  {
+    context: {
+      scale: 2,
+      hitbox: { x: PLAYER_HITBOX.x, y: PLAYER_HITBOX.y },
+      offset: { x: PLAYER_HITBOX_OFFSET.x, y: PLAYER_HITBOX_OFFSET.y }
+    },
+    sprite: {
+      name: 'bobOmb2',
+      path: 'assets/bobOmb2.png',
+      frame: { frameWidth: 24, frameHeight: 24 },
+      anim: {
+        frames: { start: 0, end: 7 },
+        frameRate: 8,
+        repeat: -1
+      }
+    },
+    frozenSprite: {
+      name: 'frozenBobOmb2',
+      path: 'assets/frozenBobOmb2.png',
+      frame: { frameWidth: 24, frameHeight: 24 },
+      anim: {
+        frames: { start: 0, end: 4 },
+        frameRate: 8,
         repeat: -1
       }
     }

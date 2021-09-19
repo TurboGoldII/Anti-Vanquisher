@@ -4,6 +4,12 @@ class MainMenu extends Scene {
   #sceneSwitcher = null;
   renderer = null;
 
+  #CHARACTERS = CHARACTERS.map(charackter => charackter.sprite);
+  #activeCharackter = {
+    sprite: null,
+    linePos: 0
+  };
+
   constructor(sceneSwitcher, renderer) {
     super();
     this.#sceneSwitcher = sceneSwitcher;
@@ -13,9 +19,12 @@ class MainMenu extends Scene {
   preload() {
     super.preload();
     this.buttonFactory = new ButtonFactory(this.renderer);
+    this.#preloadCharackterSpritesheets()
   }
 
   create() {
+    this.#createCharackterAnims()
+
     /* Shall be replaced by the logo */
     let gameLogo = this.buttonFactory.createText(
       GAME_CENTER.x,
@@ -25,7 +34,7 @@ class MainMenu extends Scene {
     );
 
     gameLogo.setOrigin(0.5);
-    let linePos = 170;
+    let linePos = 150;
     let lineOffset = 130;
 
     this.#addMenuButton(
@@ -33,6 +42,27 @@ class MainMenu extends Scene {
       'Play',
       () => { this.#sceneSwitcher.scene = SCENE_CORE_GAME; }
     );
+
+    this.buttonFactory.createButton(
+      GAME_CENTER.x - 136,
+      (linePos += lineOffset),
+      '[<]',
+      { fill: '000000' },
+      () => { this.#switchCharackter(1) },
+      'buttonSmall'
+    );
+
+    this.buttonFactory.createButton(
+      GAME_CENTER.x + 136,
+      (linePos),
+      '[>]',
+      { fill: '000000' },
+      () => { this.#switchCharackter(0) },
+      'buttonSmall'
+    );
+
+    this.#activeCharackter.linePos = linePos;
+    this.#setCharackter(0);
 
     this.#addMenuButton(
       (linePos += lineOffset),
@@ -60,8 +90,60 @@ class MainMenu extends Scene {
     );
   }
 
+  #switchCharackter(toLeft) {
+    this.#activeCharackter.sprite.destroy();
+
+    let index = 0;
+
+    if (toLeft) {
+      index = this.renderer.$charackterIndex ? --this.renderer.$charackterIndex : this.#CHARACTERS.length - 1;
+    }
+    else {
+      index = this.renderer.$charackterIndex === this.#CHARACTERS.length - 1 ? 0 : ++this.renderer.$charackterIndex;
+    }
+
+    this.#setCharackter(index);
+  }
+
+  #setCharackter(index) {
+    this.renderer.$charackterIndex = index;
+    this.#activeCharackter.sprite = this.renderer.physics.add.sprite(
+      GAME_CENTER.x,
+      this.#activeCharackter.linePos,
+      this.#CHARACTERS[index].name
+    );
+
+    this.#activeCharackter.sprite.anims.play(this.#CHARACTERS[index].name);
+    this.#activeCharackter.sprite.setImmovable();
+    this.#activeCharackter.sprite.setScale(CHARACTERS[index].context.scale);
+  }
+
+  #preloadCharackterSpritesheets() {
+    for (let i = 0; i < this.#CHARACTERS.length; i++) {
+      this.renderer.load.spritesheet(
+        this.#CHARACTERS[i].name,
+        this.#CHARACTERS[i].path,
+        this.#CHARACTERS[i].frame
+      );
+    }
+  };
+
+  #createCharackterAnims() {
+    for (let i = 0; i < this.#CHARACTERS.length; i++) {
+      if (this.#CHARACTERS[i].anim) {
+        this.renderer.anims.create({
+          key: this.#CHARACTERS[i].name,
+          frames: this.renderer.anims.generateFrameNumbers(this.#CHARACTERS[i].name, this.#CHARACTERS[i].anim.frames),
+          frameRate: this.#CHARACTERS[i].anim.frameRate,
+          repeat: this.#CHARACTERS[i].anim.repeat
+        });
+      }
+    }
+  }
+
   update() {
     super.update();
   }
+
 
 }

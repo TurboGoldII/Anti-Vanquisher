@@ -13,7 +13,12 @@ const getReadOnlyObject = function (object) {
     var v = object[prop];
 
     if (typeof v === 'object') {
-      v = getReadOnlyObject(v);
+      if (!v) {
+        v = null;
+      }
+      else {
+        v = getReadOnlyObject(v);
+      }
     }
 
     Object.defineProperty(result, prop, {
