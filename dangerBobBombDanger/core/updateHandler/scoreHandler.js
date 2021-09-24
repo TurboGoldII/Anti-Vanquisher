@@ -16,15 +16,20 @@ const scoreSingleton = (function () {
     if (flow && scoreQ.length) {
       flow = false;
       --scoreQ[0];
+
       formatScore(++displayedScore);
 
       if (scoreQ[0] === 0) {
         scoreQ.shift();
       }
 
+      let timeout = 25 - Math.floor(actualScore / 250)
+
+      timeout = timeout < 0 ? 0 : timeout;
+
       setGameTimeout(() => {
         flow = true;
-      }, 25);
+      }, timeout);
     }
   }
 

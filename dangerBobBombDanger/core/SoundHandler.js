@@ -1,19 +1,20 @@
 class SoundHandler {
-  backgroundMusic = null;
+  #music = null;
 
-  constructor() {
-    this.backgroundMusic = this.createSound('backgroundMusic');
+  constructor(audioName, options) {
+    this.#music = $this.sound.add(audioName, options || { volume: SOUND_VOLUME });
   }
 
-  playBackgroundMusic() {
-    this.backgroundMusic.play({ loop: true });
+  play(options) {
+    this.#music.play(options || { loop: true });
   }
 
-  stopBackgroundMusic() {
-    this.backgroundMusic.stop();
+  stop() {
+    this.#music.stop();
   }
 
-  createSound(soundName) {
-    return $this.sound.add(soundName, { volume: SOUND_VOLUME });
+  destroy() {
+    this.#music.stop();
+    $this.sound.remove(this.#music.key);
   }
 }

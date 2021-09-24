@@ -2,7 +2,7 @@
 const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
     name: 'fireball',
-    probability: 0.4,
+    probability: 0.6,
     function(data) {
       new Fireball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
       data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
@@ -26,7 +26,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     function(data) {
       if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < Homingball.maxNumberOfBalls) {
         new Homingball(data.players, data.players, data.game, data.EventBus);
-        data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL * 2 });
+        data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL + 5 });
       }
       else {
         getProbabilitiesArrayEntry('fireball').function(data);
@@ -35,11 +35,11 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
   },
   {
     name: 'chaosball',
-    probability: 0.3,
+    probability: 0.1,
     function(data) {
       if (scoreSingleton.getScore() > 750 && Chaosball.numberOfChaosBalls < Chaosball.maxNumberOfChaosBalls) {
         new Chaosball(data.players, data);
-        data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL * 2 });
+        data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
       }
       else {
         getProbabilitiesArrayEntry('fireball').function(data);
@@ -109,8 +109,8 @@ const FIRESTREAM_STAGE_OFFSET = 50;
 /* Score constants */
 const SCORE_MAXIMUM = 999999;
 const SCORE_INCREMENT_FIREBALL = 10;
-const SCORE_INCREMENT_ICEBALL = 7;
-const SCORE_INCREMENT_FIRESTREAM = 50;
+const SCORE_INCREMENT_ICEBALL = 5;
+const SCORE_INCREMENT_FIRESTREAM = 20;
 
 const FIREBALL_TURRET_POSITIONS = {
   x: { left: -20, right: GAME_WIDTH + 20 },

@@ -26,7 +26,11 @@ const preloadImages = function (game) {
 };
 
 const AUDIO = getReadOnlyObject([
-  { name: 'backgroundMusic', path: 'assets/music/danger_bomb_danger_demo_soundtrack.mp3' }
+  { name: 'backgroundMusic', path: 'assets/music/danger_bomb_danger_demo_soundtrack.mp3' },
+  { name: 'shootFirestreamSfx', path: 'assets/sfx/firestream.mp3' },
+  { name: 'buildLaserSfx', path: 'assets/sfx/buildLaserSfx.mp3' },
+  { name: 'initFirestreamSfx', path: 'assets/sfx/initFirestreamSfx.mp3' },
+  { name: 'projectileSfx', path: 'assets/sfx/projectileSfx.mp3' }
 ]);
 
 const preloadAudio = function (game) {

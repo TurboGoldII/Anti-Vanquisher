@@ -1,8 +1,8 @@
 const handleCreate = function (data) {
   data.game.lights.enable().setAmbientColor(LIGHT_COLOR);
   ++$gameId;
-  $soundHandler = new SoundHandler();
-  $soundHandler.playBackgroundMusic();
+  $soundHandler = new SoundHandler('backgroundMusic');
+  $soundHandler.play();
 
   let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
   floor.setPipeline('Light2D');

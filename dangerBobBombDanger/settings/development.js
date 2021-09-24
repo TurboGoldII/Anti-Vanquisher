@@ -13,4 +13,4 @@ const DEBUG_BOXES = false;
  * The god mode should be implemented to make the player invincible in order
  * to speed up the development process.
  */
-const GOD_MODE = false;
+const GOD_MODE = true;

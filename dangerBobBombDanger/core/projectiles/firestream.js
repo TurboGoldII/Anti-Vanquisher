@@ -1,15 +1,24 @@
 class Firestream extends Projectile {
   #game = null;
   #projectileHitPlayer = null;
+  #buildLaserSfx = null;
+  #initFirestreamSfx = null;
+  #shootFirestreamSfx = null;
+  static #volume = SOUND_VOLUME / 2;
+
 
   constructor(collideWithPlayers, game) {
     super(collideWithPlayers);
     this.#game = game;
     this.#projectileHitPlayer = this.projectileHitPlayer;
+    this.#buildLaserSfx = new SoundHandler('buildLaserSfx', { volume: Firestream.#volume });
+    this.#initFirestreamSfx = new SoundHandler('initFirestreamSfx', { volume: Firestream.#volume });
+    this.#shootFirestreamSfx = new SoundHandler('shootFirestreamSfx', { volume: Firestream.#volume });
     this.#buildLaserCrystal();
   }
 
   #buildLaserCrystal() {
+    this.#buildLaserSfx.play({ loop: false });
     var streamPos = calculateStreamStartPos();
     var laserCrystal = this.#game.add.sprite(streamPos.x, streamPos.y, 'crystal');
     laserCrystal.setScale(1.3);
@@ -18,12 +27,15 @@ class Firestream extends Projectile {
 
     setGameTimeout(() => {
       this.#initFirestream(laserCrystal, streamPos);
+      this.#buildLaserSfx.destroy();
     }, CRYSTAL_BUILDING_TIME, () => {
       laserCrystal.destroy();
+      this.#buildLaserSfx.destroy();
     });
   }
 
   #initFirestream(laserCrystal, streamPos) {
+    this.#initFirestreamSfx.play({ loop: false });
     var firestreamBuilding = this.#game.physics.add.sprite(
       streamPos.x + FIRESTREAM_OFFSET.x,
       streamPos.y + FIRESTREAM_OFFSET.y,
@@ -54,16 +66,19 @@ class Firestream extends Projectile {
     setGameTimeout(
       () => {
         this.#shootFirestream(laserCrystal, streamPos, firestreamBuilding);
+        this.#buildLaserSfx.destroy();
       },
       FIRESTREAM_INIT_TIME,
       () => {
         laserCrystal.destroy();
         firestreamBuilding.destroy();
+        this.#buildLaserSfx.destroy();
       }
     );
   }
 
   #shootFirestream(laserCrystal, streamPos, firestreamBuilding) {
+    this.#shootFirestreamSfx.play();
     var firestreamShooting = this.#game.physics.add.sprite(
       streamPos.x + FIRESTREAM_OFFSET.x,
       streamPos.y + FIRESTREAM_OFFSET.y,
@@ -90,6 +105,7 @@ class Firestream extends Projectile {
     setTimeout(() => {
       laserCrystal.destroy();
       firestreamShooting.destroy();
+      this.#shootFirestreamSfx.destroy();
     }, FIRESTREAM_SHOOTING_TIME);
   }
 }
