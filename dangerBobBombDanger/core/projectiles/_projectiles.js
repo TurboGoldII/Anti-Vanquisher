@@ -15,10 +15,11 @@ class Projectile {
     if (new.target === Projectile) {
       throw TypeError("The class Projectile is abstract and cannot be instanced.");
     }
-
+    // const sound = new SoundHandler('projectileSfx', { volume: SOUND_VOLUME / 2 }).play({ loop: false });
     this.collideWithPlayers = collideWithPlayers;
     this.#initFunctions();
     Projectile.#increaseProjectilesShot();
+    // setGameTimeout(() => { sound.destroy(); }, 100, () => { sound.destroy(); });
   }
 
   static get fireRate() {
@@ -86,6 +87,7 @@ class Projectile {
     /* TO-DO: Use this function again */
     Projectile.#EventBus.reset();
     scoreSingleton.reset();
+    $soundHandler.stop();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
     /* Destroy registry */

@@ -1,13 +1,13 @@
 const handleCreate = function (data) {
   data.game.lights.enable().setAmbientColor(LIGHT_COLOR_AMBIENCE);
   ++$gameId;
-  $soundHandler = new SoundHandler();
-  $soundHandler.playBackgroundMusic();
+  $soundHandler = new SoundHandler('backgroundMusic');
+  $soundHandler.play();
 
   let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
   floor.setPipeline('Light2D');
   createPlayers(data);
-  scoreSingleton.init(data.EventBus);
+  scoreSingleton.init(data.EventBus, data.playerSettings.length - 1);
   Projectile.init(data);
   createAnimations(data.game);
   printStartCountdown(data);

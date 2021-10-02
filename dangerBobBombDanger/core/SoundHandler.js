@@ -1,25 +1,22 @@
 class SoundHandler {
-  backgroundMusic = null;
+  #music = null;
   gameOverJingle = null;
 
-  constructor() {
-    this.backgroundMusic = this.createSound('backgroundMusic');
+  constructor(audioName, options) {
+    this.#music = $this.sound.add(audioName, options || { volume: SOUND_VOLUME });
     this.gameOverJingle = this.createSound('gameOverJingle');
   }
 
-  playBackgroundMusic() {
-    this.backgroundMusic.play({ loop: true });
+  play(options) {
+    this.#music.play(options || { loop: true });
   }
 
-  stopBackgroundMusic() {
-    this.backgroundMusic.stop();
+  stop() {
+    this.#music.stop();
   }
 
-  playGameOverJingle() {
-    this.gameOverJingle.play();
-  }
-
-  createSound(soundName) {
-    return $this.sound.add(soundName, { volume: SOUND_VOLUME });
+  destroy() {
+    this.#music.stop();
+    $this.sound.remove(this.#music.key);
   }
 }
