@@ -1,6 +1,6 @@
 /* TO-DO: The global $this shall not be used and removed in the future. */
 var $this = null;
-var $soundHandler = null;
+var $backgroundMusic = null;
 var $player = null;
 var $gameId = 0;
 

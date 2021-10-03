@@ -6,37 +6,40 @@ namespace rest;
 
 class HighscoreRestservice
 {
-  const FILE_PATH_HIGHSCORE = '';
-  const HIGHSCORE_LIST_LIMIT = 50;
+  const FILE_PATH_HIGHSCORE = '../data/highscores.json';
+  /**
+   * The highscore list shall display this number of elements but also
+   * the player's personal best and current highscore.
+   */
+  const HIGHSCORE_LIST_LIMIT = 10;
 
   public function storeHighscore(string $playerName, int $score): void
   {
-    $highscores = json_decode(file_get_contents(self::FILE_PATH_HIGHSCORE), true);
-    $highscores = $this->addHighscore($highscores, $playerName, $score);
+    $highscores = $this->getHighscores();
+    $highscores[] = ['playerName' => $playerName, 'score' => $score];
     $highscores = $this->sortHighscores($highscores);
     file_put_contents(self::FILE_PATH_HIGHSCORE, json_encode($highscores));
   }
 
-  private function addHighscore($highscores, $playerName, $score): array
+  private function sortHighscores($highscores): array
   {
-    $highscores[] = ['playerName' => $playerName, 'score' => $score];
     return $highscores;
   }
 
-  private function sortHighscores($highscores)
+  public function getHighscores(): array
   {
-    $scores = [];
-
-    foreach ($inventory as $key => $row) {
-      $scores[$key] = $row['price'];
-    }
-
-    return array_multisort($scores, SORT_DESC, $inventory);
+    $highscores = json_decode(file_get_contents(self::FILE_PATH_HIGHSCORE), true);
+    return $highscores;
   }
 
-  public function getHighscores(): string
+  public function getPlayerHighscores(string $playerName): array
   {
-    /* TO-DO */
-    return file_get_contents(self::FILE_PATH_HIGHSCORE);
+    $highscores = $this->getHighscores();
+    return $highscores;
+  }
+
+  public function clearHighscores(): void
+  {
+    file_put_contents(self::FILE_PATH_HIGHSCORE, '{}');
   }
 }

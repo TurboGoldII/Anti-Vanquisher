@@ -10,16 +10,16 @@ class Projectile {
   static #isInit = false;
   static #game = null;
   static #players = null;
+  static #gameOverStarted = false;
 
   constructor(collideWithPlayers) {
     if (new.target === Projectile) {
       throw TypeError("The class Projectile is abstract and cannot be instanced.");
     }
-    // const sound = new SoundHandler('projectileSfx', { volume: SOUND_VOLUME / 2 }).play({ loop: false });
+
     this.collideWithPlayers = collideWithPlayers;
     this.#initFunctions();
     Projectile.#increaseProjectilesShot();
-    // setGameTimeout(() => { sound.destroy(); }, 100, () => { sound.destroy(); });
   }
 
   static get fireRate() {
@@ -28,6 +28,7 @@ class Projectile {
 
   #initFunctions() {
     this.projectileHitPlayer = Projectile.#projectileHitPlayer;
+    this.resetGame = Projectile.#resetGame;
   }
 
   static init(data) {
@@ -40,56 +41,31 @@ class Projectile {
   }
 
   static #projectileHitPlayer() {
-    if (GOD_MODE) {
+    /*
+     * "gameOverStarted" is needed here because otherwise the game over track
+     * plays for every further hit, resulting in an ear rape.
+     */
+    if (GOD_MODE || Projectile.#gameOverStarted) {
       return;
     }
 
-    return;
+    Projectile.#gameOverStarted = true;
+    $backgroundMusic.stop();
+    const gameOverJingle = new Sound('gameOverJingle');
+    gameOverJingle.play({ loop: false });
 
-    $soundHandler.stopBackgroundMusic();
-    $soundHandler.playGameOverJingle();
-    const player = Projectile.#players[0];
-
-    const vanquishAnim = Projectile.#game.add.sprite(
-      player.x, player.y, 'dudeVanquish'
-    );
-
-    /* TO-DO: Add light to vanquish */
-
-    player.setImmovable();
-    Projectile.#game.lights.addLight(player.x, player.y, LIGHT_RADIUS_PLAYER_VANQUISH, LIGHT_COLOR_PLAYER);
-    this.iceballTexture.destroy();
-    this.iceballTexture = null;
-
-    // this.#game.anims.remove(player.$data.settings.sprite.name);
-
-    // if (player.$data.settings.frozenSprite) {
-    //   player.setTexture(player.$data.settings.frozenSprite.name);
-    // }
-
-    // player.isFrozen = true;
-
-    // setGameTimeout(() => {
-    //   if (player.$data.settings.frozenSprite && player.$data.settings.frozenSprite.anim) {
-    //     this.#game.anims.remove(player.$data.settings.frozenSprite.name);
-    //   }
-
-    //   player.isFrozen = false;
-    //   player.setTexture(player.$data.settings.sprite.name);
-    //   createPlayerAnimation(this.#game, player, player.$data.settings.sprite);
-    // }, ICEBALL_FROZEN_TIME);
-    //firefly.anims.play('firefly_bobbing');
-
-    /* TO-DO: Open highscore uploader dialog */
+    /* NOTE: It takes about 5,5 seconds to play the gameover jingle. */
+    setGameTimeout(() => {
+      this.resetGame();
+    }, 5500);
   }
 
   static #resetGame() {
-    /* TO-DO: Use this function again */
     Projectile.#EventBus.reset();
     scoreSingleton.reset();
-    $soundHandler.stop();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
+    Projectile.#gameOverStarted = false;
     /* Destroy registry */
     Projectile.#game.registry.destroy();
     /* Disable all active events */

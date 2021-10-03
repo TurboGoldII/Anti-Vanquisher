@@ -1,10 +1,8 @@
-class SoundHandler {
+class Sound {
   #music = null;
-  gameOverJingle = null;
 
   constructor(audioName, options) {
     this.#music = $this.sound.add(audioName, options || { volume: SOUND_VOLUME });
-    this.gameOverJingle = this.createSound('gameOverJingle');
   }
 
   play(options) {
