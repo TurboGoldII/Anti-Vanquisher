@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 require_once('../api/utils/Functions.php');
-// $restservice = $_POST['restservice'];
-$restserviceName = 'HighscoreRestservice';
-// $restserviceMethod = $_POST['restserviceMethod'];
-$restserviceMethod = 'clearHighscores';
+$restserviceName = $_POST['restservice'];
+$restserviceMethod = $_POST['restserviceMethod'];
 /*
  * The parameters are directly passed to the restservice and therefore they
  * have to be in a numeric array.
@@ -15,8 +13,7 @@ $restserviceMethod = 'clearHighscores';
  *
  * "playerName": "Blorpo"
  */
-// $restserviceParameters = json_decode($_POST['parameterPayload'], true);
-$restserviceParameters = [];
+$restserviceParameters = json_decode($_POST['parameters'], true);
 require_once('./' . $restserviceName . '.php');
 $namespaceRestserviceName = 'rest\\' . $restserviceName;
 $restservice = new $namespaceRestserviceName();
