@@ -27,11 +27,11 @@ class TextHandler {
 
   /**
    * This function creates a line below the given text object.
-   * 
-   * TO-DO: For some reason, this is currently buggy and not working but I like
+   *
+   * Note: For some reason, this is currently buggy and not working but I like
    * this prototype, so I won't delete for now.
-   * 
-   * @param {TextObject} text 
+   *
+   * @param {TextObject} text
    */
   underlineText(text) {
     let underline = this.game.add.graphics(text.left, text.bottom - 7);

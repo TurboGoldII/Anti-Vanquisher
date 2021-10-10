@@ -12,6 +12,7 @@ class CoreGame extends Scene {
 
   preload() {
     super.preload();
+
     const EventBus = (function () {
       /* Private interface */
       var queues = {}
@@ -70,22 +71,22 @@ class CoreGame extends Scene {
     };
 
     if (this.renderer.$charackterIndex >= CHARACTERS.length) {
-      handlePlayerMovement = handlePlayerMovementKoop;
+      handlePlayerMovement = handlePlayerMovementCoop;
       this.gameData.playerSettings.push(CHARACTERS[0]);
       this.gameData.playerSettings.push(CHARACTERS[1]);
+
       for (let i = 0; i < KEYS.length; i++) {
         for (const key in KEYS[i]) {
           KEYS[i][key].keyObject = this.renderer.input.keyboard.addKey(key);
         }
       }
+
       this.gameData.keys = KEYS
     }
     else {
       handlePlayerMovement = handlePlayerMovementSinglePlayer;
       this.gameData.playerSettings.push(CHARACTERS[this.renderer.$charackterIndex]);
     }
-
-
 
     handlePreload(this.gameData);
   }

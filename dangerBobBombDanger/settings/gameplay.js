@@ -1,4 +1,4 @@
-// Projectiles constants
+/* Projectile constants */
 const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
     name: 'fireball',
@@ -118,19 +118,20 @@ const FIREBALL_TURRET_POSITIONS = {
 };
 
 /* KEYS / COOP */
-COOP_MULTIPLIER = 1.2;
-const VELOCITY = 5;
+const COOP_MULTIPLIER = 1.5;
+const VELOCITY = 300;
+
 const KEYS = [
   {
-    'W': { keyObject: null, function: (player) => { player.y += -VELOCITY } },
-    'S': { keyObject: null, function: (player) => { player.y += VELOCITY } },
-    'A': { keyObject: null, function: (player) => { player.x += -VELOCITY } },
-    'D': { keyObject: null, function: (player) => { player.x += VELOCITY } },
+    'W': { keyObject: null, function: (player) => { player.setVelocityY(-1 * VELOCITY); } },
+    'S': { keyObject: null, function: (player) => { player.setVelocityY(VELOCITY); } },
+    'A': { keyObject: null, function: (player) => { player.setVelocityX(-1 * VELOCITY); } },
+    'D': { keyObject: null, function: (player) => { player.setVelocityX(VELOCITY); } }
   },
   {
-    'up': { keyObject: null, function: (player) => { player.y += -VELOCITY } },
-    'down': { keyObject: null, function: (player) => { player.y += VELOCITY } },
-    'left': { keyObject: null, function: (player) => { player.x += -VELOCITY } },
-    'right': { keyObject: null, function: (player) => { player.x += VELOCITY } },
+    'up': { keyObject: null, function: (player) => { player.setVelocityY(-1 * VELOCITY); } },
+    'down': { keyObject: null, function: (player) => { player.setVelocityY(VELOCITY); } },
+    'left': { keyObject: null, function: (player) => { player.setVelocityX(-1 * VELOCITY); } },
+    'right': { keyObject: null, function: (player) => { player.setVelocityX(VELOCITY); } },
   }
 ];

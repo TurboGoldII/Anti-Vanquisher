@@ -22,7 +22,6 @@ class Firestream extends Projectile {
     var streamPos = calculateStreamStartPos();
     var laserCrystal = this.#game.add.sprite(streamPos.x, streamPos.y, 'crystal');
     laserCrystal.setScale(1.3);
-    laserCrystal.setPipeline('Light2D');
     laserCrystal.anims.play('crystal');
 
     setGameTimeout(
@@ -48,7 +47,6 @@ class Firestream extends Projectile {
     );
 
     firestreamBuilding.setScale(2);
-    firestreamBuilding.setPipeline('Light2D');
     firestreamBuilding.anims.play('firelaser_building');
     firestreamBuilding.setImmovable();
 
@@ -91,7 +89,6 @@ class Firestream extends Projectile {
     );
 
     firestreamShooting.setScale(2);
-    firestreamShooting.setPipeline('Light2D');
     firestreamShooting.anims.play('firelaser_full_size');
     firestreamShooting.setImmovable();
     firestreamShooting.setSize(FIRESTREAM_HITBOX.x, FIRESTREAM_HITBOX.y);

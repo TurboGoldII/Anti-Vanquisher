@@ -90,6 +90,16 @@ const CHARACTERS = getReadOnlyObject([
         frameRate: 8,
         repeat: -1
       }
+    },
+    vanquishSprite: {
+      name: 'dudeVanquish',
+      path: 'assets/mob/particle_flame_vanquish.png',
+      frame: { frameWidth: 24, frameHeight: 24 },
+      anim: {
+        frames: { start: 0, end: 5 },
+        frameRate: 6,
+        repeat: -1
+      }
     }
   }
 ]);

@@ -39,6 +39,7 @@ const createPlayers = (data) => {
 
     /* Disables the automatic physics pushing from the Phaser physics */
     player.setImmovable();
+    player.body.setMaxSpeed(VELOCITY);
     player.$data = {};
     player.$data.firefly = firefly;
     player.setScale(data.playerSettings[i].context.scale);

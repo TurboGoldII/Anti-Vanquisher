@@ -44,7 +44,7 @@ class VelocityHandler {
   /**
    * Moves the affected object TO the targets position and stops there.
    *
-   * TO-DO: This feature would be really hard to implement. The complete game
+   * Note: This feature would be really hard to implement. The complete game
    * loop would have to be adjusted with the engine in mind, so that the object
    * can be stopped at the right moment in the queue. It must be implemented
    * by taking the vector length to the target point and cap the velocity
