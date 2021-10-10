@@ -6,13 +6,16 @@ var $gameId = 0;
 
 function renderGame() {
   /* The game shall start in the menu. */
-  const sceneSwitcher = new SceneSwitcher(SCENE_MAIN_MENU);
+  const sceneSwitcher = new SceneSwitcher(SCENE_GAME_OVER);
 
   var config = {
     type: Phaser.AUTO,
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
     backgroundColor: 0x000000,
+    dom: {
+      createContainer: true
+    },
     physics: {
       default: 'arcade',
       arcade: {

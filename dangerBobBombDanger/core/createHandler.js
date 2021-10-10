@@ -1,4 +1,4 @@
-const handleCreate = function (data) {
+const handleCreate = function (data, sceneSwitcher) {
   data.game.lights.enable().setAmbientColor(LIGHT_COLOR_AMBIENCE);
   ++$gameId;
   $backgroundMusic = new Sound('backgroundMusic');
@@ -8,7 +8,7 @@ const handleCreate = function (data) {
   floor.setPipeline('Light2D');
   createPlayers(data);
   scoreSingleton.init(data.EventBus, data.playerSettings.length - 1);
-  Projectile.init(data);
+  Projectile.init(data, sceneSwitcher);
   createAnimations(data.game);
   printStartCountdown(data);
 };

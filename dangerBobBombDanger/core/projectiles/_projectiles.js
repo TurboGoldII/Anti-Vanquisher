@@ -10,6 +10,7 @@ class Projectile {
   static #isInit = false;
   static #game = null;
   static #players = null;
+  static #sceneSwitcher = null;
   static #gameOverStarted = false;
 
   constructor(collideWithPlayers) {
@@ -31,12 +32,13 @@ class Projectile {
     this.resetGame = Projectile.#resetGame;
   }
 
-  static init(data) {
+  static init(data, sceneSwitcher) {
     if (!Projectile.#isInit) {
       Projectile.#isInit = true;
       Projectile.#EventBus = data.EventBus;
       Projectile.#game = data.game;
       Projectile.#players = data.players;
+      Projectile.#sceneSwitcher = sceneSwitcher;
     }
   }
 
@@ -49,14 +51,15 @@ class Projectile {
       return;
     }
 
+    scoreSingleton.stop();
     Projectile.#gameOverStarted = true;
     $backgroundMusic.stop();
     const gameOverJingle = new Sound('gameOverJingle');
     gameOverJingle.play({ loop: false });
 
-    /* NOTE: It takes about 5,5 seconds to play the gameover jingle. */
+    /* NOTE: It takes about 5.5 seconds to play the gameover jingle. */
     setGameTimeout(() => {
-      this.resetGame();
+      Projectile.#sceneSwitcher.scene = SCENE_GAME_OVER;
     }, 5500);
   }
 

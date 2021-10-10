@@ -91,7 +91,7 @@ class CoreGame extends Scene {
   }
 
   create() {
-    handleCreate(this.gameData);
+    handleCreate(this.gameData, this.#sceneSwitcher);
   }
 
   update() {

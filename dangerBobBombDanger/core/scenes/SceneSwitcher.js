@@ -12,6 +12,7 @@ class SceneSwitcher {
     this.#scenes[SCENE_CORE_GAME] = new CoreGame(this, renderer);
     this.#scenes[SCENE_HIGHSCORES] = new Highscores(this, renderer);
     this.#scenes[SCENE_CREDITS] = new Credits(this, renderer);
+    this.#scenes[SCENE_GAME_OVER] = new GameOver(this, renderer);
   }
 
   get sceneId() {
@@ -33,7 +34,6 @@ class SceneSwitcher {
    * @param {number} sceneId
    */
   set scene(sceneId) {
-    // this.#renderer.sys.game.destroy(true);
     this.#sceneId = sceneId;
     /* Destroy registry */
     this.#renderer.registry.destroy();

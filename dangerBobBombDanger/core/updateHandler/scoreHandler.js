@@ -8,6 +8,7 @@ const scoreSingleton = (function () {
   var scoreCounterText = null;
   var actualScore = 0;
   var displayedScore = 0;
+  var counterStopped = false;
   var scoreQ = [];
   var flow = true;
   let multiplier = 1;
@@ -42,7 +43,6 @@ const scoreSingleton = (function () {
       return SCORE_MAXIMUM;
     }
 
-    //TO-DO: Improve this with string padding
     var formattedScore = score.toString();
     var formattedScoreLength = formattedScore.length;
 
@@ -75,6 +75,9 @@ const scoreSingleton = (function () {
     increaseScore: function () {
       handleScoreQ();
     },
+    stop: function () {
+      counterStopped = true;
+    },
     /**
      * reset should be called if the game is over
      */
@@ -82,6 +85,7 @@ const scoreSingleton = (function () {
       scoreCounterText = null;
       actualScore = 0;
       displayedScore = 0;
+      counterStopped = false;
       flow = true;
       scoreQ = [];
     },
@@ -99,9 +103,11 @@ const scoreSingleton = (function () {
       }
 
       EventBus.on('score', ev => {
-        var score = Math.floor(ev.score * multiplier);
-        actualScore += score;
-        scoreQ.push(score);
+        if (!counterStopped) {
+          var score = Math.floor(ev.score * multiplier);
+          actualScore += score;
+          scoreQ.push(score);
+        }
       });
 
       var textHandler = new TextHandler($this);
