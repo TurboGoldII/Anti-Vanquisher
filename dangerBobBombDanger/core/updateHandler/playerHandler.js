@@ -10,7 +10,6 @@ const handlePlayerMovementCoop = (data, players) => {
     players[i].setVelocity(0, 0);
 
     if (players[i].isFrozen) {
-      /* Player did not move this frame or is frozen */
       continue;
     }
 
@@ -66,7 +65,6 @@ const handlePlayerMovementSinglePlayer = (data, players) => {
   player.$data.firefly.$data.light.y = player.$data.firefly.y;
 
   if (player.isFrozen) {
-    /* Player did not move this frame or is frozen */
     return;
   }
 

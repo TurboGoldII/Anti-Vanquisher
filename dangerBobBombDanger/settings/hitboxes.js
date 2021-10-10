@@ -69,7 +69,7 @@ const CHARACTERS = getReadOnlyObject([
     context: {
       scale: 2,
       hitbox: { x: PLAYER_HITBOX.x, y: PLAYER_HITBOX.y },
-      offset: { x: PLAYER_HITBOX_OFFSET.x, y: PLAYER_HITBOX_OFFSET.y }
+      offset: { x: PLAYER_HITBOX_OFFSET.x + 1, y: PLAYER_HITBOX_OFFSET.y }
     },
     sprite: {
       name: 'bobOmb2',

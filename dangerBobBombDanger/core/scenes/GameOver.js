@@ -11,6 +11,7 @@ class GameOver extends MenuNavigation {
   #sceneSwitcher = null;
   #texter = null;
   #buttonFactory = null;
+  #nameInput = null;
   #uploadButton = null;
 
   constructor(sceneSwitcher, renderer) {
@@ -56,22 +57,15 @@ class GameOver extends MenuNavigation {
 
     yourScoreText.setOrigin(0.5);
     scoreSingleton.reset();
-    const nameFormPos = 220;
 
-    const nameEnterText = this.#texter.createText(
-      GAME_CENTER.x, nameFormPos, 'Please enter your name', { fill: '#ffdd00' }
-    );
-
-    nameEnterText.setOrigin(0.5);
-
-    const nameInput = this.renderer.add.dom(GAME_CENTER.x, nameFormPos)
+    this.#nameInput = this.renderer.add.dom(GAME_CENTER.x, 230)
       .createFromCache('nameform');
 
-    nameInput.setOrigin(0.5);
+    this.#nameInput.setOrigin(0.5);
 
     this.#uploadButton = this.#buttonFactory.createButton(
       GAME_CENTER.x,
-      300,
+      320,
       'Upload Score',
       { fill: '000000' },
       this.#getUploadFunction()
@@ -84,11 +78,14 @@ class GameOver extends MenuNavigation {
 
   #getUploadFunction() {
     return () => {
+      // Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+      // str = rgx.Replace(str, "");
+      this.#nameInput.destroy();
       this.#uploadButton.destroy();
 
       const uploadedMessage = this.#texter.createText(
         GAME_CENTER.x,
-        300,
+        230,
         'Highscore uploaded',
         { fill: '#ffdd00' }
       );

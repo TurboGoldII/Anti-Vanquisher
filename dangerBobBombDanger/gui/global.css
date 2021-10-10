@@ -12,3 +12,22 @@ canvas {
   left: -1000px;
   visibility: hidden;
 }
+
+input {
+  font-family: inherit;
+  font-size: 32px;
+  background-color: black;
+  color: #ffdd00;
+  width: 450px;
+  border: #ffdd00 solid 6px;
+  padding: 10px;
+  text-align: center;
+}
+
+input::placeholder {
+  color: #ffdd0094;
+}
+
+input:focus {
+  outline: 0;
+}

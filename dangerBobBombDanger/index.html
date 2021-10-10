@@ -46,15 +46,6 @@
   <script src="core/scenes/SceneSwitcher.js"></script>
   <script src="core/game.js"></script>
 
-  <!-- CSS files -->
-  <link rel="stylesheet" href="gui/global.css">
-</head>
-
-<body>
-  <!--
-    The font is enabled by adding an invisible field, so that Phaser can use
-    the font of it.
-  -->
   <style media='screen' type='text/css'>
     @font-face {
       font-family: pixel_font;
@@ -64,7 +55,17 @@
     }
   </style>
 
+  <!-- CSS files -->
+  <link rel="stylesheet" href="gui/global.css">
+</head>
+
+<body style="font-family: pixel_font;">
+  <!--
+    The font is enabled by adding an invisible field, so that Phaser can use
+    the font of it.
+  -->
   <div id="fontLoader">.</div>
+  <div id="canvasContainer"></div>
 
   <script>
     renderGame();

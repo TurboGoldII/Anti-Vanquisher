@@ -13,7 +13,7 @@ function resetTimer() {
 
 /**
  * Checks whether a given amount of seconds is passed via FPS calculation.
- * 
+ *
  * @param integer seconds
  */
 function isSecondsPassed(seconds, game) {
