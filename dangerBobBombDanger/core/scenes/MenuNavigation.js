@@ -20,7 +20,7 @@ class MenuNavigation extends Scene {
       60,
       'Back',
       { fill: '000000' },
-      () => { this.#sceneSwitcher.scene = SCENE_MAIN_MENU; },
+      this.getBackButtonFunction(),
       'buttonSmall'
     );
 
@@ -29,6 +29,10 @@ class MenuNavigation extends Scene {
 
   update() {
     super.update();
+  }
+
+  getBackButtonFunction() {
+    return () => { this.#sceneSwitcher.scene = SCENE_MAIN_MENU; };
   }
 
 }

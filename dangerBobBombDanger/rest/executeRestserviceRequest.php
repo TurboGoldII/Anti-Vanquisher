@@ -6,9 +6,9 @@ $restserviceName = $_POST['restservice'];
 $restserviceMethod = $_POST['restserviceMethod'];
 /*
  * The parameters are directly passed to the restservice and therefore they
- * have to be in a numeric array.
+ * have to be in a NUMERIC array.
  *
- * NOTE: Of course, it would be cooler if the parameters could be passed
+ * Note: Of course, it would be cooler if the parameters could be passed
  * in an associative array like so:
  *
  * "playerName": "Blorpo"
@@ -18,6 +18,10 @@ require_once('./' . $restserviceName . '.php');
 $namespaceRestserviceName = 'rest\\' . $restserviceName;
 $restservice = new $namespaceRestserviceName();
 $response = $restservice->$restserviceMethod(...$restserviceParameters);
+
+if (!$response) {
+  $response = ['Code' => 200, 'Message' => 'OK'];
+}
 
 if (is_array($response)) {
   echo json_encode($response);

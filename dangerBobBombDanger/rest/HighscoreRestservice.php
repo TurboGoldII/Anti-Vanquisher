@@ -18,23 +18,29 @@ class HighscoreRestservice
     $highscores = $this->getHighscores();
     $highscores[] = ['playerName' => $playerName, 'score' => $score];
     $highscores = $this->sortHighscores($highscores);
+    $highscores = array_splice($highscores, 0, self::HIGHSCORE_LIST_LIMIT);
     file_put_contents(self::FILE_PATH_HIGHSCORE, json_encode($highscores));
   }
 
   private function sortHighscores($highscores): array
   {
+    usort(
+      $highscores,
+      function ($a, $b) {
+        if ($a['score'] === $b['score']) {
+          return 0;
+        }
+
+        return $a['score'] < $b['score'] ? 1 : -1;
+      }
+    );
+
     return $highscores;
   }
 
   public function getHighscores(): array
   {
     $highscores = json_decode(file_get_contents(self::FILE_PATH_HIGHSCORE), true);
-    return $highscores;
-  }
-
-  public function getPlayerHighscores(string $playerName): array
-  {
-    $highscores = $this->getHighscores();
     return $highscores;
   }
 

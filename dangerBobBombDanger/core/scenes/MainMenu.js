@@ -35,7 +35,7 @@ class MainMenu extends Scene {
 
     gameLogo.setOrigin(0.5);
     let linePos = 150;
-    let lineOffset = 130;
+    let lineOffset = 110;
 
     this.#addMenuButton(
       linePos,
@@ -76,6 +76,9 @@ class MainMenu extends Scene {
       'Credits',
       () => { this.#sceneSwitcher.scene = SCENE_CREDITS; }
     );
+
+    this.buttonFactory.createText(10, 564, GAME_VERSION);
+    this.buttonFactory.createText(490, 564, 'Powered by Phaser');
 
     /* Must be called at the end, so that the cursor is above the buttons */
     super.create();

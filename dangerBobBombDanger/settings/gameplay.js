@@ -118,7 +118,7 @@ const FIREBALL_TURRET_POSITIONS = {
 };
 
 /* KEYS / COOP */
-const COOP_MULTIPLIER = 1.5;
+const COOP_MULTIPLIER = 2.5;
 const VELOCITY = 300;
 
 const KEYS = [

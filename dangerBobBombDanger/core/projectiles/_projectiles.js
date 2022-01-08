@@ -29,7 +29,6 @@ class Projectile {
 
   #initFunctions() {
     this.projectileHitPlayer = Projectile.#projectileHitPlayer;
-    this.resetGame = Projectile.#resetGame;
   }
 
   static init(data, sceneSwitcher) {
@@ -51,30 +50,30 @@ class Projectile {
       return;
     }
 
+    Projectile.#players.forEach(function (singlePlayer) {
+      singlePlayer.isFrozen = true;
+      singlePlayer.setTint(0x0b0b75);
+    });
+
     scoreSingleton.stop();
     Projectile.#gameOverStarted = true;
+
     $backgroundMusic.stop();
     const gameOverJingle = new Sound('gameOverJingle');
     gameOverJingle.play({ loop: false });
 
-    /* NOTE: It takes about 5.5 seconds to play the gameover jingle. */
+    /* Note: It takes about 5.5 seconds to play the game over jingle. */
     setGameTimeout(() => {
       Projectile.#sceneSwitcher.scene = SCENE_GAME_OVER;
     }, 5500);
   }
 
-  static #resetGame() {
+  static resetGame() {
+    Projectile.#isInit = false;
     Projectile.#EventBus.reset();
-    scoreSingleton.reset();
     Projectile.#fireRate = PROJECTILE_START_FIRE_RATE;
     Projectile.#projectilesShot = 0;
     Projectile.#gameOverStarted = false;
-    /* Destroy registry */
-    Projectile.#game.registry.destroy();
-    /* Disable all active events */
-    Projectile.#game.events.off();
-    /* Restart current scene */
-    Projectile.#game.scene.restart();
   }
 
   static #increaseProjectilesShot() {
