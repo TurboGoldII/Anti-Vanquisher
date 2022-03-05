@@ -19,6 +19,7 @@ const LIGHT_COLOR_HOMINGBALL = 0xcf00ff;
  * probably be replaced by a volume slider later on.
  */
 const SOUND_VOLUME = 0.2;
+const SOUND_VOLUME_GAME_OVER = 0.05;
 
 /*
  * These are the coordinates of the middle of the game. This is the middle of

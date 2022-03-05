@@ -58,8 +58,15 @@ class Projectile {
     scoreSingleton.stop();
     Projectile.#gameOverStarted = true;
 
-    $backgroundMusic.stop();
-    const gameOverJingle = new Sound('gameOverJingle');
+    /*
+     * This is a lazy bugfix for the laser building sounds in the game over
+     * screen. The #gameId is then changed again in the screen itself because
+     * otherwise errors occur due to running setTimeouts.
+     */
+    ++$gameId;
+
+    Sound.stopAllActiveSounds();
+    const gameOverJingle = new Sound('gameOverJingle', { volume: SOUND_VOLUME_GAME_OVER });
     gameOverJingle.play({ loop: false });
 
     /* Note: It takes about 5.5 seconds to play the game over jingle. */

@@ -8,7 +8,7 @@ class Sound {
   /**
    * Plays the sound.
    *
-   * NOTE: Chrome and other webbrowsers support a feature that mutes a tab
+   * Note: Chrome and other webbrowsers support a feature that mutes a tab
    * when it is not selected. Thing is, when switching back to the tab, Phaser
    * plays every sound, it should have played in the meantime AT ONCE,
    * resulting in an insanely loud, catastrophic ear rape that I cannot fix.
@@ -23,8 +23,15 @@ class Sound {
     this.#music.stop();
   }
 
+  static stopAllActiveSounds() {
+    for (const soundKey in $this.sound.sounds) {
+      $this.sound.sounds[soundKey].stop();
+    }
+  }
+
   destroy() {
     this.#music.stop();
     $this.sound.remove(this.#music.key);
   }
+
 }

@@ -75,9 +75,14 @@ class CoreGame extends Scene {
       this.gameData.playerSettings.push(CHARACTERS[0]);
       this.gameData.playerSettings.push(CHARACTERS[1]);
 
+      /* Co-op controls */
       for (let i = 0; i < KEYS.length; i++) {
         for (const key in KEYS[i]) {
-          KEYS[i][key].keyObject = this.renderer.input.keyboard.addKey(key);
+          /*
+           * Using false as the second parameter .addKey(key, false) still
+           * enables the use of the keys in HTML inputs.
+           */
+          KEYS[i][key].keyObject = this.renderer.input.keyboard.addKey(key, false);
         }
       }
 

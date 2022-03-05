@@ -1,3 +1,8 @@
+/* When are special balls allowed to appear? */
+const SCORE_THRESHOLD_ICEBALL = 400;
+const SCORE_THRESHOLD_CHAOS_BALL = 800;
+const SCORE_THRESHOLD_HOMING_BALL = 1200;
+
 /* Projectile constants */
 const PROBABILITIES_ARRAY = getReadOnlyObject([
   {
@@ -12,7 +17,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     name: 'iceball',
     probability: 0.2,
     function(data) {
-      if (scoreSingleton.getScore() > 500) {
+      if (scoreSingleton.getScore() > SCORE_THRESHOLD_ICEBALL) {
         new Iceball({ x: data.players[0].x, y: data.players[0].y }, data.players, data.game);
         data.EventBus.emit('score', { score: SCORE_INCREMENT_ICEBALL });
       } else {
@@ -24,7 +29,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     name: 'homingball',
     probability: 0.1,
     function(data) {
-      if (scoreSingleton.getScore() > 1000 && Homingball.numberOfHomingBalls < Homingball.maxNumberOfBalls) {
+      if (scoreSingleton.getScore() > SCORE_THRESHOLD_HOMING_BALL && Homingball.numberOfHomingBalls < Homingball.maxNumberOfBalls) {
         new Homingball(data.players, data.players, data.game, data.EventBus);
         data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL + 5 });
       }
@@ -37,7 +42,7 @@ const PROBABILITIES_ARRAY = getReadOnlyObject([
     name: 'chaosball',
     probability: 0.1,
     function(data) {
-      if (scoreSingleton.getScore() > 750 && Chaosball.numberOfChaosBalls < Chaosball.maxNumberOfChaosBalls) {
+      if (scoreSingleton.getScore() > SCORE_THRESHOLD_CHAOS_BALL && Chaosball.numberOfChaosBalls < Chaosball.maxNumberOfChaosBalls) {
         new Chaosball(data.players, data);
         data.EventBus.emit('score', { score: SCORE_INCREMENT_FIREBALL });
       }
