@@ -7,3 +7,5 @@ Ranging from:
 - Snow flakes which freeze the flame in place without causing a game over
 - Chaos balls that switch their direction or not
 - Homing balls - by far the hardest - that follow the players if they get into its detection range
+
+The game is playable at: https://maxmalt.de/Anti_Vanquisher/
