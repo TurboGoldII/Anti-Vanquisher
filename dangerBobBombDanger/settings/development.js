@@ -21,4 +21,4 @@ const SHOW_START_COUNTER = false;
  * Note: At first I wanted to make it as a version.txt but simply using a
  * JavaScript constant is just way more comfortable.
  */
-const GAME_VERSION = '1.0.0';
+const GAME_VERSION = '1.1.0';

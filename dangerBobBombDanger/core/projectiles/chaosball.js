@@ -30,7 +30,6 @@ class Chaosball extends Projectile {
     );
 
     this.#chaosballTexture.setImmovable();
-
     this.#chaosballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
 
     for (let i = 0; i < this.collideWithPlayers.length; i++) {
