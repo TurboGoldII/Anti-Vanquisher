@@ -59,7 +59,6 @@ class Homingball extends Projectile {
 
   #huntPlayers() {
     try {
-      //cl(this.#homingballTexture.body)
       const o = this.#getNearesPlayerVelosity(50);
 
       if (o.distance2 < Homingball.lightRange - 25) {
@@ -76,6 +75,7 @@ class Homingball extends Projectile {
           this.#homingballTexture.setVelocityY(minPos.y);
         }
       }
+
       if (this.#homingballTexture.x > GAME_WIDTH || this.#homingballTexture.x < 0 || this.#homingballTexture.y < 0 || this.#homingballTexture.y > GAME_HEIGHT) {
         this.#EventBus.updateFunctions.delete(this.#hash);
         this.#game.lights.removeLight(this.#light)

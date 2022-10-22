@@ -41,7 +41,7 @@ class Highscores extends MenuNavigation {
         }
         catch (ex) {
           /* NOTE: This is no debug. */
-          cl(ex);
+          console.error(ex);
           this.#printNoHighscoreMessage();
         }
       }
@@ -53,7 +53,7 @@ class Highscores extends MenuNavigation {
     highscoreRequest.send(
       'restservice=HighscoreRestservice'
       + '&restserviceMethod=getHighscores'
-      + '&parameters={}'
+      + '&parameters=[' + HIGHSCORE_LIST_LIMIT + ']'
     );
   }
 

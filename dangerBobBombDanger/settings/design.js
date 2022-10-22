@@ -1,8 +1,11 @@
 const GAME_NAME = 'Anti-Vanquisher';
+
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
+
 const FONT = 'pixel_font';
 const FONT_FILL = '#ffffff';
+
 const LIGHT_INTENSITY_DEFAULT = 1;
 const LIGHT_INTENSITY_PLAYER = 2;
 const LIGHT_INTENSITY_HOMINGBALL = 1.5;
@@ -73,3 +76,12 @@ const FLOOR_SIZE = {
 
 const FIREBALL_TTL = 10000;
 const WARNING_BLINK_INTERVAL = 500;
+
+/**
+ * All highscores are stored as backup (in case of cheaters), but only the top
+ * 10 are displayed in the game.
+ *
+ * In case of cheating, the cheated highscores can be deleted and the fairly
+ * earned highscores are still in the file.
+ */
+const HIGHSCORE_LIST_LIMIT = 10;
