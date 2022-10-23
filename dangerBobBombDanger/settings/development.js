@@ -14,11 +14,13 @@ const DEBUG_BOXES = true;
  * to speed up the development process.
  */
 const GOD_MODE = true;
+
 const SHOW_START_COUNTER = false;
+
 /**
  * The version of Anti-Vanquisher
  *
  * Note: At first I wanted to make it as a version.txt but simply using a
  * JavaScript constant is just way more comfortable.
  */
-const GAME_VERSION = '1.1.0';
+const GAME_VERSION = '1.2.0';

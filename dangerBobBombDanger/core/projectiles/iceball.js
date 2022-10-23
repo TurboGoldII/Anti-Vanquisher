@@ -53,7 +53,7 @@ class Iceball extends Projectile {
 
     this.iceballTexture.setImmovable();
     this.iceballTexture.setSize(FIREBALL_HITBOX.x, FIREBALL_HITBOX.y);
-    this.iceballTexture.setPipeline('Light2D');
+
     var that = this;
 
     for (let i = 0; i < this.collideWithPlayers.length; i++) {

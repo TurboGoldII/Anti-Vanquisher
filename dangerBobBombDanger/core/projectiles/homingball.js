@@ -17,7 +17,6 @@ class Homingball extends Projectile {
   #lightHash = 0;
   #speedIsSet = false;
 
-
   constructor(playersHunt, collideWithPlayers, game, EventBus) {
     super(collideWithPlayers);
     ++Homingball.numberOfHomingBalls;
@@ -104,7 +103,11 @@ class Homingball extends Projectile {
     );
 
     this.#light = this.#game.lights.addLight(
-      this.#homingballTexture.x, this.#homingballTexture.y, Homingball.lightRange, LIGHT_COLOR_HOMINGBALL, LIGHT_INTENSITY_HOMINGBALL
+      this.#homingballTexture.x,
+      this.#homingballTexture.y,
+      Homingball.lightRange,
+      LIGHT_COLOR_HOMINGBALL,
+      LIGHT_INTENSITY_HOMINGBALL
     );
 
     this.#lightHash = randomHash(10);

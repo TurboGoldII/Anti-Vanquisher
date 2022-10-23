@@ -6,6 +6,7 @@ const handleCreate = function (data, sceneSwitcher) {
 
   let floor = data.game.add.image(GAME_CENTER.x, GAME_CENTER.y, 'lava');
   floor.setPipeline('Light2D');
+  floor.setScale(2, 2);
   createPlayers(data);
   scoreSingleton.init(data.EventBus, data.playerSettings.length - 1);
   Projectile.init(data, sceneSwitcher);
